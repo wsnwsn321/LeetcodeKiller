@@ -15,6 +15,7 @@ public class Solution557 {
         String[] v = s.split(" ");
         int i=0;
         for (String q: v) {
+
             StringBuilder newQ = new StringBuilder(q);
             newQ.reverse();
             v[i] = new String(newQ);
