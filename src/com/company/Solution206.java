@@ -13,19 +13,19 @@ public class Solution206 {
 
     }
     public ListNode reverseList(ListNode head) {
-        List<Integer> l = new ArrayList<>();
-        while(head!=null){
-            l.add(head.val);
-            head = head.next;
+        if(head==null) return head;
+        if(head.next==null) return head;
+        ListNode newHead = head.next;
+        ListNode previous = head;
+        ListNode tail = head;
+        while(newHead.next!=null){
+            ListNode next = newHead.next;
+            newHead.next = previous;
+            previous = newHead;
+            newHead = next;
         }
-        ListNode temp = new ListNode(l.get(l.size()-1));
-        ListNode result = temp;
-        for(int i=l.size()-1;i>-1;--i){
-            ListNode next = new ListNode(l.get(i));
-            temp.next=next;
-            temp = temp.next;
-        }
-        return result;
-
+        tail.next =null;
+        newHead.next = previous;
+        return newHead;
     }
 }
