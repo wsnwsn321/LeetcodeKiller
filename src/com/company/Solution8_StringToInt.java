@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution8 {
+public class Solution8_StringToInt {
     public static void main(String[] args) {
 
         String s = "    ";

@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution2_R {
+public class Solution2_AddTwoNums_R {
     public static class ListNode {
       int val;
       ListNode next;

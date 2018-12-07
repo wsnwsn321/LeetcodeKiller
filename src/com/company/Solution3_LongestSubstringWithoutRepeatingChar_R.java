@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Solution3_R {
+public class Solution3_LongestSubstringWithoutRepeatingChar_R {
     public static void main(String[] args) {
 
         String a = "abcabcbb";

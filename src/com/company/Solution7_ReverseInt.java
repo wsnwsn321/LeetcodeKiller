@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution7 {
+public class Solution7_ReverseInt {
     public static void main(String[] args) {
 
         int x =1534236469;

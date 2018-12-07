@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution11_R {
+public class Solution11_ContainerWithMostWater_R {
     public static void main(String[] args) {
 
     }

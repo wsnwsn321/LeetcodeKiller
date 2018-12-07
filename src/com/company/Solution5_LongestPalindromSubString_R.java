@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution5_R {
+public class Solution5_LongestPalindromSubString_R {
     public static int lo,maxLen;
     public static void main(String[] args) {
         String s = "abacd";

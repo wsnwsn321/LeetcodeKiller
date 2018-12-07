@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution9 {
+public class Solution9_PalindromeNum {
     public static void main(String[] args) {
         int x=121;
         isPalindrome(x);
