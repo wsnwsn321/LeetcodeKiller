@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.List;
 
-public class Solution21 {
+public class Solution21_MergeTwoSortedList {
 
     public static class ListNode {
       int val;
