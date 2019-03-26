@@ -5,6 +5,6 @@ public class Solution746_MinCostClimbingStairs {
 
     }
     public int minCostClimbingStairs(int[] cost) {
-
+        return 1;
     }
 }

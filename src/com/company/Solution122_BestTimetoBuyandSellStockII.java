@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution122 {
+public class Solution122_BestTimetoBuyandSellStockII {
     public static void main(String[] args) {
         int[] p = new int[]{1,2,3,4,5};
         maxProfit(p);

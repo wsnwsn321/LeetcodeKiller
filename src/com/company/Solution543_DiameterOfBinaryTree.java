@@ -13,7 +13,7 @@ public class Solution543_DiameterOfBinaryTree {
     public int diameterOfBinaryTree(TreeNode root) {
         if(root==null) return 0;
         int dia = maxDepth(root.left)+maxDepth(root.right);
-        int childrenDia = Math.max(diameterOfBinaryTree(root.left),diameterOfBinaryTree(root.right))
+        int childrenDia = Math.max(diameterOfBinaryTree(root.left),diameterOfBinaryTree(root.right));
         return Math.max(dia,childrenDia);
     }
 

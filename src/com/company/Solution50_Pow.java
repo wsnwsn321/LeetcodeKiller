@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution50_R {
+public class Solution50_Pow {
     public static void main(String[] args) {
 
         double x = 2;
