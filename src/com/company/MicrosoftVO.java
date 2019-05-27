@@ -14,12 +14,14 @@ public class MicrosoftVO {
 //        l.add(4);
 //        l.add(5);
 //        List<List<int[]>> res = connectedPoints(l,3);
-        int[] a = {5,7,8};
-        int[] b = {6,3,4};
-        int[] c = {1,2,10};
-        int[][] map = new int[][]{a,b,c};
-        int p = longestPath(map);
-        int i=p;
+//        int[] a = {5,7,8};
+//        int[] b = {6,3,4};
+//        int[] c = {1,2,10};
+//        int[][] map = new int[][]{a,b,c};
+        String s1  = "a";
+        String s2 = "";
+        Set<String> s  = FindSubString(s1,s2);
+        int i=s.size();
     }
 
     public static List<List<int[]>> connectedPoints(List<Integer> p,int D){
@@ -82,12 +84,44 @@ public class MicrosoftVO {
 
     }
 
-    public static int longestPathDP(int[][] map){
 
+    public static Set<String> FindSubString(String s1, String s2){
+        Set<String> res = new HashSet<>();
+        if(s1.equals("")||s2.equals("")) return res;
+        for(int i=0;i<s1.length();++i){
+            res.add(s1.substring(i,i+1));
+        }
+        for(int i=0;i<s1.length();++i){
+            for(int j=i+1;j<s1.length()+1;++j){
+                String candidate = s1.substring(i,j);
+                if(res.contains(candidate)) continue;
+                if(ifSub(candidate,s2)) res.add(candidate);
+            }
+        }
+        return res;
 
     }
-
-    public static maxSumZeroSubarray(int[] arr){
-
+    public static boolean ifSub(String s1sub,String s2){
+        int diff =0;
+        if(s1sub.length()>s2.length()) return false;
+        for(int i=0;i<s2.length();++i){
+            int count=0;
+            if(s1sub.length()>s2.substring(i).length()) return false;
+            for(int j=i;j<s2.length();++j){
+                if(count<s1sub.length()){
+                    if(s1sub.charAt(count)!=s2.charAt(j)){
+                        diff++;
+                        if(diff>=2) break;
+                    }
+                    count++;
+                }
+                else{
+                    break;
+                }
+            }
+            if(diff<=1) return true;
+            diff = 0;
+        }
+        return false;
     }
 }

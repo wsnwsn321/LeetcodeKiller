@@ -11,19 +11,20 @@ public class Solution94_BTInorderTraversal {
       TreeNode right;
       TreeNode(int x) { val = x; }
   }
-//    public List<Integer> inorderTraversal(TreeNode root) {
-//        List < Integer > res = new ArrayList<>();
-//        Stack< TreeNode > stack = new Stack < > ();
-//        TreeNode curr = root;
-//        while (curr != null || !stack.isEmpty()) {
-//            while (curr != null) {
-//                stack.push(curr);
-//                curr = curr.left;
-//            }
-//            curr = stack.pop();
-//            res.add(curr.val);
-//            curr = curr.right;
-//        }
-//        return res;
-//    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> s= new Stack<>();
+        s.push(root);
+        while(!s.isEmpty()){
+            while(root.left!=null){
+                s.push(root.left);
+                root=root.left;
+            }
+            TreeNode temp = s.pop();
+            res.add(temp.val);
+            if(temp.right!=null)
+                s.add(temp.right);
+        }
+        return res;
+    }
 }

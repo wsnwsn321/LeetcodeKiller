@@ -20,4 +20,5 @@ public class Solution252_MeetingRooms {
         }
         return true;
     }
+
 }
