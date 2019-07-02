@@ -11,7 +11,7 @@ public class Solution938_RangeSumOfBST {
             rangeSumBST(root.right,L,R);
         }
         if(root.val>R){
-            rangeSumBST(root.left.L,R);
+            rangeSumBST(root.left,L,R);
         }
         sum+=root.val;
         rangeSumBST(root.left,L,R);

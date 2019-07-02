@@ -5,8 +5,6 @@ import java.util.Arrays;
 public class Solution654 {
     public static void main(String[] args) {
         int[] a = new int[]{3, 2, 1, 6, 0, 5};
-        TreeNode k = constructMaximumBinaryTree(a);
-        int b = k.val;
 
     }
     public TreeNode constructMaximumBinaryTree(int[] nums) {

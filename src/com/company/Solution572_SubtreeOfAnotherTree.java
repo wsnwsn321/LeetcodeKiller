@@ -11,6 +11,6 @@ public class Solution572_SubtreeOfAnotherTree {
 
     }
     public boolean isSubtree(TreeNode s, TreeNode t) {
-
+      return false;
     }
 }

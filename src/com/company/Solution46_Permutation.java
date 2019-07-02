@@ -8,8 +8,8 @@ import java.util.List;
 public class Solution46_Permutation {
     public static void main(String[] args) {
         int[] num = new int[]{1,2,3};
-        List<List<Integer>> res  = permute(num);
-        int x = res.size();
+        //List<List<Integer>> res  = permute(num);
+        //int x = res.size();
     }
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
