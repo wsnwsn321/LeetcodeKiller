@@ -5,6 +5,7 @@ public class Solution9_PalindromeNum {
         int x=121;
         isPalindrome(x);
 
+
     }
     public static boolean isPalindrome(int x) {
         int reverse=0;
