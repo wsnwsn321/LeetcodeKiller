@@ -14,18 +14,13 @@ public class Solution264_DP_UglyNumber2 {
 
     public static int nthUglyNumber(int n) {
         int[] r = new int[n];
-        int f2 =2,f3 =3,f5=5;
-        int i2=1,i3=1,i5=1;
-        r[0]=1;
-        for(int i=1;i<n;++i){
-            int min = Math.min(Math.min(f2,f3),f5);
-            r[i] = min;
-            if(f2 == min)
-                f2 = 2*r[i2++];
-            if(f3 == min)
-                f3 = 3*r[i3++];
-            if(f5 == min)
-                f5 = 5*r[i5++];
+        int i2 =0,i3=0,i5=0;
+        r[0] =1;
+        for (int i=1;i<n;++i){
+            r[i] = Math.min(r[i2]*2,Math.min(r[i3]*3,r[i5]*5));
+            if (r[i]%2==0) i2++;
+            if (r[i]%3==0) i3++;
+            if (r[i]%5==0) i5++;
         }
         return r[n-1];
 
