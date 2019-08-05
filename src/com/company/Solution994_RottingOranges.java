@@ -5,6 +5,6 @@ public class Solution994_RottingOranges {
 
     }
     public int orangesRotting(int[][] grid) {
-        
+
     }
 }
