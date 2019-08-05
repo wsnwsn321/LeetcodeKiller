@@ -1,26 +1,29 @@
-package src.com.company;
+package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
-import src.com.company.Solution94_BinaryTreeInorderTraversal.TreeNode;
 public class Solution144_BinaryTreePreorderTraversal {
+    public class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+    }
     public static void main(String[] args) {
 
     }
     public List<Integer> preorderTraversal(TreeNode root) {
-        Stack<TreeNode> s = new Stack<>();
-        List<Integer> ret = new ArrayList<>();
-        TreeNode curr = root;
-        s.push(curr);
-        while(!s.isEmpty()){
-            curr = s.pop();
-            ret.add(curr.val);
-            if (curr.right!=null) s.push(curr.right);
-            if(curr.left!=null) s.push(curr.left);
-
+        List<Integer> pre = new LinkedList<Integer>();
+        if(root==null) return pre;
+        Stack<TreeNode> tovisit = new Stack<TreeNode>();
+        tovisit.push(root);
+        while(!tovisit.empty()) {
+            TreeNode visiting = tovisit.pop();
+            pre.add(visiting.val);
+            if(visiting.right!=null) tovisit.push(visiting.right);
+            if(visiting.left!=null) tovisit.push(visiting.left);
         }
-        return ret;
+        return pre;
+
     }
 }

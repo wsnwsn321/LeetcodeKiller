@@ -5,18 +5,17 @@ public class Solution121_R {
 
     }
     public static int maxProfit(int[] prices) {
-        int low=Integer.MAX_VALUE;
-        int high = 0;
-        int profit =0;
-        int result =0;
-        for(int x:prices){
-            if(x<low) low = x;
+        int low =Integer.MAX_VALUE,profit=0,max=0;
+        for(int x: prices){
+            if(x<low){
+                low =x;
+            }
             else{
                 profit = x-low;
             }
-            if(profit>result) result =profit;
+            max = Math.max(profit,max);
         }
-        return result;
+        return max;
     }
 
 }

@@ -11,10 +11,12 @@ public class Solution404_SumOfLeftLeaves {
     public static void main(String[] args) {
 
     }
-
     public int sumOfLeftLeaves(TreeNode root) {
-        if(root==null||root.left==null) return 0;
-        if(root.left!=null&&root.left.left==null&&root.left.right==null) sum+=root.val;
+        if(root==null)
+            return 0;
+        if(root.left!=null&&root.left.left==null&&root.left.right==null){
+            sum+=root.val;
+        }
         sumOfLeftLeaves(root.left);
         sumOfLeftLeaves(root.right);
         return sum;

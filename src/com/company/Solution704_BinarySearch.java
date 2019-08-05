@@ -12,14 +12,31 @@ public class Solution704_BinarySearch {
 
     }
     public static int binarySearch(int start, int end, int[] nums, int target){
-        if(start<=end){
-            int mid = start+ (end-start)/2;
-            if(target==nums[mid]) return mid;
-            else{
-                if(target>nums[mid]) return binarySearch(mid+1,end,nums,target);
-                else return binarySearch(start,mid-1,nums,target);
-            }
+//        if(start<=end){
+//            int mid = (start+end)/2;
+//            if(target==nums[mid]) return mid;
+//            else{
+//                if(target>nums[mid]) return binarySearch(mid+1,end,nums,target);
+//                else return binarySearch(start,mid-1,nums,target);
+//            }
+//        }
+        //return -1;
+
+        int lo = 0;
+        int hi = end;
+
+        while(lo <= hi)
+        {
+            int mid = (lo + hi) / 2;
+
+            if(nums[mid] < target)
+                lo = mid + 1;
+            else if(nums[mid] > target)
+                hi = mid - 1;
+            else
+                return mid;
         }
+
         return -1;
     }
 

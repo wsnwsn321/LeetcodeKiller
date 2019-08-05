@@ -1,6 +1,9 @@
 package com.company;
 
-public class Solution104 {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Solution104_MaxDepthOfBinaryTree {
     public static class TreeNode {
         int val;
         TreeNode left;

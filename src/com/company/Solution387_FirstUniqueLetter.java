@@ -8,34 +8,16 @@ public class Solution387_FirstUniqueLetter {
 
     }
     public int firstUniqChar(String s) {
-//        int min =s.length();
-//        Map<Character,Integer> m = new HashMap<>();
-//        char[] cs = s.toCharArray();
-//        for(char x:cs){
-//            if(m.containsKey(x)){
-//                int v = m.get(x);
-//                m.put(x,v+1);
-//            }else{
-//                m.put(x,1);
-//            }
-//        }
-//        for (Map.Entry<Character,Integer> entry : m.entrySet()){
-//            if(entry.getValue()==1) {
-//                min =Math.min(s.indexOf(entry.getKey()),min);
-//            }
-//        }
-//        if(min==s.length()) return -1;
-//        else return min;
-        int min = s.length();
+        int[] letters  = new int[26];
         char[] cs = s.toCharArray();
-        for(char x:cs){
-            if(s.indexOf(x)==s.lastIndexOf(x)){
-                min = Math.min(s.indexOf(x),min);
-            }
+        for(char x: cs){
+            int pos = (int) x-97;
+            letters[pos]+=1;
         }
-        if(min==s.length()) return -1;
-        else return min;
-
+        for(int i=0;i<letters.length;++i){
+            if(letters[i]==1) return s.indexOf((char)97+i);
+        }
+        return-1;
 
 }
 }
