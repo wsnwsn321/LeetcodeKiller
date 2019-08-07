@@ -9,46 +9,33 @@ public class Solution329_LongestIncreasingPathinaMatrix {
     }
 
     public int longestIncreasingPath(int[][] matrix) {
-        int[][] dp = new int[matrix.length][matrix[0].length];
-
-        int max = Integer.MIN_VALUE;
-        int max_i = 0, max_j = 0;
-        for (int i = 0; i < matrix.length; ++i) {
-            for (int j = 0; j < matrix[0].length; ++j) {
-                if (matrix[i][j] > max) {
-                    max = matrix[i][j];
-                    max_i = i;
-                    max_j = j;
-                }
+        int max=1;
+        if (matrix.length==0) return 0;
+        int dp[][] = new int[matrix.length][matrix[0].length];
+        for (int i=0;i<matrix.length;++i){
+            for (int j=0;j<matrix[0].length;++j){
+                max = Math.max(max,dfs(matrix,i,j,dp));
             }
         }
-        int ret = 0;
-        int[] dr = new int[]{-1, 0, 1, 0};
-        int[] dc = new int[]{0, -1, 0, 1};
-        dp[max_i][max_j] = 1;
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{max_i, max_j});
-        while (!q.isEmpty()) {
-            int size = q.size();
-            while (size > 0) {
-                int[] index = q.poll();
-                int i = index[0];
-                int j = index[1];
-                for (int k = 0; k < 4; ++k) {
-                    int nr = i + dr[k];
-                    int nc = j + dc[k];
-                    if (0 <= nr && nr < matrix.length && 0 <= nc && nc < matrix[0].length && dp[nr][nc] == 0) {
-                        dp[nr][nc] = 1;
-                        if (matrix[nr][nc] < matrix[i][j] && dp[i][j] + 1 > dp[nr][nc]) {
-                            dp[nr][nc] = dp[i][j] + 1;
-                            ret = Math.max(ret, dp[nr][nc]);
-                            q.offer(new int[]{nr, nc});
-                        }
-                    }
-                    size--;
-                }
-            }
+        return max;
+    }
+    public int dfs(int[][] matrix, int i, int j,int[][] dp){
+        int max =1;
+        int length=1;
+        if (dp[i][j]!=0) return -1;
+        if(i+1 < matrix.length && matrix[i+1][j] > matrix[i][j]) {
+            length = Math.max(length, 1 + dfs(matrix,i+1,j,dp));
         }
-        return ret;
+        if(i-1 >=0 && matrix[i-1][j] > matrix[i][j]) {
+            length = Math.max(length, 1 + dfs(matrix,i-1,j,dp));
+        }
+        if(j+1 <matrix[0].length && matrix[i][j+1] > matrix[i][j]) {
+            length = Math.max(length, 1 + dfs(matrix,i,j+1,dp));
+        }
+        if(j-1 >=0 && matrix[i][j-1] > matrix[i][j]) {
+            length = Math.max(length, 1 + dfs(matrix,i,j-1,dp));
+        }
+        dp[i][j] =length;
+        return length;
     }
 }
