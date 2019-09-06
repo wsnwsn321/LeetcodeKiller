@@ -13,15 +13,13 @@ public class Solution206_ReverseLinkedList {
 
     }
     public ListNode reverseList(ListNode head) {
-        if(head==null) return head;
-        ListNode next = head.next;
-        head.next = null;
-        while(next!=null){
-            ListNode newHead = next.next;
-            next.next = head;
+        ListNode prev = null;
+        while(head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
             head = next;
-            next = next.next;
         }
-        return head;
+        return prev;
     }
 }
