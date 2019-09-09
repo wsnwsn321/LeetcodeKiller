@@ -8,27 +8,29 @@ public class Solution15_3Sum {
         int[] a = new int[]{2,4,3,-3,-2,-2,1,0,0,3,0,-2,-1,1,2,-3};
         threeSum(a);
      }
-
+     //time:    O(n^2)
+    //space: O(n)
     public static List<List<Integer>> threeSum(int[] num) {
-        Arrays.sort(num);
+        if (num.length<2) return new ArrayList<>();
         List<List<Integer>> res = new ArrayList<>();
-        for(int i=0;i<num.length-2;++i){
-            if(num[i+1]==num[i]) continue;
-            int l = i+1,r=num.length-1;
-            while(l<r){
-                if(num[l]+num[r]==0-num[i]){
+        Arrays.sort(num);
+        for (int i=0;i<num.length-2;++i){
+            if (i!=0&&num[i]==num[i-1]) continue;
+            int target = 0- num[i];
+            int l=i+1,r=num.length-1;
+            while (l<r){
+                if (num[l]+num[r]==target){
                     res.add(Arrays.asList(num[i],num[l],num[r]));
-                    while(l<r&&num[l]==num[l+1]) l++;
-                    while(l<r&&num[r]==num[r-1]) r--;
+                    while (l<r&&num[l]==num[l+1])l++;
+                    while (l<r&&num[r]==num[r-1])r--;
                     l++;r--;
                 }
-                else if(num[l]+num[r]>0-num[i]){
-                    r--;
-                }
-                else{
+                else if (num[l]+num[r]<target){
                     l++;
                 }
-
+                else {
+                    r--;
+                }
             }
         }
         return res;

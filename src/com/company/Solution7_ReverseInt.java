@@ -6,27 +6,18 @@ public class Solution7_ReverseInt {
         int x =1534236469;
         reverse(x);
     }
+    //time: O(n) length if x
+    //space: O(1)
     public static int reverse(int x) {
-        if(x>=0&&x<10) return x;
-        String s = Integer.toString(x);
-        String reversed = "";
-        for(int i=s.length()-1;i>-1;--i){
-            reversed+=s.charAt(i);
+        boolean flag = false;
+        if (x<0) flag =true;
+        x = Math.abs(x);
+        int res = 0;
+        char[] digits = Integer.toString(x).toCharArray();
+        for (int i=0;i<digits.length;++i){
+            res+=(digits[i]-'0')*Math.pow(10,i);
+            if (res>Integer.MAX_VALUE) return 0;
         }
-        while(reversed.charAt(0)=='0'){
-            reversed = reversed.substring(1);
-        }
-        if(reversed.charAt(reversed.length()-1)=='-'){
-            reversed="-"+reversed.substring(0,reversed.length()-1);
-        }
-
-        int result = 0;
-        try {
-            result = Integer.parseInt(reversed);
-        } catch (NumberFormatException e) {
-            // act accordingly
-            return 0;
-        }
-        return result;
+        return flag?-res:res;
     }
 }

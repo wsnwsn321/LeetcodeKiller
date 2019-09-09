@@ -11,21 +11,24 @@ public class Solution3_LongestSubstringWithoutRepeatingChar_R {
         String a = "abcabcbb";
         lengthOfLongestSubstring(a);
     }
+    //runtime: O(n) n=length of s
+    //space: O(n) n= length of s
     public static int lengthOfLongestSubstring(String s) {
-        char[] cs = s.toCharArray();
-        Set<Character> list = new HashSet<>();
-        int l=0,r=0,max =0;
-        while(r<cs.length){
-            if(!list.contains(cs[r])){
-                list.add(cs[r++]);
-                max = Math.max(max,list.size());
+        int l=0,r=0;
+        int max=0;
+        Set<Character> count = new HashSet<>();
+        while (r<s.length()){
+            if (!count.contains(s.charAt(r))){
+                count.add(s.charAt(r));
+                max = Math.max(r-l+1,max);
+                r++;
             }
             else{
-                list.remove(cs[l++]);
+                count.remove(s.charAt(l++));
             }
+
         }
         return max;
-
     }
 
 }

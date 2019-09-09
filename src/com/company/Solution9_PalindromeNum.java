@@ -7,17 +7,16 @@ public class Solution9_PalindromeNum {
 
 
     }
+    //time: O(log10(n))
+    //space: O(1)
     public static boolean isPalindrome(int x) {
-        int reverse=0;
-        int temp =x;
-        if(x<0) return false;
-        if(x>-1&&x<10) return true;
-        while(temp>0){
-            int digit = String.valueOf(temp).length();
-            reverse+=(int)((temp%10)*Math.pow(10,digit-1));
-            temp/=10;
+        if(x < 0 || (x % 10 == 0 && x != 0)) return false;
+        int secondHalf=0;
+        while (secondHalf<x){
+            int digit = x%10;
+            secondHalf = secondHalf*10+digit;
+            x/=10;
         }
-        return x==reverse;
-
+        return x==secondHalf||x==secondHalf/10;
     }
 }

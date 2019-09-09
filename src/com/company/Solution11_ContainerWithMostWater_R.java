@@ -4,20 +4,18 @@ public class Solution11_ContainerWithMostWater_R {
     public static void main(String[] args) {
 
     }
-    public static int maxArea(int[] height) {
-        int ans = 0;
-        int left = 0;
-        int right = height.length - 1;
-
-        while(left < right){
-            ans = Math.max(ans, Math.min(height[left], height[right]) * (right - left));
-            if(height[left] < height[right]){
-                left++;
-            }else{
-                right--;
-            }
+    //time:     O(n)
+    //space:    O(1)
+    public  int maxArea(int[] height) {
+        int l=0,r=height.length-1;
+        int maxArea=0;
+        while (l<r){
+            int area = Math.min(height[l],height[r])*(r-l);
+            maxArea = Math.min(maxArea,area);
+            if (height[l]<height[r])l++;
+            else r--;
         }
-        return ans;
+        return maxArea;
     }
 }
 

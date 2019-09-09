@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Solution5_LongestPalindromSubString_R {
     public static int lo,maxLen;
     public static void main(String[] args) {
@@ -7,40 +9,31 @@ public class Solution5_LongestPalindromSubString_R {
         longestPalindrome(s);
 
     }
+    //time: O(n^2);
+    //space: O(n^2);
     public static String longestPalindrome(String s) {
-        int l =0,r=1;
-        char[] cs = s.toCharArray();
-        int[] res = new int[2];
-        int max =0;
-        if(s.length()<=1) return s;
-        while(l<s.length()){
-            if(r==s.length()-1){
-                if(ifPalindrome(l,r,cs)){
-                    return s.substring(l,r+1);
-                }
-                l++;
-                r = l+1;
-                if(r>s.length()-1) break;
-            }
-            else if(ifPalindrome(l,r,cs)){
-                if(max<r-l){
-                    max = r-l;
-                    res[0]=l;
-                    res[1] =r;
-                }
-                r++;
-            }
-            else{
-                r++;
+        if(s.length()==0) return "";
+        int l=0,r=0;
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for (int i=0;i<dp.length;++i){
+            dp[i][i]=true;
+            for (int j=0;j<i;++j){
+                if (j==i-1&&s.charAt(i)==s.charAt(j)) dp[j][i]=true;
             }
         }
-        return s.substring(res[0],res[1]+1);
-    }
-    public static boolean ifPalindrome(int l, int r, char[] cs){
-        while(l<r){
-            if(cs[l++]!=cs[r--]) return false;
-        }
-        return true;
-    }
+        for (int i=0;i<dp.length;++i){
+            for (int j=0;j<i;++j){
+                if (i-j>1){
+                    dp[j][i] = dp[j+1][i-1]&&s.charAt(j)==s.charAt(i);
+                }
+                if (dp[j][i]){
+                    if (i-j>r-l){
+                        r=i;l=j;
+                    }
+                }
 
+            }
+        }
+        return s.substring(l,r+1);
+    }
 }
