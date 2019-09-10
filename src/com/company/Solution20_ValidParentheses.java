@@ -10,19 +10,21 @@ public class Solution20_ValidParentheses {
     public static void main(String[] args) {
 
     }
-    public static boolean isValid(String s) {
-        List<Character> l = new ArrayList<>();
-        char[] cs = s.toCharArray();
-        for(char x:cs){
-            if(x=='(' ||x=='['||x=='{')
-                l.add(x);
-            if(x==')'&& l.indexOf(l.size()-1)=='('||x==']'&&l.indexOf(l.size()-1)=='['||x=='}'&&l.indexOf(l.size()-1)=='{'){
-                l.remove(l.size()-1);
-            }
-            else return false;
-        }
-        return true;
-
+    //time:     O(n)
+    //space:    O(n)
+    public  boolean isValid(String s) {
+       List<Character> container = new ArrayList<>();
+       if (s.length()==0) return true;
+       char[] cs = s.toCharArray();
+       for (char x: cs){
+           if (x=='['||x=='{'||x=='(') container.add(x);
+           else if (container.size()==0) return false;
+           else if((x==']'&&container.get(container.size()-1)=='[')||(x=='}'&&container.get(container.size()-1)=='{')||(x==')'&&container.get(container.size()-1)=='(')){
+               container.remove(container.size()-1);
+           }
+           else return false;
+       }
+       return container.size()==0;
     }
 
 }

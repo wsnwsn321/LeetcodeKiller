@@ -5,9 +5,11 @@ import java.util.Map;
 
 public class maxCutCommon {
     public static void main(String[] args) {
+        String s = "abcdecdefg";
+        int c = maxCommon(s);
 
     }
-    public int maxCommon(String s){
+    public static int maxCommon(String s){
         int max = 0,cur = 0;
         if(s.length()==1) return 0;
         Map<Character, Integer> map = new HashMap<>();

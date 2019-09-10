@@ -9,21 +9,25 @@ public class Solution23_MergeKSortedList {
       ListNode next;
       ListNode(int x) { val = x; }
   }
+  //time:   O(Nlogk)    N-number of elements
+  //                    k-number of ListNode
+    // space: O(k)
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode head = new ListNode(0);
-        ListNode temp = head;
-        PriorityQueue<Integer> p = new PriorityQueue<>();
-
-        for(int i=0;i<lists.length;++i){
-            while(lists[i]!=null){
-                p.add(lists[i].val);
-                lists[i] = lists[i].next;
-            }
-        }
-        while(p.size()>0){
-            temp.next = new ListNode(p.poll());
-            temp = temp.next;
-        }
-        return head.next;
+       PriorityQueue<Integer> p =new PriorityQueue<>();
+       for (ListNode x:lists){
+           while (x!=null){
+               p.add(x.val);
+               x=x.next;
+           }
+       }
+       ListNode dummyHead = new ListNode(0);
+       ListNode head = dummyHead;
+       int size = p.size();
+       while (size>0){
+           //runtime of poll() is logk
+           head.next = new ListNode(p.poll());
+           head = head.next;
+       }
+       return dummyHead.next;
     }
 }

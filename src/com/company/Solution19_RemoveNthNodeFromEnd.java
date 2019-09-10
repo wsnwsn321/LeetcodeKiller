@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.List;
+
 public class Solution19_RemoveNthNodeFromEnd {
     public class ListNode {
       int val;
@@ -9,23 +11,25 @@ public class Solution19_RemoveNthNodeFromEnd {
     public static void main(String[] args) {
 
     }
+    //time: O(n) length of node
+    //space: O(1)
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        int f = 0, s =0;
-
-        ListNode dummy = new ListNode(0);
-        ListNode fast = dummy;
-        ListNode slow = dummy;
-        dummy.next = head;
-        while(f-s<=n){
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode pre = new ListNode(0);
+        pre.next = head;
+        ListNode dummyHead = pre;
+        while (n>0){
             fast = fast.next;
-            f++;
+            n--;
         }
-        while(fast!=null){
-            //System.out.println(slow.val);
-            fast =fast.next;
+        while (fast!=null){
+            pre =slow;
+            fast = fast.next;
             slow = slow.next;
         }
-        slow.next = slow.next.next;
-        return dummy.next;
+        pre.next = slow.next;
+        return dummyHead.next;
+
     }
 }

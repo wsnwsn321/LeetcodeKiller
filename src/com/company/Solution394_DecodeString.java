@@ -18,7 +18,7 @@ public class Solution394_DecodeString {
         }
         for (int[] brackets:pairs){
             int times = s.charAt(brackets[0]-1)-'0';
-            String temp = s.substring(brackets[0]+1,brackets[1];
+            String temp = s.substring(brackets[0]+1,brackets[1]);
             StringBuilder sb = new StringBuilder(s);
             for (int i=0;i<times;++i){
                 sb.append(temp);
@@ -30,6 +30,7 @@ public class Solution394_DecodeString {
 
             }
         }
+        return "";
 
     }
 }

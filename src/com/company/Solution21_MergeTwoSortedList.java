@@ -12,31 +12,25 @@ public class Solution21_MergeTwoSortedList {
     public static void main(String[] args) {
     }
 
-    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode head = new ListNode(0);
-        ListNode temp = head.next;
-        while(l1!=null&&l2!=null){
-            if(l1.val<l2.val){
-                temp.next = l1;
+    //time:     O(l1+l2)
+    //space:    O(1)
+    public  ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode head = dummyHead;
+        while (l1!=null||l2!=null){
+            int v1 = l1==null?Integer.MAX_VALUE:l1.val;
+            int v2 = l2==null?Integer.MAX_VALUE:l2.val;
+            if (v1<v2) {
+                head.next = l1;
                 l1 = l1.next;
             }
-            else{
-                temp.next = l2;
+            else {
+                head.next = l2;
                 l2 = l2.next;
             }
-            temp = temp.next;
+            head=head.next;
         }
-        while(l1!=null){
-            temp.next = l1;
-            l1 = l1.next;
-            temp = temp.next;
-        }
-        while(l2!=null){
-            temp.next = l2;
-            l2 = l2.next;
-            temp = temp.next;
-        }
-        return head.next;
+        return dummyHead.next;
     }
 
 }

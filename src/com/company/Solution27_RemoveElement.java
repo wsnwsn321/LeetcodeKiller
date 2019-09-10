@@ -6,15 +6,21 @@ public class Solution27_RemoveElement {
         removeElement(nums,3);
 
     }
+    //time:     O(n)
+    //space:    O(1)
     public static int removeElement(int[] nums, int val) {
-        int i = 0;
-        for (int j = 0; j < nums.length; j++) {
-            if (nums[j] != val) {
-                //put all none-val value into the front of the array
-                nums[i] = nums[j];
-                i++;
+        int l=0;
+        for (int r=0;r<nums.length;++r){
+            if (nums[r]==val) {
+                l=r;
+            }
+            else{
+                int temp =nums[l];
+                nums[l] = nums[r];
+                nums[r]=temp;
+                l++;
             }
         }
-        return i;
+        return l+1;
     }
 }
