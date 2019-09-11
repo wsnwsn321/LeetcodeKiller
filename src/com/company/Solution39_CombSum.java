@@ -9,25 +9,26 @@ public class Solution39_CombSum {
     public static void main(String[] args) {
 
     }
+
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(candidates);
-        DFS(res,new ArrayList<>(),target,0,candidates);
+        backtracking(candidates,res,new ArrayList<>(),0,target,0);
         return res;
 
     }
-    public void DFS(List<List<Integer>> res, List<Integer> temp,int remain,int pos,int[] cand){
-        if(remain<0) return;
-        else if(remain==0){
+
+    public void backtracking(int[] candidates,List<List<Integer>> res,List<Integer> temp,int current, int target,int index){
+        if (current>target) return;
+        if (current==target) {
             res.add(new ArrayList<>(temp));
             return;
         }
-
-        for(int i=pos;i<cand.length;++i){
-            temp.add(cand[i]);
-            DFS(res,temp,remain-cand[i],i,cand);
+        for (int i=index;i<candidates.length;++i){
+            temp.add(candidates[i]);
+            backtracking(candidates,res,temp,current+candidates[i],target,i);
             temp.remove(temp.size()-1);
-        }
 
+        }
     }
 }
