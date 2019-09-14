@@ -4,24 +4,25 @@ public class Solution48_RotateImage {
     public static void main(String[] args) {
 
     }
+    //time:     O(n^2)
+    //space:    O(1)
     public void rotate(int[][] matrix) {
-        int n =matrix.length;
-        //swap upside down
-        for (int t=0;t<n/2;++t){
-            for (int i=0;i<n;++i){
-                int temp =matrix[t][i];
-                matrix[t][i]=matrix[n-1-t][i];
-                matrix[n-1-t][i]=temp;
-            }
-        }
-        //swap symmetry
-        for (int i=0;i<n;++i){
-            for (int j=i;j<n;++j){
+       //transpose
+        for (int i=0;i<matrix.length;++i){
+            for (int j=i;j<matrix[0].length;++j){
                 int temp =matrix[i][j];
                 matrix[i][j]=matrix[j][i];
                 matrix[j][i]=temp;
             }
         }
-
+        //reverse
+        for (int i=0;i<matrix.length;++i){
+            for (int j=0;j<matrix[0].length;++j){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][matrix[0].length-1-j];
+                matrix[i][matrix[0].length-1-j] = temp;
+            }
+        }
+        //reverse + transpose = rotate anti-clockwise
     }
 }

@@ -17,7 +17,7 @@ public class Solution1_TwoSum {
         for (int i=0;i<nums.length;++i){
             if (m.containsKey(target-nums[i])){
                 res[0]=i;
-                res[1]=m.get(target-nums[i];
+                res[1]=m.get(target-nums[i]);
             }
             else{
                 m.put(nums[i],i);
