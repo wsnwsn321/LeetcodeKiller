@@ -4,11 +4,9 @@ public class Solution66_PlusOne {
     public static void main(String[] args) {
 
     }
+    //time:     O(n)
+    //space:    O(1)
     public int[] plusOne(int[] digits) {
-//        int num =0;
-//        for(int i=digits.length-1;i>0;--i){
-//            num+=digits[i]*Math.pow(10,digits.length-1-i);
-//        }
         if(digits[digits.length-1]!=9){
             digits[digits.length-1]+=1;
             return digits;

@@ -1,5 +1,9 @@
 package com.company;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
 public class Solution496 {
     public static void main(String[] args) {
         int[] n1 = new int[]{4,1,2};
@@ -8,22 +12,23 @@ public class Solution496 {
     }
 
     public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        int[] result = new int[nums1.length];
-        for(int i=0;i<nums1.length;++i){
-            result[i]=findNextNum(nums2,nums1[i]);
+        Map<Integer,Integer> nextG = new HashMap<>();
+        Stack<Integer> s= new Stack<>();
+        s.push(nums2[0]);
+        for (int i=1;i<nums2.length;++i){
+            if (nums2[i]>s.peek()){
+                nextG.put(s.pop(),nums2[i]);
+            }
+            s.push(nums2[i]);
         }
-        return result;
+        while (!s.isEmpty()){
+            nextG.put(s.pop(),-1);
+        }
+        int[] res = new int[nums1.length];
+        for (int i=0;i<nums1.length;++i){
+            res[i] = nextG.get(nums1[i]);
+        }
+        return  res;
     }
 
-    public static int findNextNum(int[] num, int n){
-        int count=0;
-        while(num[count]!=n){
-            count++;
-        }
-        while(count<num.length){
-            if(num[count]>n) return num[count];
-            count++;
-        }
-        return -1;
-    }
 }
