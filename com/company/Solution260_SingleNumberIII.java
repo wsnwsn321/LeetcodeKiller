@@ -7,21 +7,21 @@ public class Solution260_SingleNumberIII {
         int[] n = new int[]{1,2,1,3,2,5};
         singleNumber(n);
     }
+    //time:     O(n)
+    //space:    O(n)
     public static int[] singleNumber(int[] nums) {
-        Map<Integer,Integer> m = new HashMap<>();
-        Set<Integer> temp = new HashSet<>();
-        for (int x:nums){
-            temp.add(x);
-        }
-        for (int i=0;i<nums.length;++i){
-            m.put(nums[i],m.getOrDefault(nums[i],0)+1);
-            if (m.get(nums[i])==2) temp.remove(nums[i]);
-        }
-        int[] ret = new int[temp.size()];
-        List<Integer> temp2 = new ArrayList<>(temp);
-        for (int i=0;i<temp2.size();++i){
-            ret[i] =temp2.get(i);
-        }
-        return ret;
+       Map<Integer,Integer> m = new HashMap<>();
+       int[] res = new int[2];
+       for (int x:nums){
+           m.put(x,m.getOrDefault(x,0)+1);
+       }
+       int index=0;
+       for (int k:m.keySet()){
+           if (m.get(k)==1){
+               res[index]=k;
+               index++;
+           }
+       }
+       return res;
     }
 }

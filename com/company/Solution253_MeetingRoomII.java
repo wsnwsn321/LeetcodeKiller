@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Solution253_MeetingRoomII {
@@ -14,27 +15,25 @@ public class Solution253_MeetingRoomII {
     public static void main(String[] args) {
 
     }
-    public int minMeetingRooms(Interval[] intervals) {
-        Arrays.sort(intervals,new Comparator<Interval>(){
+    //time:     O(nlogn)
+    //space:    O(n)
+    public int minMeetingRooms(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
-            public int compare(Interval i1, Interval i2){
-                return i1.start - i2.start;
+            public int compare(int[] o1, int[] o2) {
+                return o1[0]-o2[0];
             }
         });
-        PriorityQueue<Integer> p = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1.compareTo(o2);
+        PriorityQueue<Integer> rooms = new PriorityQueue<>();
+        rooms.add(intervals[0][1]);
+        for (int i=1;i<intervals.length;++i){
+            int end = intervals[i-1][1];
+            if (intervals[i][0]>rooms.peek()){
+                //poll takes logn times
+                rooms.poll();
             }
-        });
-        p.add(intervals[0].end);
-        for(Interval i:intervals){
-            int start = i.start;
-            if(start<p.peek())
-                p.poll();
-            p.add(i.end);
+            rooms.add(intervals[i][1]);
         }
-        return p.size();
-
+        return rooms.size();
     }
 }
