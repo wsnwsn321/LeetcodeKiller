@@ -4,35 +4,23 @@ public class Solution75_SortColors {
     public static void main(String[] args) {
 
     }
-//    public void sortColors(int[] nums) {
-//        int[] count = new int[2];
-//        for (int x:nums){
-//            count[x]++;
-//        }
-//        int start=0;
-//        for (int x:count){
-//            for(int i=start;i<start+x;++i){
-//                nums[i] = i;
-//            }
-//            start+=x;
-//        }
-//    }
-public void sortColors(int[] nums) {
-    int p1 = 0, p2 = nums.length - 1, index = 0;
-    while (index <= p2) {
-        if (nums[index] == 0) {
-            nums[index] = nums[p1];
-            nums[p1] = 0;
-            p1++;
+    public void sortColors(int[] nums) {
+        int zero=0,two =nums.length-1;
+        int i=0;
+        while (i<=two){
+            if (nums[i]==1) i++;
+            if (nums[i]==0){
+                nums[i] = nums[zero];
+                nums[zero++] = 0;
+                i++;
+
+            }
+            if (nums[i]==2)
+                nums[i]=nums[two];
+                nums[two--] = 2;
+                i++;
+            }
         }
-        else if (nums[index] == 2) {
-            nums[index] = nums[p2];
-            nums[p2] = 2;
-            p2--;
-            index--;
-        }
-        index++;
     }
-}
 
 }
