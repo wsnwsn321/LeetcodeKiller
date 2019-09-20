@@ -10,20 +10,20 @@ public class Solution77_Combinations {
         combine(n,k);
     }
     public static List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> res = new ArrayList<>();
-        backtracking(res,new ArrayList<>(),n,k,1);
+        List<List<Integer>> res= new ArrayList<>();
+        backtracking(n,k,1,new ArrayList<>(),res);
         return res;
     }
-
-    public static void backtracking(List<List<Integer>> res, List<Integer> temp, int n, int k, int current){
-        if(temp.size()==k){
+    public static void backtracking(int n, int k, int current, List<Integer>temp, List<List<Integer>> res){
+        if (temp.size()==k){
             res.add(new ArrayList<>(temp));
             return;
         }
-        for(int i=current;i<=n;++i){
+        for (int i=current;i<=n;++i){
             temp.add(i);
-            backtracking(res,temp,n,k,i+1);
+            backtracking(n,k,i+1,temp,res);
             temp.remove(temp.size()-1);
         }
     }
+
 }
