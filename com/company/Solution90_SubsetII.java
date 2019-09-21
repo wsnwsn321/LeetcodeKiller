@@ -10,17 +10,17 @@ public class Solution90_SubsetII {
     }
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        List<Integer> comb = new ArrayList<>();
         Arrays.sort(nums);
-        DFS(res,nums,0,comb);
+        backtracking(res,nums,0,new ArrayList<>());
         return res;
     }
-    public void DFS(List<List<Integer>> res,int[] nums,int current,List<Integer> temp){
-        res.add(new ArrayList<>(temp));
-        for(int i=current;i<nums.length;++i){
-            temp.add(nums[i]);
-            DFS(res,nums,i+1,temp);
-            temp.remove(temp.size()-1);
-        }
+    public void backtracking(List<List<Integer>> res,int[] nums,int current,List<Integer> temp){
+       res.add(new ArrayList<>(temp));
+       for (int i=current;i<nums.length;++i){
+           if(i>current&&nums[i-1]==nums[i]) continue;
+           temp.add(nums[i]);
+           backtracking(res,nums,i+1,temp);
+           temp.remove(temp.size()-1);
+       }
     }
 }

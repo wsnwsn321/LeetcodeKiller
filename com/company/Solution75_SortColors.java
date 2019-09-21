@@ -9,16 +9,13 @@ public class Solution75_SortColors {
         int i=0;
         while (i<=two){
             if (nums[i]==1) i++;
-            if (nums[i]==0){
-                nums[i] = nums[zero];
+            else if (nums[i]==0){
+                nums[i++] = nums[zero];
                 nums[zero++] = 0;
-                i++;
-
             }
-            if (nums[i]==2)
+            else if (nums[i]==2){
                 nums[i]=nums[two];
                 nums[two--] = 2;
-                i++;
             }
         }
     }

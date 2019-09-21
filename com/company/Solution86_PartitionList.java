@@ -10,25 +10,24 @@ public class Solution86_PartitionList {
 
     }
     public ListNode partition(ListNode head, int x) {
-        ListNode before_head = new ListNode(0);
-        ListNode before = before_head;
-        ListNode after_head = new ListNode(0);
-        ListNode after = after_head;
-
-        while (head != null) {
-            if (head.val < x) {
-                before.next = head;
-                before = before.next;
-            } else {
-                after.next = head;
-                after = after.next;
+        ListNode beforeHeadDummy = new ListNode(0);
+        ListNode afterHeadDummy = new ListNode(0);
+        ListNode beforeHead = beforeHeadDummy,afterHead = afterHeadDummy;
+        ListNode cur = head;
+        while (cur!=null){
+            if (cur.val<x){
+                beforeHead.next = cur;
+                beforeHead = beforeHead.next;
             }
-            head = head.next;
+            else{
+                afterHead.next = cur;
+                afterHead = afterHead.next;
+            }
+            cur = cur.next;
         }
+        afterHead.next =null;
+        beforeHead.next = afterHeadDummy.next;
+        return beforeHeadDummy.next;
 
-        after.next = null;
-        before.next = after_head.next;
-
-        return before_head.next;
     }
 }

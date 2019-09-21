@@ -14,29 +14,25 @@ public class Solution82_RemoveDupFromList2 {
     public static void main(String[] args) {
 
     }
+    //time:     O(n)
+    //space:    O(1)
     public ListNode deleteDuplicates(ListNode head) {
-        List<Integer> s = new ArrayList<>();
-        ListNode temp = head;
-        while(temp!=null){
-            if(s.contains(temp.val)){
-                s.remove(temp.val);
-                while(temp.next!=null&&temp.val == temp.next.val){
-                    temp = temp.next;
-                }
+        ListNode pre = new ListNode(0);
+        boolean duped=false;
+        pre.next = head;
+        ListNode dummyHead = pre;
+        ListNode cur = head;
+        while (cur!=null){
+            while (cur.next!=null&&cur.val==cur.next.val){
+                cur = cur.next;
             }
-            else{
-                s.add(temp.val);
-            }
-            temp = temp.next;
+            //if there's no duplication, ignore no node
+            if (pre.next==cur) pre = cur;
+            //step over all duplicated nodes
+            else pre.next =cur.next;
+            cur = cur.next;
         }
-        //System.out.println(s);
-        ListNode dumb = new ListNode(0);
-        ListNode h =dumb;
-        for(int x:s){
-            h.next = new ListNode(x);
-            h = h.next;
-        }
-        return dumb.next;
+        return dummyHead.next;
     }
 
 }
