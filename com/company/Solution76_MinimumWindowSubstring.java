@@ -5,42 +5,43 @@ import java.util.Map;
 
 public class Solution76_MinimumWindowSubstring {
     public static void main(String[] args) {
-        String s="ab";
-        String t = "a";
+        String s="a";
+        String t = "b";
         minWindow(s,t);
     }
+    //time:     O(s+t)
+    //space:    O(s+t)
     public static String minWindow(String s, String t) {
-        if (s.length()==0) return "";
-        Map<Character,Integer> count = new HashMap<>();
-        Map<Character,Integer> current = new HashMap<>();
-        for (char x:t.toCharArray()){
-            count.put(x,count.getOrDefault(x,0)+1);
+        Map<Character,Integer> tMap = new HashMap<>();
+        int tLength=0;
+        for (char ct:t.toCharArray()){
+            tMap.put(ct,tMap.getOrDefault(ct,0)+1);
         }
-        int min = Integer.MAX_VALUE;
-        int fl=0,fr=0;
+        tLength = tMap.size();
+        Map<Character,Integer> windowCount = new HashMap<>();
+        int current=0;
+        int minL=Integer.MAX_VALUE,fl=0,fr=0;
         int l=0;
-        for (int r=0;r<s.length();++r){
-            current.put(s.charAt(r),current.getOrDefault(s.charAt(r),0)+1);
-            while (l<=r&&StringContains(current,count)){
-                if (r-l+1<min){
-                    min = r-l+1;
-                    fl=l;fr=r;
+        char[] cs = s.toCharArray();
+        for (int i=0;i<s.length();++i){
+            windowCount.put(cs[i],windowCount.getOrDefault(cs[i],0)+1);
+            if (tMap.containsKey(cs[i])&&tMap.get(cs[i])==windowCount.get(cs[i])){
+                current++;
+            }
+            while (l<i&&current==tLength){
+                if (i-l<minL){
+                    minL = i-l;
+                    fl=l;
+                    fr =i;
                 }
-                current.put(s.charAt(l),current.get(s.charAt(l))-1);
+                windowCount.put(cs[l],windowCount.get(cs[l])-1);
+                if (tMap.containsKey(cs[l])&&tMap.get(cs[l])>windowCount.get(cs[l])){
+                    current--;
+                }
                 l++;
             }
         }
-        if (min==Integer.MAX_VALUE) return "";
-        return s.substring(fl,fr+1);
-
+        return minL==Integer.MAX_VALUE?"":s.substring(fl,fr+1);
     }
 
-    public static boolean StringContains(Map<Character,Integer> current, Map<Character,Integer> count){
-        if (current.size()<count.size()) return false;
-        for (char c: count.keySet()){
-            if (!current.containsKey(c)) return false;
-            if (count.get(c)>current.get(c)) return false;
-        }
-        return true;
-    }
 }
