@@ -2,26 +2,37 @@ package com.company;
 import java.util.*;
 public class Solution347_TopKElement {
     public static void main(String[] args) {
-
+        int[] n = new int[]{1,2};
+        topKMostFrequent(n,2);
     }
+    //time:     O(nlogn)
+    //space:    O(n)
     public static List<Integer> topKMostFrequent(int[] nums, int k){
-        Map<Integer,Integer> m = new HashMap<>();
-        for(int x: nums){
-            m.put(x, m.getOrDefault(x, 0) + 1);
-        }
-        PriorityQueue<Integer> heap =
-                new PriorityQueue<Integer>((n1, n2) -> m.get(n1) - m.get(n2));
-        for (int x: m.keySet()){
-            heap.add(x);
-            if(heap.size()>k)
-                heap.poll();
-        }
-        List<Integer> res = new ArrayList<>();
-        int size = heap.size();
-        for (int i=0;i<k;++i){
-            res.add(heap.poll());
-        }
-        return res;
+       Map<Integer,Integer> m = new HashMap<>();
+       for (int x:nums){
+           m.put(x,m.getOrDefault(x,0)+1);
+       }
+       PriorityQueue<Integer> p = new PriorityQueue<>(new Comparator<Integer>() {
+           @Override
+           public int compare(Integer o1, Integer o2) {
+               return m.get(o2)-m.get(o1);
+           }
+       });
+       int size=k;
+       for (int x:m.keySet()){
+           //logn
+           if (p.size()>k) p.poll();
+           p.add(x);
 
+       }
+       List<Integer> res = new ArrayList<>();
+       while (k>0){
+           //logn
+           int cur = p.poll();
+           res.add(cur);
+           k--;
+       }
+       Collections.reverse(res);
+       return res;
     }
 }

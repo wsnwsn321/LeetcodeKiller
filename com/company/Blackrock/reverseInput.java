@@ -1,6 +1,10 @@
 package com.company.Blackrock;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class reverseInput {
+    Map<String,Float> m;
     public static void main(String[] args) {
         String s ="ABcd,9323.d=f";
         reverseInput(s);

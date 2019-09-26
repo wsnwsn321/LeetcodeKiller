@@ -17,22 +17,35 @@ public class Solution102_BinaryTreeLevelOrderTraversal {
 
     }
     public List<List<Integer>> levelOrder(TreeNode root) {
+        // List<List<Integer>> res = new ArrayList<>();
+        // travel(res,0,root);
+        // return res;
+        Queue<TreeNode> q= new LinkedList<>();
         List<List<Integer>> res = new ArrayList<>();
-        Queue<TreeNode> q = new LinkedList<>();
+        if(root==null) return res;
         q.offer(root);
-        while(q.size()>0){
+        int level=0;
+        while (!q.isEmpty()){
+            res.add(new ArrayList<>());
             int size = q.size();
-            List<Integer> temp = new ArrayList<>();
-            while(size>0){
-                TreeNode t = q.remove();
-                temp.add(t.val);
-                if(t.left!=null) q.offer(t.left);
-                if(t.right!=null) q.offer(t.right);
-                size--;
+            for (int i=0;i<size;++i){
+                TreeNode cur = q.poll();
+                res.get(level).add(cur.val);
+                if (cur.left!=null) q.offer(cur.left);
+                if (cur.right!=null) q.offer(cur.right);
             }
-            res.add(temp);
+            level++;
         }
         return res;
+
     }
+    public void travel(List<List<Integer>> res, int level,TreeNode root){
+        if(root==null) return;
+        if (res.size()<=level) res.add(new ArrayList<>());
+        res.get(level).add(root.val);
+        travel(res,level+1,root.left);
+        travel(res,level+1,root.right);
+    }
+
 
 }

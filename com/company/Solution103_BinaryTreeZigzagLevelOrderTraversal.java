@@ -1,7 +1,9 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Solution103_BinaryTreeZigzagLevelOrderTraversal {
     public class TreeNode {
@@ -14,8 +16,26 @@ public class Solution103_BinaryTreeZigzagLevelOrderTraversal {
 
     }
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+//        List<List<Integer>> res = new ArrayList<>();
+//        travel(res,root,0);
+//        return res;
+        Queue<TreeNode> q= new LinkedList<>();
         List<List<Integer>> res = new ArrayList<>();
-        travel(res,root,0);
+        if(root==null) return res;
+        q.offer(root);
+        int level=0;
+        while (!q.isEmpty()){
+            res.add(new ArrayList<>());
+            int size = q.size();
+            for (int i=0;i<size;++i){
+                TreeNode cur = q.poll();
+                if (level%2==0) res.get(level).add(0,cur.val);
+                else res.get(level).add(cur.val);
+                if (cur.left!=null) q.offer(cur.left);
+                if (cur.right!=null) q.offer(cur.right);
+            }
+            level++;
+        }
         return res;
 
     }

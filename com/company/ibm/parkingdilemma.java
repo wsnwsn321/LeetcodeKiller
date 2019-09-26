@@ -11,7 +11,7 @@ public class parkingdilemma {
         int l=0;
         Arrays.sort(n);
         int min=Integer.MAX_VALUE;
-        while (l<n.length-k){
+        while (l<n.length-k+1){
             min = Math.min(n[l+k-1]-n[l],min);
             l++;
         }

@@ -1,41 +1,43 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Solution210_CourseScheduleII {
     public static void main(String[] args) {
 
     }
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        ArrayList[] edges = new ArrayList[numCourses];
-        List<Integer> ret = new ArrayList<>();
-        for(int i=0;i<numCourses;++i){
-            edges[i] = new ArrayList();
+        if(prerequisites.length==0) return new int[]{};
+        int[] indegree = new int[numCourses];
+        Queue<Integer> q= new LinkedList<>();
+        List<Integer> resList = new ArrayList<>();
+        for (int i=0;i<prerequisites.length;++i){
+            indegree[prerequisites[i][0]]++;
         }
-        for(int[] x:prerequisites){
-            edges[x[1]].add(x[0]);
+        for (int i=0;i<indegree.length;++i){
+            if (indegree[i]==0) {
+                q.add(i);
+            }
         }
-        int[] visited = new int[numCourses];
-        for(int i=0;i<numCourses;++i){
-            if(dfsForCircle(edges,i,visited,ret)) return new int[]{};
+        int canFinish=q.size();
+        while (!q.isEmpty()){
+            int cur = q.poll();
+            resList.add(cur);
+            for (int i=0;i<prerequisites.length;++i){
+                if (prerequisites[i][1]==cur){
+                    indegree[prerequisites[i][0]]--;
+                    if (indegree[prerequisites[i][0]]==0) {
+                        q.add(prerequisites[i][0]);
+                        canFinish++;
+                    }
+                }
+            }
         }
+        if (canFinish!=numCourses) return new int[]{};
         int[] res = new int[numCourses];
-        for(int i=0;i<ret.size();++i){
-            res[i] = ret.get(i);
+        for (int i=0;i<resList.size();++i){
+            res[i] = resList.get(i);
         }
         return res;
-    }
-    public boolean dfsForCircle(ArrayList[] edges, int course,int[] visited,List<Integer> ret){
-        if(visited[course]==1) return true;
-        if(visited[course]==2) return false;
-        visited[course] =1;
-        for(int i=0;i<edges[course].size();++i){
-            if(dfsForCircle(edges,(int)edges[course].get(i),visited,ret)) return true;
-        }
-        visited[course] = 2;
-        ret.add(0,course);
-        return false;
     }
 }

@@ -10,20 +10,20 @@ public class Solution101_SymmetricTree {
     public static void main(String[] args) {
 
     }
+
+    //time:     O(n) number of nodes
+    //space:    O(n)
     public boolean isSymmetric(TreeNode root) {
         return isMirror(root,root);
     }
+    public boolean isMirror(TreeNode r1,TreeNode r2){
+        if (r1==null&&r2==null) return true;
+        if((r1==null&&r2!=null)||(r2==null&&r1!=null)) return false;
+        return (r1.val==r2.val)&&
+                isMirror(r1.left,r2.right)&&
+                isMirror(r1.right,r2.left);
 
-    public boolean isMirror(TreeNode t1, TreeNode t2) {
-        //both are leaves
-        if(t1==null&&t2==null) return true;
-        //one is leaf and one is not
-        if(t1==null||t2==null) return false;
-        if(t1.val==t2.val){
-            return isMirror(t1.left,t2.right)&&isMirror(t1.right,t2.left);
-        }
-        else{
-            return false;
-        }
     }
+
+
 }
