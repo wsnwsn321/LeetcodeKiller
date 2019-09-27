@@ -4,36 +4,31 @@ import java.util.*;
 
 public class Solution155_MinStack {
     class MinStack {
-        PriorityQueue<Integer> q = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1.compareTo(o2);
-            }
-        });
-        int top;
-        List<Integer> t = new ArrayList<>();
+
         /** initialize your data structure here. */
+        List<Integer> l;
+        PriorityQueue<Integer> p;
         public MinStack() {
-
-
+            l = new ArrayList<>();
+            p = new PriorityQueue<>();
         }
 
         public void push(int x) {
-            q.add(x);
-            t.add(x);
+            l.add(x);
+            p.add(x);
         }
 
         public void pop() {
-           q.remove(top);
-           t.remove(t.size()-1);
+            int top = l.remove(l.size()-1);
+            p.remove(top);
         }
 
         public int top() {
-            return t.get(t.size()-1);
+            return l.get(l.size()-1);
         }
 
         public int getMin() {
-            return q.peek();
+            return p.peek();
         }
     }
 

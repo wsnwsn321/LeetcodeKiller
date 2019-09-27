@@ -26,11 +26,8 @@ public class Solution347_TopKElement {
 
        }
        List<Integer> res = new ArrayList<>();
-       while (k>0){
-           //logn
-           int cur = p.poll();
-           res.add(cur);
-           k--;
+       for (int x: p){
+           res.add(x);
        }
        Collections.reverse(res);
        return res;

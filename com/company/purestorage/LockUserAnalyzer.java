@@ -2,6 +2,7 @@ package com.company.purestorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class LockUserAnalyzer {
     public static void main(String[] args) {
@@ -14,6 +15,7 @@ public class LockUserAnalyzer {
     }
     public static int analyzeLock(List<String> input){
         List<Integer> acNum = new ArrayList();
+        Stack<Integer> s = new Stack<>();
         for (int i=0;i<input.size();++i){
             String cur = input.get(i);
             String[] cand = cur.split("\\s+");
