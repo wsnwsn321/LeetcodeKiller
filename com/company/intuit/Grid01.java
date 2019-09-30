@@ -9,6 +9,7 @@ public class Grid01 {
     public static void main(String[] args) {
 
     }
+    //num1
     public List<int[]> validPoint(int[][] grid, int i, int j){
         int[] x = new int[]{-1,1};
         int[] y = new int[]{-1,1};
@@ -26,6 +27,7 @@ public class Grid01 {
         }
         return res;
     }
+    //num2
     public boolean canAccess(int[][] grid, int dest_i, int dest_j){
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[]{dest_i,dest_j});
@@ -52,8 +54,34 @@ public class Grid01 {
         return true;
     }
 
+    //num3
+    int minLength=0;
+    int countT=0;
     public int numOfTreaure(int[][] grid, int start_i, int start_j, int dest_i, int dest_j){
-        return 0;
+        int count = 0;
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        for (int i=0;i<grid.length;++i){
+            for (int x: grid[i]){
+                if (x==1) count++;
+            }
+        }
+        countT =count;
+        dfs(grid,start_i,start_j,dest_i,dest_j,count,visited,0);
+        return minLength;
+    }
+
+    public void dfs(int[][] grid, int i, int j, int dest_i, int dest_j, int numOfT, boolean[][] visited,int length){
+        if (i<0||j<0||i>grid.length||j>grid[0].length||visited[i][j]||grid[i][j]==1) return ;
+        visited[i][j]=true;
+        if (i==dest_i&&j==dest_j){
+            if (numOfT==countT) minLength = Math.min(length,minLength);
+            return;
+        }
+        if (grid[i][j]==-1) numOfT++;
+        dfs(grid,i-1,j,dest_i,dest_j,numOfT,visited,length+1);
+        dfs(grid,i+1,j,dest_i,dest_j,numOfT,visited,length+1);
+        dfs(grid,i,j+1,dest_i,dest_j,numOfT,visited,length+1);
+        dfs(grid,i,j-1,dest_i,dest_j,numOfT,visited,length+1);
     }
 
 

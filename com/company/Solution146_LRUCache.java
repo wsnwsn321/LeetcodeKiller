@@ -1,26 +1,33 @@
 package com.company;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
-class LRUCache extends LinkedHashMap<Integer, Integer> {
-    private int capacity;
+public class Solution146_LRUCache {
+    class LRUCache {
 
-    public LRUCache(int capacity) {
-        super(capacity, 0.75F, true);
-        this.capacity = capacity;
-    }
+        Map<Integer,Integer> m;
+        Deque<Integer> deque;
+        int capacity;
+        public LRUCache(int capacity) {
+            deque = new LinkedList<Integer>();
+            m = new HashMap<>();
+            this.capacity = capacity;
+        }
 
-    public int get(int key) {
-        return super.getOrDefault(key, -1);
-    }
+        public int get(int key) {
+            deque.remove(key);
+            deque.addLast(key);
+            return m.containsKey(key)?m.get(key):-1;
+        }
 
-    public void put(int key, int value) {
-        super.put(key, value);
-    }
+        public void put(int key, int value) {
 
-    @Override
-    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
-        return size() > capacity;
+            m.put(key,value);
+            deque.addLast(key);
+            if (deque.size()>capacity){
+                int removedKey = deque.pollFirst();
+                m.put(removedKey,-1);
+            }
+        }
     }
 }

@@ -8,26 +8,26 @@ public class Solution451_SortCharactersByFrequency {
     }
     public String frequencySort(String s) {
         Map<Character,Integer> m = new HashMap<>();
-        char[]cs = s.toCharArray();
-        for (char x:cs){
-            m.put(x,m.getOrDefault(x,0)+1);
-        }
         PriorityQueue<Character> p = new PriorityQueue<>(new Comparator<Character>() {
             @Override
             public int compare(Character o1, Character o2) {
                 return m.get(o2)-m.get(o1);
             }
         });
-        for (char x:cs){
-            if (!p.contains(x)) p.add(x);
+        char[] cs = s.toCharArray();
+        for (char x: cs){
+            m.put(x,m.getOrDefault(x,0)+1);
         }
-        StringBuilder res = new StringBuilder();
-        while (!p.isEmpty()) {
-            char e = p.poll();
-            for (int i = 0; i < m.get(e); i++)
-                res.append(e);
+        for (char x:m.keySet()){
+            p.add(x);
         }
-        return res.toString();
+        StringBuilder sb = new StringBuilder();
+        while(!p.isEmpty()){
+            char x = p.poll();
+            for (int i=0;i<m.get(x);++i)
+                sb.append(x);;
+        }
+        return sb.toString();
     }
 
 }
