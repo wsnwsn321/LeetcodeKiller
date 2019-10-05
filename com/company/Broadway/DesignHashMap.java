@@ -1,8 +1,6 @@
-package com.company;
+package com.company.Broadway;
 
-import java.util.*;
-
-public class Solution706_DesignHashMap {
+public class DesignHashMap {
     public static void main(String[] args) {
 
     }

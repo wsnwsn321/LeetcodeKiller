@@ -60,53 +60,30 @@ public class MinHeap {
     // Function to heapify the node at pos
     private void minHeapify(int pos)
     {
-
-        // If the node is a non-leaf node and greater
-        // than any of its child
-        if (!isLeaf(pos)) {
-            if (Heap[pos] > Heap[leftChild(pos)]
-                    || Heap[pos] > Heap[rightChild(pos)]) {
-
-                // Swap with the left child and heapify
-                // the left child
-                if (Heap[leftChild(pos)] < Heap[rightChild(pos)]) {
-                    swap(pos, leftChild(pos));
+        if (!isLeaf(pos)){
+            if (Heap[pos]>Heap[leftChild(pos)]||Heap[pos]>Heap[rightChild(pos)]){
+                if (Heap[leftChild(pos)]<Heap[rightChild(pos)]){
+                    swap(pos,leftChild(pos));
                     minHeapify(leftChild(pos));
                 }
-
-                // Swap with the right child and heapify
-                // the right child
                 else {
-                    swap(pos, rightChild(pos));
+                    swap(pos,rightChild(pos));
                     minHeapify(rightChild(pos));
                 }
             }
         }
+
     }
 
+    //log(n)
     // Function to insert a node into the heap
     public void insert(int element)
     {
-        if (size >= maxsize) {
-            return;
-        }
         Heap[++size] = element;
-        int current = size;
-
-        while (Heap[current] < Heap[parent(current)]) {
-            swap(current, parent(current));
-            current = parent(current);
-        }
-    }
-
-    // Function to print the contents of the heap
-    public void print()
-    {
-        for (int i = 1; i <= size / 2; i++) {
-            System.out.print(" PARENT : " + Heap[i]
-                    + " LEFT CHILD : " + Heap[2 * i]
-                    + " RIGHT CHILD :" + Heap[2 * i + 1]);
-            System.out.println();
+        int cur = size;
+        while (Heap[cur]<Heap[parent(cur)]){
+            swap(cur,parent(cur));
+            cur = parent(cur);
         }
     }
 
@@ -121,12 +98,13 @@ public class MinHeap {
 
     // Function to remove and return the minimum
     // element from the heap
+    //log(n)
     public int remove()
     {
-        int popped = Heap[FRONT];
-        Heap[FRONT] = Heap[size--];
-        minHeapify(FRONT);
-        return popped;
+        int res = Heap[1];
+        Heap[0] = Heap[size--];
+        minHeapify(1);
+        return res;
     }
 
     // Driver code
@@ -145,7 +123,6 @@ public class MinHeap {
         minHeap.insert(9);
         minHeap.minHeap();
 
-        minHeap.print();
         System.out.println("The Min val is " + minHeap.remove());
     }
 }

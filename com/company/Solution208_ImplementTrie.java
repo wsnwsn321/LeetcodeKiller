@@ -1,37 +1,17 @@
 package com.company;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Solution208_ImplementTrie {
     public static void main(String[] args) {
 
     }
     class TrieNode {
-        private TrieNode[] child;
-
-        private final int R = 26;
-
-        private boolean isEnd;
-
-        public TrieNode() {
-            child = new TrieNode[R];
-        }
-
-        public boolean containsKey(char ch) {
-            return child[ch -'a'] != null;
-        }
-        public TrieNode getNext(char ch) {
-            return child[ch -'a'];
-        }
-        public void put(char ch, TrieNode node) {
-            child[ch -'a'] = node;
-        }
-        public void setEnd() {
-            isEnd = true;
-        }
-        public boolean isEnd() {
-            return isEnd;
+        public char val;
+        public boolean isWord;
+        public TrieNode[] children = new TrieNode[26];
+        public TrieNode() {}
+        TrieNode(char c){
+            TrieNode node = new TrieNode();
+            node.val = c;
         }
     }
     class Trie {
@@ -43,39 +23,37 @@ public class Solution208_ImplementTrie {
 
         /** Inserts a word into the trie. */
         public void insert(String word) {
-            TrieNode node = root;
-            char[] cs = word.toCharArray();
-            for (int i=0;i<word.length();++i){
-                if (!node.containsKey(cs[i])) {
-                    node.put(cs[i],new TrieNode());
-                }
-                node = node.getNext(cs[i]);
-            }
-            node.setEnd();
+           TrieNode cur = root;
+           for (int i=0;i<word.length();++i){
+               if (cur.children[word.charAt(i)-'a']==null){
+                   TrieNode temp = new TrieNode(word.charAt(i));
+                   cur.children[word.charAt(i)-'a'] = temp;
+               }
+               cur = cur.children[word.charAt(i)-'a'];
+           }
+           cur.isWord = true;
         }
 
         /** Returns if the word is in the trie. */
         public boolean search(String word) {
-            TrieNode node = root;
-            char[] cs = word.toCharArray();
-            for (char x:cs){
-                if (node.containsKey(x)) {
-                    node = node.getNext(x);
+            TrieNode cur = root;
+            for (int i=0;i<word.length();++i){
+                if (cur.children[word.charAt(i)-'a']==null){
+                    return false;
                 }
-                else return false;
+                cur = cur.children[word.charAt(i)-'a'];
             }
-            return node.isEnd();
+            return cur.isWord;
         }
 
         /** Returns if there is any word in the trie that starts with the given prefix. */
         public boolean startsWith(String prefix) {
-            TrieNode node = root;
-            char[] cs = prefix.toCharArray();
-            for (char x:cs){
-                if (node.containsKey(x)) {
-                    node = node.getNext(x);
+            TrieNode cur = root;
+            for (int i=0;i<prefix.length();++i){
+                if (cur.children[prefix.charAt(i)-'a']==null){
+                    return false;
                 }
-                else return false;
+                cur = cur.children[prefix.charAt(i)-'a'];
             }
             return true;
         }

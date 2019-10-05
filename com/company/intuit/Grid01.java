@@ -1,50 +1,51 @@
 package com.company.intuit;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Grid01 {
     public static void main(String[] args) {
-
+        int[][] grid = new int[4][4];
+        grid[0] = new int[]{0,0,0,0};
+        grid[1] = new int[]{0,1,1,1};
+        grid[2] = new int[]{0,0,1,0};
+        grid[3] = new int[]{0,1,0,0};
+        canAccess(grid,3,2);
     }
     //num1
-    public List<int[]> validPoint(int[][] grid, int i, int j){
-        int[] x = new int[]{-1,1};
-        int[] y = new int[]{-1,1};
+    public static List<int[]> validPoint(int[][] grid, int i, int j){
+        int dir[][] = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
         int count=0;
         List<int[]> res= new ArrayList<>();
-        for (int row=0;row<x.length;++row){
-            for(int col=0;col<y.length;++col){
-               if (i+x[row]<0||i+x[row]>grid.length-1||j+y[col]<0
-                       ||j+y[col]>grid[0].length-1
-                       ||grid[i+x[row]][j+y[col]]==1)
-                   continue;
-                res.add(new int[]{i+x[row],j+y[col]});
+        for (int row=0;row<dir.length;++row){
+            int next_i = i+dir[row][0];
+            int next_j = j+dir[row][1];
+            if (next_i<0||next_i>grid.length-1||next_j<0
+                    ||next_j>grid[0].length-1
+                    ||grid[next_i][next_j]==1) continue;
+                res.add(new int[]{next_i,next_j});
 
-            }
+
         }
         return res;
     }
     //num2
-    public boolean canAccess(int[][] grid, int dest_i, int dest_j){
+    //time:     O(m*n)
+    public static boolean canAccess(int[][] grid, int dest_i, int dest_j){
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[]{dest_i,dest_j});
         while (!q.isEmpty()){
             int[] cur = q.remove();
-            int[] x = new int[]{-1,1};
-            int[] y = new int[]{-1,1};
-            for (int row=0;row<x.length;++row){
-                for(int col=0;col<y.length;++col){
-                    if (cur[0]+x[row]<0||cur[0]+x[row]>grid.length-1||cur[1]+y[col]<0
-                            ||cur[1]+y[col]>grid[0].length-1
-                            ||grid[cur[0]+x[row]][cur[1]+y[col]]==1||grid[cur[0]+x[row]][cur[1]+y[col]]==-1)
-                        continue;
-                    grid[cur[0]+x[row]][cur[1]+y[col]]=-1;
-                    q.add(new int[]{cur[0]+x[row],cur[1]+y[col]});
+            int dir[][] = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+                for(int i=0;i<dir.length;++i){
+                    int next_i = cur[0]+dir[i][0];
+                    int next_j = cur[1]+dir[i][1];
+                    if (next_i<0||next_i>grid.length-1||next_j<0
+                            ||next_j>grid[0].length-1
+                            ||grid[next_i][next_j]==1) continue;
+                    grid[next_i][next_j]=1;
+                    q.add(new int[]{next_i,next_j});
                 }
-            }
+
         }
         for (int row=0;row<grid.length;++row) {
             for (int col = 0; col < grid[0].length; ++col) {
@@ -55,33 +56,44 @@ public class Grid01 {
     }
 
     //num3
-    int minLength=0;
-    int countT=0;
-    public int numOfTreaure(int[][] grid, int start_i, int start_j, int dest_i, int dest_j){
+    //time:     O(4^(m*n))
+    static int minLength=Integer.MAX_VALUE;
+    static int countT=0;
+    static List<int[]> fres = new ArrayList<>();
+    public static List<int[]> numOfTreaure(int[][] grid, int start_i, int start_j, int dest_i, int dest_j){
         int count = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
         for (int i=0;i<grid.length;++i){
             for (int x: grid[i]){
-                if (x==1) count++;
+                if (x==-1) count++;
             }
         }
         countT =count;
-        dfs(grid,start_i,start_j,dest_i,dest_j,count,visited,0);
-        return minLength;
+        boolean[][] route = new boolean[grid.length][grid[0].length];
+        List<int[]> res = new ArrayList<>();
+        dfs(grid,start_i,start_j,dest_i,dest_j,0,visited,1,route,res);
+        return fres;
     }
 
-    public void dfs(int[][] grid, int i, int j, int dest_i, int dest_j, int numOfT, boolean[][] visited,int length){
-        if (i<0||j<0||i>grid.length||j>grid[0].length||visited[i][j]||grid[i][j]==1) return ;
-        visited[i][j]=true;
-        if (i==dest_i&&j==dest_j){
-            if (numOfT==countT) minLength = Math.min(length,minLength);
-            return;
-        }
+    public static void dfs(int[][] grid, int i, int j, int dest_i, int dest_j, int numOfT, boolean[][] visited,int length,boolean[][] route,List<int[]> res){
+        if (i<0||j<0||i>grid.length-1||j>grid[0].length-1||visited[i][j]||grid[i][j]==1||length>minLength) return ;
         if (grid[i][j]==-1) numOfT++;
-        dfs(grid,i-1,j,dest_i,dest_j,numOfT,visited,length+1);
-        dfs(grid,i+1,j,dest_i,dest_j,numOfT,visited,length+1);
-        dfs(grid,i,j+1,dest_i,dest_j,numOfT,visited,length+1);
-        dfs(grid,i,j-1,dest_i,dest_j,numOfT,visited,length+1);
+        res.add(new int[]{i,j});
+        if (i==dest_i&&j==dest_j){
+            if (numOfT==countT) {
+                if (length<minLength) {
+                    minLength =length;
+                    fres = new ArrayList<>(res);
+                }
+            }
+        }
+        visited[i][j]=true;
+        dfs(grid,i-1,j,dest_i,dest_j,numOfT,visited,length+1,route,res);
+        dfs(grid,i+1,j,dest_i,dest_j,numOfT,visited,length+1,route,res);
+        dfs(grid,i,j+1,dest_i,dest_j,numOfT,visited,length+1,route,res);
+        dfs(grid,i,j-1,dest_i,dest_j,numOfT,visited,length+1,route,res);
+        visited[i][j] = false;
+        res.remove(res.size()-1);
     }
 
 

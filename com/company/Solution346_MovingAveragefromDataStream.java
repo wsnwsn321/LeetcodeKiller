@@ -7,24 +7,23 @@ public class Solution346_MovingAveragefromDataStream {
 
     }
     class MovingAverage {
-        public double previousSum = 0.0;
-        Queue<Integer> q = new LinkedList<>();
-        int size=0;
+
         /** Initialize your data structure here. */
+        Queue<Integer> q;
+        int size;
+        double sum=0;
         public MovingAverage(int size) {
-            this.size=size;
+            this.size = size;
+            q= new LinkedList<>();
         }
 
         public double next(int val) {
-            int total  = 0;
-            q.add(val);
-            if (q.size()>size) {
-                previousSum-=q.poll();
-
+            q.offer(val);
+            sum+=val;
+            if (q.size()>size){
+                sum-=q.poll();
             }
-
-            previousSum+=val;
-            return previousSum/q.size();
+            return sum/q.size();
         }
     }
 }

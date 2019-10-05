@@ -21,20 +21,21 @@ class Node {
         Node cur = head;
         while (cur!=null){
             if (cur.child!=null){
-                Node oldNext = cur.next;
-                cur.next = flatten(cur.child);
-                cur.next.prev = cur;
-                cur.child=null;
-                while (cur.next!=null)
-                    cur = cur.next;
-                if (oldNext!=null) {
-                    cur.next = oldNext;
-                    oldNext.prev = cur;
+                Node ogNext = cur.next;
+                Node c = flatten(cur);
+                cur.next =c;
+                c.prev = cur;
+                cur.child =null;
+                while (c.next!=null) c= c.next;
+                if (ogNext!=null) {
+                    c.next = ogNext;
+                    ogNext.prev = c;
                 }
             }
             cur = cur.next;
         }
         return head;
+
     }
 
 }

@@ -6,10 +6,10 @@ import java.util.List;
 public class justification {
     public static void main(String[] args) {
         List<String> lines = new ArrayList<>();
-        lines.add("as");
-        lines.add("sdsd dfsf");
-        reflowLines(2,lines);
+        lines.add("This is an example of text justification.");
+        reflowLines(16,lines);
     }
+    //time:     O(number of words)
     static List<String> reflowLines(int lineLength, List<String> lines) {
         List<String> words = new ArrayList<>();
         List<String> res = new ArrayList<>();
@@ -42,7 +42,9 @@ public class justification {
                     sb.append(" ");
                 }
             } else {
+                //space added to each word
                 int space = (lineLength - count) / diff;
+                //left space should be more than right space if gap number can't module space number
                 int mid = (lineLength - count) % diff;
                 for (int i = index+1; i < last; ++i) {
                     for (int j = space; j > 0; --j) {
