@@ -19,23 +19,23 @@ class Node {
 
     public Node flatten(Node head) {
         Node cur = head;
+        if (cur==null) return null;
         while (cur!=null){
             if (cur.child!=null){
-                Node ogNext = cur.next;
-                Node c = flatten(cur);
+                Node c = flatten(cur.child);
+                Node temp = cur.next;
                 cur.next =c;
                 c.prev = cur;
                 cur.child =null;
-                while (c.next!=null) c= c.next;
-                if (ogNext!=null) {
-                    c.next = ogNext;
-                    ogNext.prev = c;
+                while (c.next!=null) c = c.next;
+                if (temp!=null) {
+                    c.next = temp;
+                    temp.prev = c;
                 }
             }
             cur = cur.next;
         }
         return head;
-
     }
 
 }

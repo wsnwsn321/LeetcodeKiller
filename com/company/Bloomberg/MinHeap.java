@@ -102,7 +102,7 @@ public class MinHeap {
     public int remove()
     {
         int res = Heap[1];
-        Heap[0] = Heap[size--];
+        Heap[1] = Heap[size--];
         minHeapify(1);
         return res;
     }
@@ -122,6 +122,8 @@ public class MinHeap {
         minHeap.insert(22);
         minHeap.insert(9);
         minHeap.minHeap();
+        minHeap.remove();
+        minHeap.remove();
 
         System.out.println("The Min val is " + minHeap.remove());
     }

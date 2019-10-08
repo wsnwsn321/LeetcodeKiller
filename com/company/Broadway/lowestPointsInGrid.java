@@ -13,17 +13,13 @@ public class lowestPointsInGrid {
         grid[2] = new int[]{2,1,1};
         getDistance(grid,1,1,0,2);
     }
+    //part 1
     public static int[][] lowestPoint(int[][] grid){
         int[][] res = new int[grid.length][grid[0].length];
         int[][] dis = new int[grid.length][grid[0].length];
         for (int i =0;i<grid.length;++i){
             for (int j=0;j<grid[0].length;++j){
                 res[i][j]=grid[i][j];
-            }
-        }
-        for (int i =0;i<grid.length;++i){
-            for (int j=0;j<grid[0].length;++j){
-                dis[i][j]=Integer.MAX_VALUE;
             }
         }
         for (int i =0;i<grid.length;++i){
@@ -47,6 +43,7 @@ public class lowestPointsInGrid {
 
     }
 
+    //follow up
     public static int getDistance(int[][] grid,int start_i, int start_j, int dest_i, int dest_j){
         int[][] dis = new int[grid.length][grid[0].length];
         int[][] visited = new int[grid.length][grid[0].length];

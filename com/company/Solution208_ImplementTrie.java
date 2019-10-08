@@ -23,13 +23,11 @@ public class Solution208_ImplementTrie {
 
         /** Inserts a word into the trie. */
         public void insert(String word) {
-           TrieNode cur = root;
-           for (int i=0;i<word.length();++i){
-               if (cur.children[word.charAt(i)-'a']==null){
-                   TrieNode temp = new TrieNode(word.charAt(i));
-                   cur.children[word.charAt(i)-'a'] = temp;
-               }
-               cur = cur.children[word.charAt(i)-'a'];
+           TrieNode cur  = root;
+           for (char x:word.toCharArray()){
+               if (cur.children[x-'a']==null)
+                   cur.children[x-'a'] = new TrieNode(x);
+               cur = cur.children[x-'a'];
            }
            cur.isWord = true;
         }
@@ -37,11 +35,9 @@ public class Solution208_ImplementTrie {
         /** Returns if the word is in the trie. */
         public boolean search(String word) {
             TrieNode cur = root;
-            for (int i=0;i<word.length();++i){
-                if (cur.children[word.charAt(i)-'a']==null){
-                    return false;
-                }
-                cur = cur.children[word.charAt(i)-'a'];
+            for (char x: word.toCharArray()){
+                if (cur.children[x-'a']==null) return false;
+                cur = cur.children[x-'a'];
             }
             return cur.isWord;
         }
@@ -49,11 +45,9 @@ public class Solution208_ImplementTrie {
         /** Returns if there is any word in the trie that starts with the given prefix. */
         public boolean startsWith(String prefix) {
             TrieNode cur = root;
-            for (int i=0;i<prefix.length();++i){
-                if (cur.children[prefix.charAt(i)-'a']==null){
-                    return false;
-                }
-                cur = cur.children[prefix.charAt(i)-'a'];
+            for (char x: prefix.toCharArray()){
+                if (cur.children[x-'a']==null) return false;
+                cur = cur.children[x-'a'];
             }
             return true;
         }

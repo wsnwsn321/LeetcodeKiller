@@ -35,6 +35,6 @@ public class SubtreewithMaximumAverage {
             max = avg;
             maxNode = root;
         }
-        return new double[sum,count];
+        return new double[]{sum,count};
     }
 }
