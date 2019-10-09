@@ -9,29 +9,17 @@ public class Solution239_SlidingWindowMaximum {
         maxSlidingWindow(nums,k);
     }
     public static int[] maxSlidingWindow(int[] nums, int k) {
-        if(nums.length==0) return new int[]{};
-        Queue<Integer> window = new LinkedList();
-        PriorityQueue<Integer> p = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2.compareTo(o1);
-            }
-        });
+        Deque<Integer> dq = new LinkedList<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->(b-a));
         int[] res = new int[nums.length-k+1];
         for (int i=0;i<nums.length;++i){
-            if (i<k) {
-                window.offer(nums[i]);
-                p.add(nums[i]);
-                res[0] = p.peek();
+            dq.add(nums[i]);
+            pq.add(nums[i]);
+            if (dq.size()>k) {
+                int head = dq.removeFirst();
+                pq.remove(head);
             }
-            else{
-                int head = window.poll();
-                p.remove(head);
-                window.offer(nums[i]);
-                p.add(nums[i]);
-                res[i-k+1] = p.peek();
-            }
-
+            if (i>=k-1) res[i-k+1] = pq.peek();
         }
         return res;
     }
