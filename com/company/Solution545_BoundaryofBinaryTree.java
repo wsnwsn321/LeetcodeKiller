@@ -9,36 +9,40 @@ public class Solution545_BoundaryofBinaryTree {
     public static void main(String[] args) {
 
     }
+    List<Integer> res = new ArrayList<>();
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
-        if(root==null) return new ArrayList<>();
-        List<Integer> res = new ArrayList<>();
+        if (root==null) return res;
         res.add(root.val);
-        printLeft(root.left,res);
-        printLeaf(root.left,res);
-        printLeaf(root.right,res);
-        printRight(root.right,res);
+        printLeft(root.left);
+        printLeaf(root.left);
+        printLeaf(root.right);
+        printRight(root.right);
         return res;
-    }
 
-    public void printLeft(TreeNode root, List<Integer> res){
+    }
+    public void printLeft(TreeNode root){
         if (root==null||(root.left==null&&root.right==null)) return;
         res.add(root.val);
-        if (root.left!=null) printLeft(root.left,res);
-        else  printLeft(root.right,res);
+        if (root.left==null) printLeft(root.right);
+        else printLeft(root.left);
     }
-    public void printLeaf(TreeNode root, List<Integer> res){
+
+    public void printLeaf(TreeNode root){
         if (root==null) return;
         if (root.left==null&&root.right==null) {
             res.add(root.val);
             return;
         }
-        printLeaf(root.left,res);
-        printLeaf(root.right,res);
+        printLeft(root.left);
+        printRight(root.right);
     }
-    public void printRight(TreeNode root, List<Integer> res){
+
+    public void printRight(TreeNode root){
         if (root==null||(root.left==null&&root.right==null)) return;
-        if (root.right!=null) printRight(root.right,res);
-        else  printRight(root.left,res);
+        if (root.right==null) printRight(root.left);
+        else printRight(root.right);
         res.add(root.val);
     }
+
+
 }

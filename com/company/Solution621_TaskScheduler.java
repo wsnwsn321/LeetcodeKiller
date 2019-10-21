@@ -9,17 +9,33 @@ public class Solution621_TaskScheduler {
     }
     public static int leastInterval(char[] tasks, int n) {
         int[] map = new int[26];
+        int distinctTask=0;
         for (char c: tasks)
             map[c - 'A']++;
-        PriorityQueue< Integer > queue = new PriorityQueue < > (26, Collections.reverseOrder());
-        for (int f: map) {
-            if (f > 0)
-                queue.add(f);
+        PriorityQueue< Integer > queue = new PriorityQueue<>((a,b)->map[b]-map[a]);
+        for (int i=0;i<map.length;++i) {
+            if (map[i] > 0) {
+                queue.add(i);
+                distinctTask++;
+            }
         }
         List<Integer> schedule = new ArrayList<>();
-        int size= queue.size();
-
-        return 1;
+        while (distinctTask>0){
+            int curCount=0;
+            for (int task:queue){
+                if (map[task]>0){
+                    schedule.add(task);
+                    map[task]--;
+                    if (map[task]==0) distinctTask--;
+                    curCount++;
+                }
+            }
+            while (distinctTask>0&&curCount<=n){
+                schedule.add(-1);
+                curCount++;
+            }
+        }
+        return schedule.size();
 
     }
 

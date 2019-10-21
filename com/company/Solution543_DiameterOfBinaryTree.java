@@ -10,15 +10,18 @@ public class Solution543_DiameterOfBinaryTree {
     public static void main(String[] args) {
 
     }
+    int res;
     public int diameterOfBinaryTree(TreeNode root) {
-        if(root==null) return 0;
-        int dia = maxDepth(root.left)+maxDepth(root.right);
-        int childrenDia = Math.max(diameterOfBinaryTree(root.left),diameterOfBinaryTree(root.right));
-        return Math.max(dia,childrenDia);
+        if (root==null) return 0;
+        diameters(root);
+        return res;
+    }
+    public int diameters(TreeNode root){
+        if (root==null) return 0;
+        int L = diameters(root.left);
+        int R = diameters(root.right);
+        res = Math.max(res,L+R);
+        return Math.max(L,R)+1;
     }
 
-    public int maxDepth(TreeNode root) {
-        if(root ==null) return 0;
-        return 1+ Math.max(maxDepth(root.left),maxDepth(root.right));
-    }
 }

@@ -1,33 +1,35 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Solution705_DesignHashSet {
     public static void main(String[] args) {
 
     }
     class MyHashSet {
-
+        boolean[] nodes = new boolean[10000];
         /** Initialize your data structure here. */
-        List<Integer> ls = new ArrayList<>();
         public MyHashSet() {
 
         }
 
         public void add(int key) {
-            if(!ls.contains(key)) ls.add(key);
+            int hashCode = key%nodes.length;
+            nodes[hashCode] =true;
         }
 
         public void remove(int key) {
-            if(ls.contains(key)) ls.remove(Integer.valueOf(2));
-
-
+            int hashCode = key%nodes.length;
+            nodes[hashCode] = false;
         }
 
         /** Returns true if this set contains the specified element */
         public boolean contains(int key) {
-            return ls.contains(key);
+            int hashCode = key%nodes.length;
+            return nodes[hashCode];
         }
     }
 }

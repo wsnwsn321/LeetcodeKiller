@@ -13,9 +13,9 @@ public class Solution112_PathSum {
     }
 
     public boolean travel(TreeNode root, int sum,int currentSum){
-        if (root==null) return false;
-        if (root.val+currentSum>sum) return false;
-        if (root.val+currentSum==sum&&root.left==null&&root.right==null) return true;
-        return travel(root.left,sum,currentSum+root.val)||travel(root.right,sum,currentSum+root.val);
+        if (root==null) return true;
+        if (currentSum==sum) return true;
+        return travel(root.left,sum,currentSum+root.val)||
+                travel(root.right,sum,currentSum+root.val);
     }
 }

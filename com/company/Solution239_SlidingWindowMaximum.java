@@ -8,19 +8,30 @@ public class Solution239_SlidingWindowMaximum {
         int k=3;
         maxSlidingWindow(nums,k);
     }
-    public static int[] maxSlidingWindow(int[] nums, int k) {
-        Deque<Integer> dq = new LinkedList<>();
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->(b-a));
-        int[] res = new int[nums.length-k+1];
-        for (int i=0;i<nums.length;++i){
-            dq.add(nums[i]);
-            pq.add(nums[i]);
-            if (dq.size()>k) {
-                int head = dq.removeFirst();
-                pq.remove(head);
-            }
-            if (i>=k-1) res[i-k+1] = pq.peek();
+    public static int[] maxSlidingWindow(int[] a, int k) {
+        if (a == null || k <= 0) {
+            return new int[0];
         }
-        return res;
+        int n = a.length;
+        int[] r = new int[n-k+1];
+        int ri = 0;
+        // store index
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < a.length; i++) {
+            // remove numbers out of range k
+            while (!q.isEmpty() && q.peek() < i - k + 1) {
+                q.poll();
+            }
+            // remove smaller numbers in k range as they are useless
+            while (!q.isEmpty() && a[q.peekLast()] < a[i]) {
+                q.pollLast();
+            }
+            // q contains index... r contains content
+            q.offer(i);
+            if (i >= k - 1) {
+                r[ri++] = a[q.peek()];
+            }
+        }
+        return r;
     }
 }

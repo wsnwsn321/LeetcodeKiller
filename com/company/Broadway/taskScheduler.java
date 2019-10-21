@@ -3,40 +3,36 @@ package com.company.Broadway;
 import java.util.*;
 
 public class taskScheduler {
-    List<List<Integer>> prerequests;
+    HashMap<String, Set<String>> prerequests;
     int numberOfTasks;
-    int[] inDegree = new int[numberOfTasks];
-    public taskScheduler(List<List<Integer>> prerequests, int numberOfTasks) {
-        this.prerequests = prerequests;
+    public taskScheduler(List<String> tasks,List<List<String>> input, int numberOfTasks) {
         this.numberOfTasks = numberOfTasks;
-        for (List<Integer> x:prerequests){
-            inDegree[x.get(0)]++;
+        for (String x: tasks){
+            prerequests.put(x,new HashSet<>());
+        }
+        for (List<String> x:input){
+            prerequests.get(x.get(0)).add(x.get(1));
         }
     }
 
-    public void addDependency(int task, int preRequest){
-        List<Integer> dep = new ArrayList<>(Arrays.asList(task,preRequest));
-        if (!prerequests.contains(dep)) {
-            prerequests.add(dep);
-            inDegree[task]++;
-        }
+    public void addDependency(String task, String preRequest){
+        if (!prerequests.containsKey(task))
+            prerequests.put(task,new HashSet<>());
+        prerequests.get(task).add(preRequest);
     }
 
-    public boolean startTask(int taskId){
-        return inDegree[taskId]==0;
-    }
-    public void addCompletedTask(int taskId){
-        if (inDegree[taskId]!=0) {
-            return;
-        }
-        for (int i=0;i<prerequests.size();++i){
-            if (prerequests.get(i).get(1)==taskId) inDegree[prerequests.get(i).get(0)]--;
+
+    public void addCompletedTask(String taskId){
+        if (prerequests.get(taskId).size()!=0) return;
+        for (Set<String> pres:prerequests.values()){
+            if (pres.contains(taskId)) pres.remove(taskId);
         }
     }
-    public List<Integer> getRunnableTasks(List<List<Integer>> prerequests){
-        List<Integer> res = new ArrayList<>();
-        for (int i=0;i<inDegree.length;++i){
-            if (inDegree[i]==0) res.add(i);
+    public List<String> getRunnableTasks(){
+        List<String> res = new ArrayList<>();
+        for (String task:prerequests.keySet()){
+            if (prerequests.get(task).size()==0)
+                res.add(task);
         }
         return res;
     }

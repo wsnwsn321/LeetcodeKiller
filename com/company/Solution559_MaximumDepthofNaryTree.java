@@ -2,8 +2,9 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
-public class Solution559 {
+public class Solution559_MaximumDepthofNaryTree {
     static class Node {
         public int val;
         public List<Node> children;
@@ -25,17 +26,14 @@ public class Solution559 {
     }
 
     public static int maxDepth(Node root) {
-        int maxD = 0,depth =0;
-        if(root == null) return 0;
-        if(root.children.isEmpty()) return 1;
-
-        for(int i=0;i<root.children.size();i++){
-            depth = maxDepth(root.children.get(i));
-            if(depth>maxD) maxD = depth;
-        }
-
-
-       return maxD+1;
+       if (root==null) return 0;
+       if (root.children.size()==0) return 1;
+       int maxD=0;
+       for (Node x:root.children){
+           maxD = Math.max(maxD,maxDepth(x)+1);
+       }
+       return maxD;
     }
+
 
 }

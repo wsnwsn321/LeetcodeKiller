@@ -7,15 +7,20 @@ public class Solution110_BalancedBinaryTree {
       TreeNode(int x) { val = x; }
     }
     public boolean isBalanced(TreeNode root) {
-        return checkBalance(root)==-1;
+        if (root==null) return true;
+        getDepth(root);
+        return res==-1?false:true;
     }
-    public int checkBalance( TreeNode root){
-        if(root==null) return 0;
-        int leftH = checkBalance(root.left);
-        if(leftH==-1) return -1;
-        int rightH = checkBalance(root.right);
-        if(rightH==-1) return -1;
-        if(Math.abs(leftH-rightH)>1) return -1;
-        return Math.max(leftH,rightH)+1;
+    int res=0;
+    public int getDepth(TreeNode root){
+        if (root==null) return 0;
+        int l = getDepth(root.left);
+        int r = getDepth(root.right);
+        if (res==-1) return res;
+        if (Math.abs(l-r)>1) {
+            res =-1;
+            return res;
+        }
+        return Math.max(l,r)+1;
     }
 }
