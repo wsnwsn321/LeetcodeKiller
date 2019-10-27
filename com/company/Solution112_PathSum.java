@@ -8,14 +8,17 @@ public class Solution112_PathSum {
         TreeNode(int x) { val = x; }
     }
     public boolean hasPathSum(TreeNode root, int sum) {
-         return travel(root,sum,0);
+         return travel(root,sum);
 
     }
 
-    public boolean travel(TreeNode root, int sum,int currentSum){
-        if (root==null) return true;
-        if (currentSum==sum) return true;
-        return travel(root.left,sum,currentSum+root.val)||
-                travel(root.right,sum,currentSum+root.val);
+    public boolean travel(TreeNode root, int sum){
+        if (root==null) return false;
+        if (root.left==null&&root.right==null){
+            if (sum-root.val==0)
+                return true;
+        }
+        return travel(root.left,sum-root.val)||travel(root.right,sum-root.val);
+
     }
 }

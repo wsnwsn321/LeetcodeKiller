@@ -20,15 +20,16 @@ public class Solution113_PathSumII {
         return res;
     }
     public void dfs(TreeNode root, int sum, List<Integer> path){
-        if (root ==null||sum<0) return;
+        if (root ==null) return;
         path.add(root.val);
-        if (sum-root.val==0&&root.left==null&&root.right==null){
-            res.add(new ArrayList<>(path));
-            return;
+        if (root.left==null&&root.right==null){
+            if (sum-root.val==0)
+                res.add(new ArrayList<>(path));
         }
         dfs(root.left,sum-root.val,path);
         dfs(root.right,sum-root.val,path);
         path.remove(path.size()-1);
+
     }
 
 }

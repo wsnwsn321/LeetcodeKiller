@@ -9,7 +9,6 @@ public class buyTickets {
         int size=0;
         List<List<Integer>> events = new ArrayList<>();
         List<List<Integer>> buyers = new ArrayList<>();
-
         while (!(lines = in.nextLine()).isEmpty()){
             size = Integer.parseInt(lines);
             int eventsNum =Integer.parseInt(in.nextLine());

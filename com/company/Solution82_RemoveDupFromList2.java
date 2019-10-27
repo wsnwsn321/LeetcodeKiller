@@ -1,17 +1,21 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Solution82_RemoveDupFromList2 {
-    class ListNode {
+    static class ListNode {
         int val;
         ListNode next;
         ListNode(int x) { val = x; }
     }
+    static public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+    }
     public static void main(String[] args) {
+
 
     }
     //time:     O(n)

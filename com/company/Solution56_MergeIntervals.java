@@ -11,23 +11,16 @@ public class Solution56_MergeIntervals {
     //space:    O(n)
     public int[][] merge(int[][] intervals) {
         List<int[]> res = new ArrayList<>();
-        //runtime of sort:  O(nlogn)
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[0]-o2[0];
-            }
-        });
-        int i = 0;
-        while (i < intervals.length) {
-            int end = intervals[i][1];
+        Arrays.sort(intervals,(a,b)->a[0]-b[0]);
+        int i=0;
+        while (i<intervals.length){
             int start = intervals[i][0];
-            while (end >= intervals[i + 1][0]) {
-                end = Math.max(intervals[i + 1][1],end);
+            int end = intervals[i][1];
+            while (i+1<intervals.length&&end>=intervals[i+1][0]){
+                end = Math.max(end,intervals[i+1][1]);
                 i++;
             }
-            res.add(new int[]{start, end});
-            i++;
+            res.add(new int[]{start,end});
         }
         int[][] res2 = new int[res.size()][2];
         for (int j=0;j<res.size();++j){
