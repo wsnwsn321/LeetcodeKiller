@@ -14,8 +14,9 @@ public class Solution141_LinkedListCycle {
 
     }
     public boolean hasCycle(ListNode head) {
-        ListNode slow = head,fast = head;
-        while (fast!=null&&fast.next!=null&&slow!=null&&slow!=fast){
+        if(head==null||head.next==null) return false;
+        ListNode slow = head,fast = head.next;
+        while (slow!=fast&&fast!=null&&fast.next!=null){
             slow = slow.next;
             fast = fast.next.next;
         }

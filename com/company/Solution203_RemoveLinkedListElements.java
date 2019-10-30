@@ -11,15 +11,16 @@ public class Solution203_RemoveLinkedListElements {
 
     }
     public ListNode removeElements(ListNode head, int val) {
-          ListNode dumb = new ListNode(0);
-          dumb.next = head;
-          ListNode current = dumb;
-          while(current!=null&&current.next!=null){
-              if (current.next.val==val){
-                  current.next = current.next.next;
+          ListNode dummyHead = new ListNode(0);
+          dummyHead.next =head;
+          ListNode cur = head,pre = dummyHead;
+          while (cur!=null){
+              if (cur.val==val){
+                  pre.next = cur.next;
               }
-              else current = current.next;
+              else pre =cur;
+              cur = cur.next;
           }
-          return dumb.next;
+          return dummyHead.next;
     }
 }

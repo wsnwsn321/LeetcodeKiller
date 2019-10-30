@@ -2,7 +2,9 @@ package com.company;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Solution199_BinaryTreeRightSideView {
     public class TreeNode {
@@ -15,21 +17,25 @@ public class Solution199_BinaryTreeRightSideView {
 
     }
     public List<Integer> rightSideView(TreeNode root) {
-        List<List<Integer>> helper = new ArrayList<>();
-        levelView(root,helper,0);
+       Queue<TreeNode> queue = new LinkedList<>();
         List<Integer> res = new ArrayList<>();
-        for (List<Integer> l:helper){
-            res.add(l.get(l.size()-1));
-        }
-        return res;
+        queue.offer(root);
+        res.add(root.val);
+       while (queue.size()>0){
+           int size = queue.size();
+           while (size>0){
+               TreeNode cur = queue.poll();
+               if (cur.left!=null)
+                   queue.offer(cur.left);
+               if (cur.right!=null)
+                   queue.offer(cur.right);
+               size--;
+               if (size==0) res.add(cur.val);
+           }
+       }
+       return res;
     }
 
-    public void levelView(TreeNode root,List<List<Integer>> res,int level){
-        if(root==null) return;
-        if(res.size()<level)res.add(new ArrayList<>());
-        res.get(level).add(root.val);
-        levelView(root.left,res,level+1);
-        levelView(root.right,res,level+1);
 
-    }
+
 }

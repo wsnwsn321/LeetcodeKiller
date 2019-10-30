@@ -16,19 +16,13 @@ public class Solution160_IntersectForLinkedList {
     public static void main(String[] args) {
 
     }
-    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        Map<ListNode,Integer> m = new HashMap<>();
-        int i=0;
-        while(headA!=null){
-            m.put(headA,headA.val);
-            headA=headA.next;
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+        while (a!=b){
+            a = a==null?headB:a.next;
+            b = b==null?headA:b.next;
         }
-        while(headB!=null){
-            if(m.containsKey(headB)){
-                return headB;
-            }
-            headB = headB.next;
-        }
-        return null;
+        return a;
     }
 }

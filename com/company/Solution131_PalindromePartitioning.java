@@ -4,27 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution131_PalindromePartitioning {
-    List<List<String>> ret = new ArrayList<>();
+    List<List<String>> res = new ArrayList<>();
     public List<List<String>> partition(String s) {
-        backtrack(s,new ArrayList<>(),0 );
-        return ret;
+        backtrakcing(s,0,new ArrayList<>());
+        return res;
 
     }
-    public void backtrack(String s, List<String> temp,int pos){
-        if(pos==s.length()){
-            ret.add(new ArrayList<>(temp));
-            return;
+    public void backtrakcing(String s, int pos, List<String> temp){
+        if (pos==s.length()){
+            res.add(new ArrayList<>(temp));
         }
         for (int i=pos;i<s.length();++i){
-            if(isPalindrome(s,pos,i)){
+            if (isPalindrome(s,pos,i)){
                 temp.add(s.substring(pos,i+1));
-                backtrack(s,temp,i+1);
+                backtrakcing(s,i+1,temp);
                 temp.remove(temp.size()-1);
             }
         }
-
-
     }
+
     public boolean isPalindrome(String s,int left,int right){
         while(left<right&&s.charAt(left)==s.charAt(right)){
             left++;
@@ -32,4 +30,5 @@ public class Solution131_PalindromePartitioning {
         }
         return left>=right;
     }
+
 }

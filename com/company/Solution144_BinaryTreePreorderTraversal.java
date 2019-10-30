@@ -13,18 +13,17 @@ public class Solution144_BinaryTreePreorderTraversal {
 
     }
     public List<Integer> preorderTraversal(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        List<Integer> list = new ArrayList<>();
-        TreeNode cur = root;
-        while(!stack.isEmpty() || cur != null){
-            while(cur != null){
-                list.add(cur.val);
-                stack.push(cur);
-                cur = cur.left;
-            }
-            cur = stack.pop();
-            cur = cur.right;
+        List<Integer> res= new ArrayList<>();
+        Stack<TreeNode> s = new Stack<>();
+        s.push(root);
+        while (s.size()>0){
+            TreeNode cur = s.pop();
+            res.add(cur.val);
+            if (cur.right!=null)
+                s.push(cur.right);
+            if (cur.left!=null)
+                s.push(cur.left);
         }
-        return list;
+        return res;
     }
 }

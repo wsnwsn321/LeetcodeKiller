@@ -15,37 +15,16 @@ public class Solution129_SumRoottoLeafNumbers {
 
     }
     public int sumNumbers(TreeNode root) {
-        return sum(root, 0);
+        return sum(root,0);
+    }
+    public int sum(TreeNode root, int sum){
+        if (root==null) return 0;
+        if (root.left==null&&root.right==null) return sum*10+root.val;
+        int left = sum(root.left,sum*10+root.val);
+        int right = sum(root.right,sum*10+root.val);
+        return left+right;
     }
 
-    public int sum(TreeNode n, int s){
-        if (n == null) return 0;
-        if (n.right == null && n.left == null) return s*10 + n.val;
-        return sum(n.left, s*10 + n.val) + sum(n.right, s*10 + n.val);
-    }
-//    public int sumNumbers(TreeNode root) {
-//        List<StringBuilder> nums = new ArrayList<>();
-//        dfs(root,new StringBuilder(),nums);
-//        int sum =0;
-//        for (StringBuilder x:nums){
-//            sum+=Integer.parseInt(x.toString());
-//        }
-//        return sum;
-//    }
-//    public void dfs(TreeNode root,StringBuilder temp, List<StringBuilder> nums){
-//        if (root==null) return;
-//        temp.append(root.val);
-//        if (root.left==null&&root.right==null){
-//            nums.add(new StringBuilder(temp));
-//            return;
-//        }
-//        if (root.left!=null){
-//            dfs(root.left,temp,nums);
-//            temp.deleteCharAt(temp.length()-1);
-//        }
-//        if (root.right!=null){
-//            dfs(root.right,temp,nums);
-//            temp.deleteCharAt(temp.length()-1);
-//        }
-//    }
+
+
 }
