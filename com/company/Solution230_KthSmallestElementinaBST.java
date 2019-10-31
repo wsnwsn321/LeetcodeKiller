@@ -10,19 +10,19 @@ public class Solution230_KthSmallestElementinaBST {
     public static void main(String[] args) {
 
     }
-    int count = 0;
-    int result = Integer.MIN_VALUE;
-
+    int count=0;int res=Integer.MAX_VALUE;
     public int kthSmallest(TreeNode root, int k) {
-        traverse(root, k);
-        return result;
+        if (root==null) return 0;
+        travel(root,k);
+        return res;
     }
-
-    public void traverse(TreeNode root, int k) {
-        if(root == null) return;
-        traverse(root.left, k);
-        count ++;
-        if(count == k) result = root.val;
-        traverse(root.right, k);
+    public void travel(TreeNode root, int k){
+        if (root==null) return;
+        travel(root.left,k);
+        count++;
+        if (count==k){
+            res = root.val;
+        }
+        travel(root.right,k);
     }
 }

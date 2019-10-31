@@ -10,31 +10,25 @@ public class Solution234_PalindromeLinkedList {
 
     }
     public boolean isPalindrome(ListNode head) {
-        ListNode slow=head;
-        ListNode fast = head;
+        ListNode slow =head,fast = head,pre =null;
         while (fast!=null&&fast.next!=null){
+            pre = slow;
+            slow = slow.next;
             fast = fast.next.next;
-            slow =slow.next;
         }
-        if (fast!=null) slow=slow.next;
-        slow = reverse(slow);
-        while (slow!=null){
-            if (slow.val!=head.val)return false;
-            slow =slow.next;
-            head =head.next;
-        }
-        return true;
-
-
+        pre.next = null;
+        ListNode second = reverseList(fast);
+        return head.equals(second);
     }
-    private ListNode reverse(ListNode head) {
-        ListNode prev = null;
-        while(head != null) {
-            ListNode next = head.next;
-            head.next = prev;
-            prev = head;
-            head = next;
+    public ListNode reverseList(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur!=null){
+            ListNode temp = cur.next;
+            cur.next = pre;
+            pre =cur;
+            cur= temp;
         }
-        return prev;
+        return pre;
     }
 }

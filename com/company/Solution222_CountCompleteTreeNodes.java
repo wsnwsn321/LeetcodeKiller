@@ -16,5 +16,16 @@ public class Solution222_CountCompleteTreeNodes {
     public int countNodes(TreeNode root) {
         if (root==null) return 0;
         Queue<TreeNode> q = new LinkedList<>();
+        int res=0;
+        q.offer(root);
+        while (q.size()>0){
+            TreeNode cur =q.poll();
+            res++;
+            if (cur.left!=null)
+                q.offer(cur.left);
+            if (cur.left!=null)
+                q.offer(cur.left);
+        }
+        return res;
     }
 }
