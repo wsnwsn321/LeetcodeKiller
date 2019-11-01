@@ -10,30 +10,25 @@ public class Solution245_ShortestWordDistanceIII {
 
     }
     public int shortestWordDistance(String[] words, String word1, String word2) {
-        int index1=-1,index2=-1;
-        int res=words.length;
-        int sameRes = words.length;
-        boolean same = word1.equals(word2);
+        int i1 = -1,i2 = -1;
+        int res=Integer.MAX_VALUE;
+        int sameRes = Integer.MAX_VALUE;
+        boolean same =false;
+        if (word1.equals(word2)) same =true;
         for (int i=0;i<words.length;++i){
-            if (words[i].equals(word1)){
-                if (same){
-                    if (index1!=-1) {
-                        sameRes = Math.min(sameRes,i-index1);
-                    }
+            String cur = words[i];
+            if (cur.equals(word1)){
+                if (same&&i1!=-1){
+                    sameRes = Math.min(sameRes,Math.abs(i-i1));
                 }
-                index1 =i;
-                if (index2!=-1)
-                    res = Math.min(res,Math.abs(index1-index2));
-
+                i1 = i;
             }
-            else if (words[i].equals(word2)) {
-                index2 = i;
-                if (index1 != -1)
-                    res = Math.min(res, Math.abs(index1 - index2));
-
+            else if (cur.equals(word2)){
+                i2 = i;
             }
-
+            if (i2!=-1&&i1!=-1)
+                res = Math.min(res,Math.abs(i1-i2));
         }
-        return res;
+        return same?sameRes:res;
     }
 }

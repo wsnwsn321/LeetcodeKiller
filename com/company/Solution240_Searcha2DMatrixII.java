@@ -5,18 +5,15 @@ public class Solution240_Searcha2DMatrixII {
 
     }
     public boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix == null || matrix.length < 1 || matrix[0].length <1) {
-            return false;
-        }
-        int m = matrix.length;
-        int n = matrix[0].length;
-        int row = 0, col = n-1;
-        while(row<m&&col>=0){
-            if (matrix[row][col]==target) return true;
-            else if (matrix[row][col]>target) col--;
-            else row++;
+        int row = 0, col = matrix[0].length-1;
+        while (row<matrix.length&&col>=0){
+            if (target==matrix[row][col])
+                return true;
+            else if (target<matrix[row][col])
+                col--;
+            else
+                row++;
         }
         return false;
-
     }
 }
