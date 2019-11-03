@@ -15,28 +15,21 @@ public class Solution257_BinaryTreePaths {
     public static void main(String[] args) {
 
     }
-    public List<String> binaryTreePaths(TreeNode root) {
-        List<String> result = new ArrayList<>();
-        String p = "";
-        if(root==null) return result;
-        helpFunc(result,root,p);
-        return result;
+    List<String> res = new ArrayList<>();
+    //time:     O(n)
+    //space:    O(n)
+    public List<String> binaryTreePaths(TreeNode root){
+        backtrakcing(root,"");
+        return res;
     }
 
-    public void helpFunc(List<String> r, TreeNode root,String path){
-        path += Integer.toString(root.val)+"->";
-        if(root==null) return;
-        if(root.left!=null){
-            //path+=Integer.toString(root.left.val);
-            helpFunc(r,root.left,path);
+    public void backtrakcing(TreeNode root,String path){
+        if (root==null) return;
+        if (root.left==null&&root.right==null){
+            path+=root.val;
+            res.add(path);
         }
-        if(root.right!=null){
-            //path+=Integer.toString(root.right.val);
-            helpFunc(r,root.right,path);
-        }
-        if(root.left==null&&root.right==null){
-            path = path.substring(0,path.length()-2);
-            r.add(path);
-        }
+        backtrakcing(root.left,path+root.val+"->");
+        backtrakcing(root.right,path+root.val+"->");
     }
 }

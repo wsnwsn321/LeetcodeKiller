@@ -13,17 +13,17 @@ public class Solution264_DP_UglyNumber2 {
     }
 
     public static int nthUglyNumber(int n) {
-        int[] r = new int[n];
-        int i2 =0,i3=0,i5=0;
-        r[0] =1;
-        for (int i=1;i<n;++i){
-            r[i] = Math.min(r[i2]*2,Math.min(r[i3]*3,r[i5]*5));
-            if (r[i]%2==0) i2++;
-            if (r[i]%3==0) i3++;
-            if (r[i]%5==0) i5++;
+        int[] dp = new int[n];
+        dp[0] = 1;
+        int f2=0,f3=0,f5=0;
+        for (int i=1;i<dp.length;++i){
+            int mul = Math.min(dp[f5]*5,Math.min(dp[f2]*2,dp[f3*3]));
+            if (mul==dp[f2]*2) f2++;
+            if (mul==dp[f3]*3) f3++;
+            if (mul==dp[f5]*5) f5++;
+            dp[i] = mul;
         }
-        return r[n-1];
-
+        return dp[n-1];
     }
 
 }

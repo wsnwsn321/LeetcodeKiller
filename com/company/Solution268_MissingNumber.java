@@ -9,11 +9,11 @@ public class Solution268_MissingNumber {
 
     }
     public int missingNumber(int[] nums) {
-        int arraySum =0;
+        int total = (0+nums.length)*(nums.length+1)/2;
+        int curSum=0;
         for(int x:nums){
-            arraySum+= x;
+            curSum+=x;
         }
-        int realSum = (0+nums.length)*(nums.length+1)/2;
-        return realSum-arraySum;
+        return total-curSum;
     }
 }

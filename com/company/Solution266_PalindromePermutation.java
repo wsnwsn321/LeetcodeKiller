@@ -8,17 +8,15 @@ public class Solution266_PalindromePermutation {
 
     }
     public boolean canPermutePalindrome(String s) {
-        Map<Character, Integer> m = new HashMap<>();
-        int single =0;
-        char[] cs = s.toCharArray();
-        for(char x: cs){
-            m.put(x,m.getOrDefault(x,0)+1);
+        int[] map = new int[128];
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            map[s.charAt(i)]++;
+            if (map[s.charAt(i)] % 2 == 0)
+                count--;
+            else
+                count++;
         }
-
-        for(Map.Entry<Character, Integer> entry: m.entrySet()){
-            if(entry.getValue()%2!=0) single++;
-            if(single>1) return false;
-        }
-        return true;
+        return count <= 1;
     }
 }

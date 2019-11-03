@@ -17,10 +17,9 @@ public class Solution252_MeetingRooms {
                 return o1[0]-o2[0];
             }
         });
-        for (int i=1;i<intervals.length;++i) {
-            int end = intervals[i - 1][1];
-            if (intervals[i][0] < end) return false;
-
+        for (int i=1;i<intervals.length;++i){
+            if (intervals[i][0]<intervals[i-1][1])
+                return false;
         }
         return true;
     }
