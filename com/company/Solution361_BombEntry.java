@@ -9,52 +9,47 @@ public class Solution361_BombEntry {
     }
 
     public static int maxKilledEnemies(char[][] grid) {
-        int max =0;
-        for(int i=0;i<grid.length;++i){
-            for (int j=0;j<grid[0].length;++j){
-                if(grid[i][j]=='0'){
-                    int r = getSurroundingEnemies(grid,i,j);
-                    max = Math.max(r,max);
+        if(grid == null || grid.length == 0 ||  grid[0].length == 0) return 0;
+        int max = 0;
+        int row = 0;
+        int[] col = new int[grid[0].length];
+        for(int i = 0; i<grid.length; i++){
+            for(int j = 0; j<grid[0].length;j++){
+                if(grid[i][j] == 'W') continue;
+                if(j == 0 || grid[i][j-1] == 'W'){
+                    row = killedEnemiesRow(grid, i, j);
+                }
+                if(i == 0 || grid[i-1][j] == 'W'){
+                    col[j] = killedEnemiesCol(grid,i,j);
+                }
+                if(grid[i][j] == '0'){
+                    max = (row + col[j] > max) ? row + col[j] : max;
                 }
             }
+
         }
+
         return max;
     }
-    public static int getSurroundingEnemies(char[][] grid,int i, int j) {
-        int res = 0;
-        int temp_i=i,temp_j=j;
-        System.out.println(i+" "+j);
-        while (i - 1 >= 0 && grid[i-1][j] != 'W') {
-            if( grid[i-1][j] == 'E') {
-                res += 1;
-                System.out.println(1);
-            }
-            i--;
-        }
-        i=temp_i;j=temp_j;
-        while (i + 1 < grid.length && grid[i+1][j] != 'W') {
-            if( grid[i+1][j] == 'E') {
-                res += 1;
-                System.out.println(2);
-            }
-            i++;
-        }
-        i=temp_i;j=temp_j;
-        while (j - 1 >= 0 && grid[i][j - 1] != 'W') {
-            if( grid[i][j - 1] == 'E'){
-                res += 1;
-                System.out.println(3);
-            }
-            j--;
-        }
-        i=temp_i;j=temp_j;
-        while (j + 1 < grid[0].length && grid[i][j + 1] != 'W') {
-            if( grid[i][j + 1] == 'E') {
-                res += 1;
-                System.out.println(4);
-            }
+
+    //calculate killed enemies for row i from column j
+    private static int killedEnemiesRow(char[][] grid, int i, int j){
+        int num = 0;
+        while(j <= grid[0].length-1 && grid[i][j] != 'W'){
+            if(grid[i][j] == 'E') num++;
             j++;
         }
-        return res;
+        return num;
     }
+    //calculate killed enemies for  column j from row i
+    private static int killedEnemiesCol(char[][] grid, int i, int j){
+        int num = 0;
+        while(i <= grid.length -1 && grid[i][j] != 'W'){
+            if(grid[i][j] == 'E') num++;
+            i++;
+        }
+        return num;
+    }
+
+
 }

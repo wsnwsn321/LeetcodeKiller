@@ -4,17 +4,17 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 class TicTacToe {
-    int[] r;
-    int[] c;
+
+    int[] colScore;
+    int[] rowScore;
+    int[] diagScore;
     int n;
-    int diag;
-    int atdiag;
     /** Initialize your data structure here. */
     public TicTacToe(int n) {
-        r = new int[n];
-        c = new int[n];
+        colScore = new int[n];
+        rowScore = new int[n];
+        diagScore = new int[2];
         this.n = n;
-
     }
 
     /** Player {player} makes a move at ({row}, {col}).
@@ -26,24 +26,23 @@ class TicTacToe {
      1: Player 1 wins.
      2: Player 2 wins. */
     public int move(int row, int col, int player) {
-
-        Queue<Integer> q =new LinkedList<>();
-        int score = player==1?1:-1;
-        r[row] += score;
-        c[col] += score;
-        if(row == col){
-            diag+=score;
+        int score = player == 1 ? 1 : -1;
+        rowScore[row] += score;
+        if (rowScore[row]==n||rowScore[row]==-n)
+            return rowScore[row]==n?1:2;
+        colScore[col] += score;
+        if (colScore[col]==n||colScore[col]==-n)
+            return colScore[col]==n?1:2;
+        if (row == col){
+            diagScore[0] += score;
+            if (diagScore[0]==n||diagScore[0]==-n)
+                return diagScore[0]==n?1:2;
         }
-        if(n-1-row == col){
-            atdiag+=score;
-        }
 
-        if (Math.abs(r[row]) == n ||
-                Math.abs(c[col]) == n ||
-                Math.abs(diag) == n  ||
-                Math.abs(atdiag) == n)
-        {
-            return player;
+        else if (row + col == n - 1){
+            diagScore[1] += score;
+            if (diagScore[1]==n||diagScore[1]==-n)
+                return diagScore[1]==n?1:2;
         }
         return 0;
     }

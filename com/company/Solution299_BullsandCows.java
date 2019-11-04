@@ -7,20 +7,19 @@ public class Solution299_BullsandCows {
         System.out.println(getHint(a,b));
     }
     public static String getHint(String secret, String guess) {
-        int cows =0,bulls=0;
         int[] count = new int[10];
+        int b=0,c=0;
         for (int i=0;i<secret.length();++i){
-            int s = secret.charAt(i)-'0';
-            int g = guess.charAt(i)-'0';
-            if (s==g) {
-                bulls++;
+            if (secret.charAt(i)==guess.charAt(i)){
+                b++;
             }
             else {
-                if (count[s]++ < 0) cows++;
-                if (count[g]-- > 0) cows++;
+                if (count[secret.charAt(i)-'0']++==0)
+                    c++;
+                if (count[guess.charAt(i)-'0']--==0)
+                    c++;
             }
         }
-        return bulls+"A"+cows+"B";
-
+        return b+"A"+c+"B";
     }
 }

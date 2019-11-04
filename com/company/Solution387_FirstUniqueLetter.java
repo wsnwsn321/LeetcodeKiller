@@ -8,12 +8,9 @@ public class Solution387_FirstUniqueLetter {
 
     }
     public int firstUniqChar(String s) {
-        int[] count = new int[26];
-        for (char x:s.toCharArray()){
-            count[x-'a']++;
-        }
         for (int i=0;i<s.length();++i){
-            if (count[s.charAt(i)]==1) return i;
+            if (s.indexOf(s.charAt(i))==s.lastIndexOf(s.charAt(i)))
+                return i;
         }
         return -1;
     }

@@ -32,4 +32,6 @@ public class Solution296_BestMeetingPoint {
         }
         return distance;
     }
+
+
 }

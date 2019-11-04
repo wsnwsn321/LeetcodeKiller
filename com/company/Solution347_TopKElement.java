@@ -19,12 +19,9 @@ public class Solution347_TopKElement {
             m.put(x,m.getOrDefault(x,0)+1);
         }
         for (int x:m.keySet()){
-            if (p.size()<k) p.add(x);
-            else {
-                if (m.get(x)>m.get(p.peek())) {
-                    p.poll();
-                    p.add(x);
-                }
+            p.offer(x);
+            if (p.size()>k){
+                p.poll();
             }
         }
         List<Integer> res = new ArrayList<>();

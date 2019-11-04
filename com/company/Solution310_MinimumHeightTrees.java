@@ -13,29 +13,40 @@ public class Solution310_MinimumHeightTrees {
         findMinHeightTrees(6,t);
     }
     public static List<Integer> findMinHeightTrees(int n, int[][] edges) {
-        if (n == 1) return Collections.singletonList(0);
-
-        List<Set<Integer>> adj = new ArrayList<>(n);
-        for (int i = 0; i < n; ++i) adj.add(new HashSet<>());
-        for (int[] edge : edges) {
-            adj.get(edge[0]).add(edge[1]);
-            adj.get(edge[1]).add(edge[0]);
+        List<Integer> res = new ArrayList<>();
+        if (n == 1) {
+            res.add(0);
+            return res;
         }
-        List<Integer> leaves = new ArrayList<>();
-        for (int i = 0; i < n; ++i)
-            if (adj.get(i).size() == 1) leaves.add(i);
-
-        while (n > 2) {
-            n -= leaves.size();
-            List<Integer> newLeaves = new ArrayList<>();
-            for (int i : leaves) {
-                int j = adj.get(i).iterator().next();
-                adj.get(j).remove(i);
-                if (adj.get(j).size() == 1) newLeaves.add(j);
+        Map<Integer,HashSet<Integer>> neighbours = new HashMap<>();
+        int[] degree = new int[n];
+        for (int i = 0; i < n; i++) neighbours.put(i, new HashSet<>());
+        for (int[] x:edges){
+            neighbours.get(x[0]).add(x[1]);
+            neighbours.get(x[1]).add(x[0]);
+            degree[x[0]]++;
+            degree[x[1]]++;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for (int i=0;i<degree.length;++i){
+            if (degree[i]==1)
+                q.offer(i);
+        }
+        while (!q.isEmpty()){
+            List<Integer> temp = new ArrayList<>();
+            int size = q.size();
+            for (int i=0;i<size;++i){
+                int cur = q.poll();
+                temp.add(cur);
+                for (int neighbour:neighbours.get(cur)){
+                    degree[neighbour]--;
+                    if (degree[neighbour]==1)
+                        q.offer(neighbour);
+                }
             }
-            leaves = newLeaves;
+            res = temp;
         }
-        return leaves;
+        return res;
 
     }
 }

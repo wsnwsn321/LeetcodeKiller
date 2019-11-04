@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -9,9 +10,10 @@ public class Solution329_LongestIncreasingPathinaMatrix {
     }
 
     public int longestIncreasingPath(int[][] matrix) {
-        int max=1;
-        if (matrix.length==0) return 0;
-        int dp[][] = new int[matrix.length][matrix[0].length];
+        int[][] dp = new int[matrix.length][matrix[0].length];
+        for (int[] x:dp)
+            Arrays.fill(x,1);
+        int max =0;
         for (int i=0;i<matrix.length;++i){
             for (int j=0;j<matrix[0].length;++j){
                 max = Math.max(max,dfs(matrix,i,j,dp));
@@ -20,22 +22,23 @@ public class Solution329_LongestIncreasingPathinaMatrix {
         return max;
     }
     public int dfs(int[][] matrix, int i, int j,int[][] dp){
-        int max =1;
-        int length=1;
-        if (dp[i][j]!=0) return -1;
-        if(i+1 < matrix.length && matrix[i+1][j] > matrix[i][j]) {
-            length = Math.max(length, 1 + dfs(matrix,i+1,j,dp));
+        if (dp[i][j]!=1) return dp[i][j];
+        if (i-1>=0&&matrix[i-1][j]<matrix[i][j]){
+            int next = dfs(matrix,i-1,j,dp);
+            dp[i][j] = Math.max(dp[i][j],next+1);
         }
-        if(i-1 >=0 && matrix[i-1][j] > matrix[i][j]) {
-            length = Math.max(length, 1 + dfs(matrix,i-1,j,dp));
+        if (i+1<matrix.length&&matrix[i+1][j]<matrix[i][j]){
+            int next = dfs(matrix,i+1,j,dp);
+            dp[i][j] = Math.max(dp[i][j],next+1);
         }
-        if(j+1 <matrix[0].length && matrix[i][j+1] > matrix[i][j]) {
-            length = Math.max(length, 1 + dfs(matrix,i,j+1,dp));
+        if (j-1>=0&&matrix[i][j-1]<matrix[i][j]){
+            int next = dfs(matrix,i,j-1,dp);
+            dp[i][j] = Math.max(dp[i][j],next+1);
         }
-        if(j-1 >=0 && matrix[i][j-1] > matrix[i][j]) {
-            length = Math.max(length, 1 + dfs(matrix,i,j-1,dp));
+        if (j+1<matrix[0].length&&matrix[i][j+1]<matrix[i][j]){
+            int next = dfs(matrix,i,j+1,dp);
+            dp[i][j] = Math.max(dp[i][j],next+1);
         }
-        dp[i][j] =length;
-        return length;
+        return dp[i][j];
     }
 }
