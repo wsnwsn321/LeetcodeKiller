@@ -13,7 +13,9 @@ public class Solution404_SumOfLeftLeaves {
     }
     public int sumOfLeftLeaves(TreeNode root) {
         if (root==null) return 0;
-        if (root.left!=null&&root.left.left==null&&root.left.right==null) sum+=root.left.val;
+        if (root.left!=null&&root.left==null&&root.right==null){
+            sum+=root.left.val;
+        }
         sumOfLeftLeaves(root.left);
         sumOfLeftLeaves(root.right);
         return sum;

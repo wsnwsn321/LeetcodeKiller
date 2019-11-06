@@ -9,17 +9,18 @@ public class Solution455_AssignCookies {
     public int findContentChildren(int[] g, int[] s) {
         Arrays.sort(g);
         Arrays.sort(s);
-        int count =0;
-        int i=0, j=0;
-        while(i<g.length-1||j<s.length-1){
-            if(g[i]<=s[j]){
-                count++;
-                i++;j++;
+        int ig = 0,is =0;
+        int res=0;
+        while (is<s.length&&ig<g.length){
+            if (s[is]>=g[ig]){
+                res++;
+                is++;
+                ig++;
             }
-            else{
-                j++;
+            else {
+                is++;
             }
         }
-        return count;
+        return res;
     }
 }

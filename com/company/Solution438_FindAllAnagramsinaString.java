@@ -6,23 +6,29 @@ import java.util.List;
 
 public class Solution438_FindAllAnagramsinaString {
     public static void main(String[] args) {
-
+        String x = "ecbaebabacd";
+        String p = "abc";
+        findAnagrams(x,p);
     }
-    public List<Integer> findAnagrams(String s, String p) {
+    public static List<Integer> findAnagrams(String s, String p) {
+        int[] pCount = new int[26];
         List<Integer> res = new ArrayList<>();
-        int sl = s.length();
-        int pl = p.length();
-        int[] pcount = new int[26];
-        int[] sw = new int[26];
-        for(char c:p.toCharArray()){
-            pcount[c-'a']++;
+        int count =p.length();
+        if (s.length()<p.length()) return res;
+        for (char ch:p.toCharArray()){
+            pCount[ch-'a']++;
         }
-        char[] sc = s.toCharArray();
-        for(int i=0;i<sc.length;++i){
-            if(i>=pl) sw[sc[i-pl]-'a']--;
-            sw[sc[i]-'a']++;
-            if(Arrays.equals(pcount,sw))
-                res.add(i-pl+1);
+        int l=0,r=0;
+        while (r<s.length()){
+            if (pCount[s.charAt(r)-'a']-->0)
+                count--;
+            if (r-l+1>p.length()){
+                if (pCount[s.charAt(l++)-'a']++>=0)
+                    count++;
+            }
+            if (count==0)
+                res.add(l);
+            r++;
         }
         return res;
     }

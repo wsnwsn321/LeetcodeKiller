@@ -6,29 +6,33 @@ public class Solution451_SortCharactersByFrequency {
     public static void main(String[] args) {
 
     }
+    //time:     O(n)
+    //space:    O(n)
     public String frequencySort(String s) {
-        Map<Character,Integer> m = new HashMap<>();
-        PriorityQueue<Character> p = new PriorityQueue<>(new Comparator<Character>() {
-            @Override
-            public int compare(Character o1, Character o2) {
-                return m.get(o2)-m.get(o1);
-            }
-        });
-        char[] cs = s.toCharArray();
-        for (char x: cs){
-            m.put(x,m.getOrDefault(x,0)+1);
+        Map<Character,Integer> map = new HashMap<>();
+        for (char ch:s.toCharArray()){
+            map.put(ch,map.getOrDefault(ch,0)+1);
         }
-        for (char x:m.keySet()){
-            p.add(x);
+        List<Character>[] buckets = new List[s.length()+1];
+        for (char ch:map.keySet()){
+            int frequency = map.get(ch);
+            if (buckets[frequency]==null)
+                buckets[frequency] =new ArrayList<>();
+            buckets[frequency].add(ch);
         }
         StringBuilder sb = new StringBuilder();
-        while(!p.isEmpty()){
-            char x = p.poll();
-            for (int i=0;i<m.get(x);++i)
-                sb.append(x);;
+        for (int i=buckets.length-1;i>=0;--i){
+            if(buckets[i]!=null){
+                for (char x: buckets[i]){
+                    for (int j = 0; j < map.get(x); j++)
+                        sb.append(x);
+                }
+            }
+
         }
         return sb.toString();
     }
+
 
 }
 
