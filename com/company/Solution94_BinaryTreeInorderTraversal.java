@@ -16,9 +16,9 @@ public class Solution94_BinaryTreeInorderTraversal {
     }
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
-        Stack<TreeNode> s = new Stack<>();
-        TreeNode cur = root;
-        while (cur!=null||!s.isEmpty()){
+        Stack<TreeNode> s= new Stack<>();
+        TreeNode cur =root;
+        while (cur!=null||s.size()>0){
             while (cur!=null){
                 s.push(cur);
                 cur = cur.left;
@@ -29,6 +29,13 @@ public class Solution94_BinaryTreeInorderTraversal {
         }
         return res;
     }
+    public void travel(List<Integer> res, TreeNode root){
+        if(root ==null) return;
+        travel(res,root.left);
+        res.add(root.val);
+        travel(res,root.right);
+    }
+
 
 
 }

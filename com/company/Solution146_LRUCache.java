@@ -22,24 +22,25 @@ public class Solution146_LRUCache {
         int capacity;
         Map<Integer, Node> map;
         Node head,tail;
-        public LRUCache(int capacity) {
-            this.capacity = capacity;
+        public LRUCache(int capacity){
             this.map = new HashMap<>();
+            this.capacity = capacity;
             head = new Node();
             tail = new Node();
-            head.next = tail;
+            head.next =tail;
             tail.pre = head;
         }
 
-        public int get(int key) {
-            Node node = map.get(key);
-            if(node==null) return -1;
-            moveToHead(node);
-            return node.val;
+        public int get(int key){
+            if (map.get(key)==null)
+                return -1;
+            Node cur = map.get(key);
+            moveToHead(cur);
+            return cur.val;
         }
 
-        public void put(int key, int value) {
-            Node cur = map.get(key);
+        public void put(int key, int value){
+            Node cur  =map.get(key);
             if (cur==null){
                 cur = new Node(key,value);
                 map.put(key,cur);
@@ -55,20 +56,17 @@ public class Solution146_LRUCache {
             }
 
         }
-
+        //always add too head
         public void addToHead(Node node){
-            Node temp = head.next;
-            head.next = node;
             node.pre = head;
-            node.next = temp;
-            temp.pre = node;
+            node.next = head.next;
+            head.next = node;
+            node.next.pre = node;
         }
 
         public void removeNode(Node node){
-            Node pre = node.pre;
-            Node next = node.next;
-            pre.next = next;
-            next.pre = pre;
+            node.pre.next = node.next;
+            node.next.pre = node.pre;
         }
 
         public void moveToHead(Node node){
@@ -77,9 +75,9 @@ public class Solution146_LRUCache {
         }
 
         public Node removeTail(){
-            Node res = tail.pre;
-            removeNode(res);
-            return res;
+            Node removed = tail.pre;
+            removeNode(removed);
+            return removed;
         }
 
     }
