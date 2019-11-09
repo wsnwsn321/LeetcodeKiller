@@ -8,35 +8,34 @@ public class Solution621_TaskScheduler {
     leastInterval(c,2);
     }
     public static int leastInterval(char[] tasks, int n) {
-        int[] map = new int[26];
-        int distinctTask=0;
-        for (char c: tasks)
-            map[c - 'A']++;
-        PriorityQueue< Integer > queue = new PriorityQueue<>((a,b)->map[b]-map[a]);
-        for (int i=0;i<map.length;++i) {
-            if (map[i] > 0) {
-                queue.add(i);
-                distinctTask++;
-            }
+        int res=0;
+        Map<Character,Integer> map = new HashMap<>();
+        for (char t:tasks){
+            map.put(t,map.getOrDefault(t,0)+1);
         }
-        List<Integer> schedule = new ArrayList<>();
-        while (distinctTask>0){
-            int curCount=0;
-            for (int task:queue){
-                if (map[task]>0){
-                    schedule.add(task);
-                    map[task]--;
-                    if (map[task]==0) distinctTask--;
-                    curCount++;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
+        for (char t:map.keySet()){
+            pq.add(map.get(t));
+        }
+        while (pq.size()>0){
+            int i = 0;
+            List < Integer > temp = new ArrayList < > ();
+            while (i <= n) {
+                if (!pq.isEmpty()) {
+                    if (pq.peek() > 1)
+                        temp.add(pq.poll() - 1);
+                    else
+                        pq.poll();
                 }
+                res++;
+                if (pq.isEmpty() && temp.size() == 0)
+                    break;
+                i++;
             }
-            while (distinctTask>0&&curCount<=n){
-                schedule.add(-1);
-                curCount++;
-            }
+            for (int l: temp)
+                pq.add(l);
         }
-        return schedule.size();
-
+        return res;
     }
 
 

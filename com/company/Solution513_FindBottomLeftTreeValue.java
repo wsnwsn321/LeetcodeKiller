@@ -1,7 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Solution513_FindBottomLeftTreeValue {
     public class TreeNode {
@@ -14,16 +13,22 @@ public class Solution513_FindBottomLeftTreeValue {
 
     }
     public int findBottomLeftValue(TreeNode root) {
-        List<List<Integer>> levels = new ArrayList<>();
-        int depth =0;
-        travel(root,levels,0);
-        return levels.get(levels.size()-1).get(0);
+        Queue<TreeNode> s = new LinkedList<>();
+        s.offer(root);
+        int res=0;
+        while (s.size()>0){
+            int size = s.size();
+            if (size>0) res = s.peek().val;
+            while (size>0){
+                TreeNode cur = s.poll();
+                if (cur.left!=null)
+                    s.offer(cur.left) ;
+                if (cur.right!=null)
+                    s.offer(cur.right);
+                size--;
+            }
+        }
+        return res;
     }
-    public void travel(TreeNode root,List<List<Integer>> levels, int depth ){
-        if (root==null )return;
-        if (levels.size()<=depth) levels.add(new ArrayList<>());
-        levels.get(depth).add(root.val);
-        travel(root.left,levels,depth+1);
-        travel(root.right,levels,depth+1);
-    }
+
 }

@@ -9,39 +9,30 @@ public class Solution542_01Matrix {
 
     }
     public int[][] updateMatrix(int[][] matrix) {
-        int[][] ret = new int[matrix.length][matrix[0].length];
-        for (int[] x:ret){
-            Arrays.fill(x,-1);
-        }
+        int[][] dist = new int[matrix.length][matrix[0].length];
         Queue<int[]> q = new LinkedList<>();
+        for (int[] d:dist) Arrays.fill(d,Integer.MAX_VALUE);
         for (int i=0;i<matrix.length;++i){
             for (int j=0;j<matrix[0].length;++j){
                 if (matrix[i][j]==0){
-                    ret[i][j]=0;
-                    q.add(new int[]{i,j});
+                    dist[i][j]=0;
+                    q.offer(new int[]{i,j});
                 }
             }
         }
-        int[] dr = new int[]{-1, 0, 1, 0};
-        int[] dc = new int[]{0, -1, 0, 1};
-        while (!q.isEmpty()){
-            int size = q.size();
-            while (size>0){
-                int[] index = q.poll();
-                int i = index[0];
-                int j = index[1];
-                for (int k = 0; k < 4; ++k) {
-                    int nr = i + dr[k];
-                    int nc = j + dc[k];
-                    if (0 <= nr && nr < matrix.length && 0 <= nc && nc < matrix[0].length && ret[nr][nc] == -1) {
-                        ret[nr][nc]=ret[i][j]+1;
-                        q.offer(new int[]{nr,nc});
-                    }
+        int[][] dir = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+        while (q.size()>0){
+            int[] cur = q.poll();
+            for (int[] d:dir){
+                int x = cur[0]+d[0];
+                int y = cur[1]+d[1];
+                if (x<0||y<0||x>matrix.length-1||y>matrix[0].length-1||dist[x][y]==0) continue;
+                if (dist[cur[0]][cur[1]]+1<dist[x][y]){
+                    dist[x][y] = dist[cur[0]][cur[1]]+1;
+                    q.offer(new int[]{x,y});
                 }
-                size--;
             }
         }
-        return ret;
-
+        return dist;
     }
 }

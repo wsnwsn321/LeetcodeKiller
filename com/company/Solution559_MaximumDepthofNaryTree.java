@@ -26,13 +26,14 @@ public class Solution559_MaximumDepthofNaryTree {
     }
 
     public static int maxDepth(Node root) {
-       if (root==null) return 0;
-       if (root.children.size()==0) return 1;
-       int maxD=0;
-       for (Node x:root.children){
-           maxD = Math.max(maxD,maxDepth(x)+1);
-       }
-       return maxD;
+        if (root==null) return 0;
+        int res=0;
+        for (Node x:root.children){
+            int depth = maxDepth(x);
+            res = Math.max(depth,res);
+        }
+        return res+1;
+
     }
 
 

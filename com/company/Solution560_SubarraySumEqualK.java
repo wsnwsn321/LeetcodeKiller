@@ -1,5 +1,8 @@
 package com.company;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Solution560_SubarraySumEqualK {
     static int count;
     public static void main(String[] args) {
@@ -8,21 +11,17 @@ public class Solution560_SubarraySumEqualK {
         int q = re;
     }
     public static  int subarraySum(int[] nums, int k) {
-            int ret =0;
-            for(int i=0;i<nums.length;++i){
-                DFS(nums,k,i,0);
-            }
-            return count;
+        Map<Integer,Integer> map = new HashMap<>();
+        int sum=0;
+        int res =0;
+        map.put(0,1);
+        for (int i=0;i<nums.length;++i){
+            sum+=nums[i];
+            if (map.containsKey(sum-k))
+                res+=map.get(sum-k);
+            map.put(sum,map.getOrDefault(sum,0)+1);
+        }
+        return res;
     }
 
-    public  static void DFS(int[] nums, int k, int i,int sum){
-        if(sum==k){
-            count+=1;
-            return;
-        }
-        if(i==nums.length){
-            return;
-        }
-        DFS(nums,k,i+1,sum+nums[i]);
-    }
 }

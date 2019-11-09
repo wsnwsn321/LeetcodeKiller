@@ -13,24 +13,19 @@ public class Solution530_MinAbsoluteDiffBST {
     public static void main(String[] args) {
 
     }
+    TreeNode prev=null;
+    int min = Integer.MAX_VALUE;
     public int getMinimumDifference(TreeNode root) {
-        List<Integer> l =new ArrayList<>();
-        inOrderTraversal(root,l);
-        int min =Integer.MAX_VALUE;
-        for(int i=0;i<l.size()-1;++i){
-            if(min>l.get(i+1)-l.get(i)){
-                min = l.get(i+1)-l.get(i);
-            }
-        }
+        inOrderTraversal(root);
         return min;
 
     }
-    public void inOrderTraversal(TreeNode r, List<Integer> l){
-        if(r!=null){
-            inOrderTraversal(r.left,l);
-            l.add(r.val);
-            inOrderTraversal(r.right,l);
-        }
-
+    public void inOrderTraversal(TreeNode r) {
+        if (r == null) return;
+        inOrderTraversal(r.left);
+        if (prev!=null)
+            min = Math.min(min,r.val-prev.val);
+        prev = r;
+        inOrderTraversal(r.right);
     }
 }

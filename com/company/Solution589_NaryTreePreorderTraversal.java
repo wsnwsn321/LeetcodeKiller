@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Solution589_NaryTreePreorderTraversal {
     class Node {
@@ -22,18 +20,18 @@ public class Solution589_NaryTreePreorderTraversal {
     }
 
     public List<Integer> preorder(Node root) {
-        List<Integer> res = new ArrayList<>();
         Stack<Node> s = new Stack<>();
-        if(root==null) return res;
+        List<Integer> res = new ArrayList<>();
         s.push(root);
-        while(!s.isEmpty()){
-            Node temp = s.pop();
-            res.add(temp.val);
-            for(int i=temp.children.size()-1;i>=0;--i){
-                s.push(temp.children.get(i));
+        while (s.size()>0){
+            Node cur = s.pop();
+            res.add(cur.val);
+            for (int i=cur.children.size()-1;i>=0;--i){
+                s.push(cur.children.get(i));
             }
         }
         return res;
+
     }
 
 

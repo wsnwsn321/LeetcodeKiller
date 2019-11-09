@@ -1,7 +1,5 @@
 package com.company;
 
-import com.company.citrix.CircularArray;
-
 import java.util.*;
 
 public class Solution146_LRUCache {
