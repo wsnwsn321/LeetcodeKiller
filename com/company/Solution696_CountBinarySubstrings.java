@@ -1,22 +1,23 @@
 package com.company;
 
-public class Solution696_R {
+public class Solution696_CountBinarySubstrings {
     public static void main(String[] args) {
 
         String a = "10101";
         countBinarySubstrings(a);
     }
     public static int countBinarySubstrings(String s) {
-        int result=0;
+        int res=0;
         char[] cs = s.toCharArray();
-        int i=0;
-        while(i<cs.length){
-            int count1 = checkConseq(i,cs);
-            int count2 = checkConseq(i+count1,cs);
-            result+=Math.min(count1,count2);
-            i=i+count1;
+        int r =0;
+        int con1 = checkConseq(r,cs);
+        while (r<s.length()){
+            int con2 = checkConseq(r+con1,cs);
+            res+=Math.min(con1,con2);
+            r = r+con1;
+            con1 = con2;
         }
-        return result;
+        return res;
     }
 
     public static int checkConseq(int p,char[] cs) {
