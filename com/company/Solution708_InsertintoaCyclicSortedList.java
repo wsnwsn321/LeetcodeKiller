@@ -16,24 +16,20 @@ public class Solution708_InsertintoaCyclicSortedList {
 
     }
     public Node insert(Node head, int insertVal) {
-        if (head==null){
-            return new Node(insertVal,null);
+        if (head==null)
+            return new Node(insertVal,null );
+        Node cur = head.next;
+        Node pre =head;
+        while (cur!=head){
+            if (pre.val==insertVal||(pre.val<insertVal&&cur.val>insertVal)
+                ||(pre.val<insertVal&&pre.val>cur.val)
+                ||(cur.val>insertVal&&pre.val>cur.val)){
+                break;
+            }
+            pre = cur;
+            cur = cur.next;
         }
-        Node prev = head;
-        Node curr = head.next;
-        while (curr!=head){
-            int pre = prev.val;
-            int cur = curr.val;
-            if (pre == insertVal || (pre < insertVal && cur > insertVal) ||
-                    (pre < insertVal && pre > cur) ||
-                    (cur > insertVal && pre > cur)
-
-            ) break;
-            prev =curr;
-            curr = curr.next;
-        }
-        prev.next = new Node(insertVal,curr);
+        pre.next = new Node(insertVal,cur);
         return head;
-
     }
 }

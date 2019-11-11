@@ -14,7 +14,7 @@ public class Solution696_CountBinarySubstrings {
         while (r<s.length()){
             int con2 = checkConseq(r+con1,cs);
             res+=Math.min(con1,con2);
-            r = r+con1;
+            r +=con1;
             con1 = con2;
         }
         return res;

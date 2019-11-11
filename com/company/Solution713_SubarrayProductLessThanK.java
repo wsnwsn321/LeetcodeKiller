@@ -5,18 +5,16 @@ public class Solution713_SubarrayProductLessThanK {
 
     }
     public int numSubarrayProductLessThanK(int[] nums, int k) {
-        int count=0;
-        if (nums.length==0) return 0;
-        int product=1;
-        int start=0;
-        for (int end=0;end<nums.length;++end){
-            product*=nums[end];
-            while (product>=k){
-                product/=nums[start];
-                start++;
+        int l=0;
+        int res =0;
+        int curPro =1;
+        for (int r=0;r<nums.length;++r){
+            curPro*=nums[r];
+            while (curPro>=k){
+                curPro/=nums[l++];
             }
-            count+=end-start+1;
+            res+=r-l+1;
         }
-        return count;
+        return res;
     }
 }
