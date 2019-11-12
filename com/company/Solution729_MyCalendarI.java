@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Solution729_MyCalendarI {
@@ -9,28 +10,20 @@ public class Solution729_MyCalendarI {
     //time:     O(NlogN)
     //space:    O(N)
     class MyCalendar {
-        TreeMap<Integer,Integer> t;
+        TreeMap<Integer,Integer> map;
         public MyCalendar() {
-            t = new TreeMap<>();
+            map  =new TreeMap<>();
         }
 
         public boolean book(int start, int end) {
-            if (t.size()==0) {
-                t.put(start,end);
+            Integer getKey = map.lowerKey(end);
+            if (getKey!=null&&map.get(getKey)>start){
+                return false;
+            }
+            else {
+                map.put(start,end);
                 return true;
             }
-            //logN
-            Integer lowerKey = t.lowerKey(end);
-            if (lowerKey==null||t.get(lowerKey)<=start){
-                t.put(start,end);
-                return true;
-            }
-            return false;
-        }
-        public boolean unbook(int start, int end) {
-            if (!t.containsKey(start)||t.get(start)!=end) return false;
-            t.remove(start);
-            return true;
         }
     }
 }
