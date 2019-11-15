@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution860 {
+public class Solution860_LemonadeChange {
     public static void main(String[] args) {
 
     }
@@ -37,9 +37,5 @@ public class Solution860 {
             }
         }
         return true;
-
     }
-
-
-
 }

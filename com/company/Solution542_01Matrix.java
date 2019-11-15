@@ -8,6 +8,8 @@ public class Solution542_01Matrix {
     public static void main(String[] args) {
 
     }
+    //time:     O(n)
+    //space:    O(n)
     public int[][] updateMatrix(int[][] matrix) {
         int[][] dist = new int[matrix.length][matrix[0].length];
         Queue<int[]> q = new LinkedList<>();
@@ -22,14 +24,17 @@ public class Solution542_01Matrix {
         }
         int[][] dir = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
         while (q.size()>0){
-            int[] cur = q.poll();
-            for (int[] d:dir){
-                int x = cur[0]+d[0];
-                int y = cur[1]+d[1];
-                if (x<0||y<0||x>matrix.length-1||y>matrix[0].length-1||dist[x][y]==0) continue;
-                if (dist[cur[0]][cur[1]]+1<dist[x][y]){
-                    dist[x][y] = dist[cur[0]][cur[1]]+1;
-                    q.offer(new int[]{x,y});
+            int size = q.size();
+            while (size>0){
+                int[] cur = q.poll();
+                for (int i=0;i<4;++i){
+                    int x = cur[0]+dir[i][0];
+                    int y = cur[0]+dir[i][1];
+                    if (x<0||y<0||x>matrix.length-1||y>matrix[0].length-1||dist[x][y]==0) continue;
+                    if (dist[x][y]>dist[cur[0]][cur[1]]+1){
+                        dist[x][y] = dist[cur[0]][cur[1]]+1;
+                        q.offer(new int[]{x,y});
+                    }
                 }
             }
         }

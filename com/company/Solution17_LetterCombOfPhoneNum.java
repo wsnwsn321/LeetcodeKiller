@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Solution17_LetterCombOfPhoneNum {
     public static void main(String[] args) {
@@ -15,23 +16,20 @@ public class Solution17_LetterCombOfPhoneNum {
     public  List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<>();
         if(digits.length()==0) return res;
-        int[] nums = new int[digits.length()];
-        for (int i=0;i<digits.length();++i){
-            nums[i] = digits.charAt(i)-'2';
-        }
-        DFS(res,nums,0,"");
+        backtracking(digits,res,"",0);
         return res;
     }
 
-    public  void DFS(List<String> res, int[] nums, int index,String comb){
-        if(comb.length()==nums.length) {
-            res.add(comb);
+    public void backtracking(String digits,List<String> res, String cur,int pos){
+        if (cur.length()==digits.length()){
+            res.add(new String(cur));
             return;
         }
-        for (int j=0;j<ref[nums[index]].length();++j){
-            comb+=ref[nums[index]].toCharArray()[j];
-            DFS(res,nums,index+1,comb);
-            comb = comb.substring(0,comb.length()-1);
+        String temp = ref[digits.charAt(pos)-'2'];
+        for (int j=0;j<temp.length();++j){
+            backtracking(digits,res,cur+temp.charAt(j),pos+1);
         }
+
     }
+
 }

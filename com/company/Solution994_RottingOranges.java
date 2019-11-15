@@ -8,39 +8,38 @@ public class Solution994_RottingOranges {
 
     }
     public int orangesRotting(int[][] grid) {
-        int step=0;
         Queue<int[]> q = new LinkedList<>();
-        for (int i=0;i<grid.length;++i){
-            for (int j=0;j<grid[0].length;++j){
-                if (grid[i][j]==2){
-                    q.offer(new int[]{i,j});
+        int freshNum = 0;
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[0].length; ++j) {
+                if (grid[i][j] == 2) {
+                    q.offer(new int[]{i, j});
+                }
+                if (grid[i][j] == 1) {
+                    freshNum++;
                 }
             }
         }
-        int[] dr = new int[]{-1, 0, 1, 0};
-        int[] dc = new int[]{0, -1, 0, 1};
-        while (!q.isEmpty()){
+        int ans = 0;
+        if (freshNum==0) return ans;
+        int[][] dir = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        while (q.size() > 0) {
             int size = q.size();
-            while(size>0){
-                int[] index = q.poll();
-                int i=index[0];
-                int j = index[1];
-                for (int k = 0; k < 4; ++k) {
-                    int nr = i + dr[k];
-                    int nc = j + dc[k];
-                    if (0 <= nr && nr < grid.length && 0 <= nc && nc < grid[0].length && grid[nr][nc] == 1) {
-                        grid[nr][nc]=2;
-                        q.offer(new int[]{nr,nc});
-                    }
+            while (size > 0) {
+                int[] cur = q.poll();
+                for (int i = 0; i < 4; ++i) {
+                    int x = cur[0] + dir[i][0];
+                    int y = cur[1] + dir[i][1];
+                    if (x < 0 || y < 0 || x > grid.length - 1 || y > grid[0].length - 1 || grid[x][y] != 1) continue;
+                    grid[x][y] = 2;
+                    freshNum--;
+                    q.offer(new int[]{x, y});
                 }
                 size--;
             }
-            step++;
+            if (q.size()>0) ans++;
+            if (freshNum==0) return ans;
         }
-        for (int[] row: grid)
-            for (int v: row)
-                if (v == 1)
-                    return -1;
-        return step;
+        return -1;
     }
 }

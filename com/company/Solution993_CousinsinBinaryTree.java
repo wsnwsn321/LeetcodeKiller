@@ -14,9 +14,9 @@ public class Solution993_CousinsinBinaryTree {
     }
     public boolean isCousins(TreeNode root, int x, int y) {
         Queue<TreeNode> q = new LinkedList<>();
-        Set<Integer> nodes = new HashSet<>();
         q.add(root);
         while (!q.isEmpty()){
+            Set<Integer> nodes = new HashSet<>();
             int size =q.size();
             while (size>0){
                 TreeNode cur = q.poll();
@@ -39,10 +39,8 @@ public class Solution993_CousinsinBinaryTree {
                 size--;
             }
             if (nodes.contains(x)&&nodes.contains(y)) return true;
-            nodes = new HashSet<>();
         }
         return false;
-
     }
 
 }

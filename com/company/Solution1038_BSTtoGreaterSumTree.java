@@ -13,15 +13,13 @@ public class Solution1038_BSTtoGreaterSumTree {
     }
     int currentSum=0;
     public TreeNode bstToGst(TreeNode root) {
-        if(root.right!=null){
-            bstToGst(root.right);
-        }
-        root.val+=currentSum;
-        currentSum = root.val;
-        if(root.left!=null){
-            bstToGst(root.left);
-        }
+        if (root==null) return null;
+        root.right = bstToGst(root.right);
+        currentSum+=root.val;
+        root.val =currentSum;
+        root.left = bstToGst(root.left);
         return root;
     }
+
 
 }

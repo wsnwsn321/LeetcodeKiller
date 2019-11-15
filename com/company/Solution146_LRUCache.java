@@ -3,68 +3,63 @@ package com.company;
 import java.util.*;
 
 public class Solution146_LRUCache {
-
     class LRUCache {
         class Node{
-            Node pre;
+            Node prev;
             Node next;
-            int key,val;
+            int key,value;
+            Node(int key, int val){
+                this.key =key;
+                this.value = val;
+            }
             Node(){
 
             }
-            Node(int k,int v){
-                this.key =k ;
-                this.val = v;
-            }
         }
+        Map<Integer,Node> map;
         int capacity;
-        Map<Integer, Node> map;
         Node head,tail;
-        public LRUCache(int capacity){
-            this.map = new HashMap<>();
+        public LRUCache(int capacity) {
+            map = new HashMap<>();
             this.capacity = capacity;
             head = new Node();
             tail = new Node();
-            head.next =tail;
-            tail.pre = head;
+            head.next = tail;
+            tail.prev = head;
         }
 
-        public int get(int key){
-            if (map.get(key)==null)
-                return -1;
+        public int get(int key) {
             Node cur = map.get(key);
+            if (cur==null) return -1;
             moveToHead(cur);
-            return cur.val;
+            return cur.value;
         }
 
-        public void put(int key, int value){
-            Node cur  =map.get(key);
+        public void put(int key, int value) {
+            Node cur = map.get(key);
             if (cur==null){
-                cur = new Node(key,value);
-                map.put(key,cur);
-                addToHead(cur);
+                Node inserted = new Node(key,value);
+                map.put(key, inserted);
+                addToHead(inserted);
                 if (map.size()>capacity){
                     Node removed = removeTail();
                     map.remove(removed.key);
                 }
-            }
-            else {
-                cur.val = value;
+            }else {
+                cur.value = value;
                 moveToHead(cur);
             }
-
         }
-        //always add too head
+
         public void addToHead(Node node){
-            node.pre = head;
+            node.prev = head;
             node.next = head.next;
+            head.next.prev = node;
             head.next = node;
-            node.next.pre = node;
         }
-
         public void removeNode(Node node){
-            node.pre.next = node.next;
-            node.next.pre = node.pre;
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
         }
 
         public void moveToHead(Node node){
@@ -73,10 +68,10 @@ public class Solution146_LRUCache {
         }
 
         public Node removeTail(){
-            Node removed = tail.pre;
+            Node removed = tail.prev;
             removeNode(removed);
             return removed;
         }
-
     }
+
 }

@@ -14,27 +14,34 @@ public class Solution914_XofAKindInADeckofCards {
         if(deck.length<2) return false;
         Map<Integer,Integer> m = new HashMap<>();
         for(int x:deck){
-            if(!m.containsKey(x)){
-                m.put(x,1);
-            }
+            m.put(x,m.getOrDefault(x,0)+1);
+        }
+        int g = -1;
+        for (int x: m.values()){
+            if (g==-1)
+                g = x;
             else{
-                int count = m.get(x);
-                m.put(x,count+1);
+                g = gcd(g,x);
+                if (g<2)
+                    return false;
             }
         }
-        int g=-1;
-        for(Map.Entry<Integer,Integer> set:m.entrySet()){
-            if(g==-1) g = set.getValue();
-            else{
-                g = gcd(g,set.getValue());
-            }
-
-        }
-
-        return g>=2;
+        return true;
     }
 
-    public int gcd(int x, int y) {
-        return x == 0 ? y : gcd(y%x, x);
+    public int gcd(int a, int b)
+    {
+        // Everything divides 0
+        if (a == 0||b==0)
+            return a==0?b:a;
+
+        // base case
+        if (a == b)
+            return a;
+
+        // a is greater
+        if (a > b)
+            return gcd(a-b, b);
+        return gcd(a, b-a);
     }
 }

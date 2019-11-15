@@ -13,17 +13,16 @@ Greedy problems usually look like "Find minimum number of something to do someth
 and typically propose an unsorted input.
     */
     public int twoCitySchedCost(int[][] costs) {
-        Arrays.sort(costs, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return (o1[0]-o1[1])-(o2[0]-o2[1]);
-            }
-        });
-        int totalCost=0;
-        for (int i=0;i<costs.length;++i){
-            if (i<costs.length/2) totalCost+=costs[i][0];
-            else totalCost+=costs[i][1];
+        Arrays.sort(costs,(a,b)->(a[0]-a[1])-(b[0]-b[1]));
+        int count=0;
+        int ans=0;
+        while (count<costs.length){
+            if (count<costs.length/2)
+                ans+=costs[count++][0];
+            else
+                ans+=costs[count++][1];
         }
-        return totalCost;
+        return ans;
+
     }
 }

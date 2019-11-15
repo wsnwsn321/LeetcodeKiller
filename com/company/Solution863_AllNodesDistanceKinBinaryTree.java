@@ -1,7 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Solution863_AllNodesDistanceKinBinaryTree {
     public class TreeNode {
@@ -13,26 +12,40 @@ public class Solution863_AllNodesDistanceKinBinaryTree {
     public static void main(String[] args) {
 
     }
-    int t_depth=0;
+    Map<TreeNode,TreeNode> parents = new HashMap<>();
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
-        List<Integer> ret = new ArrayList<>();
-        List<List<Integer>> levels = new ArrayList<>();
-        travel(root,levels,0,K,target);
-        for (int i=0;i<levels.size();++i) {
-            for (int j = 0; j < levels.get(i).size(); ++j) {
-                if (t_depth - i == K || i - t_depth == K || (i == t_depth && i + t_depth == K)) {
-                    if (levels.get(i).get(j) != target.val) ret.add(levels.get(i).get(j));
-                }
-            }
-        }
-        return ret;
+       dfs(root,null);
+       List<Integer> res = new ArrayList<>();
+       Queue<TreeNode> q = new LinkedList<>();
+       Set<TreeNode> seen = new HashSet();
+       q.offer(target);
+       int dis=0;
+       while (q.size()>0){
+           if (dis==K){
+               while (q.size()>0){
+                   res.add(q.poll().val);
+               }
+               return res;
+           }
+           int size = q.size();
+           for (int i=0;i<size;++i){
+               TreeNode cur = q.poll();
+               seen.add(cur);
+               if (parents.get(cur)!=null&&!seen.contains(parents.get(cur)))
+                   q.offer(parents.get(cur));
+               if (cur.left!=null&&!seen.contains(cur.left)) q.offer(cur.left);
+               if (cur.right!=null&&!seen.contains(cur.right)) q.offer(cur.right);
+           }
+           dis++;
+       }
+       return new ArrayList<>();
+
     }
-    public void travel(TreeNode root,List<List<Integer>> levels, int depth,int K,TreeNode target ){
-        if (root==null )return;
-        if (levels.size()<=depth) levels.add(new ArrayList<>());
-        if (root.val==target.val) t_depth = depth;
-        levels.get(depth).add(root.val);
-        travel(root.left,levels,depth+1,K,target);
-        travel(root.right,levels,depth+1,K,target);
+    public void dfs(TreeNode node, TreeNode par) {
+        if (node == null) return;
+        parents.put(node, par);
+        dfs(node.left, node);
+        dfs(node.right, node);
     }
+
 }

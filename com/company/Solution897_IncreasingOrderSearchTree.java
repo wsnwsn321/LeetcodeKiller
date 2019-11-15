@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution897_R {
+public class Solution897_IncreasingOrderSearchTree {
     public static class TreeNode {
       int val;
       TreeNode left;
@@ -19,11 +19,10 @@ public class Solution897_R {
         List<Integer> l = new ArrayList<>();
         inorderNums(l,root);
         TreeNode result = new TreeNode(l.get(0));
-        result.left = null;
         TreeNode curr = result;
         for(int i=1;i<l.size();++i){
+            curr.left=null;
             curr.right = new TreeNode(l.get(i));
-            curr.right.left = null;
             curr = curr.right;
         }
         return result;

@@ -1,6 +1,6 @@
 package com.company;
 
-public class Solution896 {
+public class Solution896_MonotonicArray {
     public static void main(String[] args) {
         int [] A = new int[]{1,2,2,3};
         isMonotonic(A);

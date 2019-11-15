@@ -10,28 +10,26 @@ public class Solution295_FindMedianFromData {
     class MedianFinder {
 
         /** initialize your data structure here. */
-        PriorityQueue<Integer> max;
-        PriorityQueue<Integer> min;
-        int size;
+        PriorityQueue<Integer> maxHeap;
+        PriorityQueue<Integer> minHeap;
         public MedianFinder() {
-            max = new PriorityQueue<>((a,b)->b-a);
-            min = new PriorityQueue<>();
+            maxHeap = new PriorityQueue<>((a,b)->b-a);
+            minHeap = new PriorityQueue<>();
         }
 
         public void addNum(int num) {
-            max.offer(num);
-            min.offer(max.poll());
-            if (min.size()>max.size())
-                max.offer(min.poll());
-            size++;
+            maxHeap.offer(num);
+            minHeap.offer(maxHeap.poll());
+            if (minHeap.size() > maxHeap.size())
+                maxHeap.offer(minHeap.poll());
         }
 
         public double findMedian() {
-            if (size%2==1){
-                return min.peek();
+            if ((maxHeap.size()+minHeap.size())%2==0){
+                return ((double)(maxHeap.peek()+minHeap.peek()))/2.0;
             }
             else
-                return (double) (min.peek()+max.peek())/2.0;
+                return maxHeap.peek();
         }
     }
 }
