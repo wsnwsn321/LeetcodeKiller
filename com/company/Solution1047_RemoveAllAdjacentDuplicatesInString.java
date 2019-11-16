@@ -7,21 +7,17 @@ public class Solution1047_RemoveAllAdjacentDuplicatesInString {
 
     }
     public String removeDuplicates(String S) {
-        Stack<Character> stack = new Stack<>();
-        int i=0;
-        while (i<S.length()){
-            char cur = S.charAt(i);
-            if (stack.isEmpty()||stack.peek()!=cur){
-                stack.push(cur);
-            }
+        Stack<Character> s = new Stack<>();
+        for (int i=0;i<S.length();++i){
+            if (s.isEmpty()||s.peek()!=S.charAt(i))
+                s.push(S.charAt(i));
             else {
-                stack.pop();
+                s.pop();
             }
-            i++;
         }
         StringBuilder sb = new StringBuilder();
-        while (stack.size()>0)
-            sb.append(stack.pop());
+        while (s.size()>0)
+            sb.append(s.pop());
         return sb.reverse().toString();
     }
 }

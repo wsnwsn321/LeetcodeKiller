@@ -10,13 +10,13 @@ public class Solution9_PalindromeNum {
     //time: O(log10(n))
     //space: O(1)
     public static boolean isPalindrome(int x) {
-        if(x < 0 || (x % 10 == 0 && x != 0)) return false;
-        int secondHalf=0;
-        while (secondHalf<x){
-            int digit = x%10;
-            secondHalf = secondHalf*10+digit;
-            x/=10;
+        if (x<0) return false;
+        int temp =x;
+        int palindrome =0;
+        while (temp>0){
+            palindrome = 10*palindrome+temp%10;
+            temp/=10;
         }
-        return x==secondHalf||x==secondHalf/10;
+        return palindrome==x;
     }
 }
