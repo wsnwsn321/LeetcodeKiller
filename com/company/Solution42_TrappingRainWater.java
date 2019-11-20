@@ -6,22 +6,20 @@ public class Solution42_TrappingRainWater {
         //trap(s);
     }
     public int trap(int[] A){
-        int l=0,r=A.length-1;
-        int res=0;
-        int leftmax=0,rightmax=0;
-        while(l<r){
-            leftmax=Math.max(leftmax,A[l]);
-            rightmax=Math.max(rightmax,A[r]);
-            if(leftmax<rightmax){
-                res+=(leftmax-A[l]);       // leftmax is smaller than rightmax, so the (leftmax-A[a]) water can be stored
-                l++;
+        int l_max=0 ,r_max=0;
+        int area = 0;
+        int l=0,r = A.length-1;
+        while (l<r){
+            l_max = Math.max(A[l],l_max);
+            r_max = Math.max(A[r],r_max);
+            if (l_max<r_max){
+                area+=l_max-A[l++];
             }
-            else{
-                res+=(rightmax-A[r]);
-                r--;
+            else {
+                area+=r_max - A[r--];
             }
         }
-        return res;
+        return area;
     }
 
 }

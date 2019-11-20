@@ -2,13 +2,14 @@ package com.company;
 
 public class Solution79_WordSearch {
     public static void main(String[] args) {
+        char[][] b = new char[][]{{'a','b','c'},{'d','g','z'},{'e','y','u'}};
 
     }
     public boolean exist(char[][] board, String word) {
         boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i=0;i<board.length;++i){
             for (int j=0;j<board[0].length;++j){
-                if (DFS(board,word,0,0,0,visited)) return true;
+                if (DFS(board,word,i,j,0,visited)) return true;
             }
         }
         return false;

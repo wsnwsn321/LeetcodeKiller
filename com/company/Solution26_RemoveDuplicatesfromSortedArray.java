@@ -9,13 +9,11 @@ public class Solution26_RemoveDuplicatesfromSortedArray {
     //time:     O(n)
     //space:    O(1)
     public static int removeDuplicates(int[] nums) {
-       int l=0;
-       for (int r=1;r<nums.length;++r){
-           if (nums[l]==nums[r]) continue;
-           int temp = nums[r];
-           nums[r]=nums[++l];
-           nums[l] = temp;
-       }
-       return l;
+        int l=0,r = nums.length-1;
+        for (int i=1; i<nums.length;++i){
+            if (nums[i]==nums[l]) continue;
+            nums[++l] = nums[i];
+        }
+        return l;
     }
 }

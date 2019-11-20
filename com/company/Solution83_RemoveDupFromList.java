@@ -12,26 +12,13 @@ public class Solution83_RemoveDupFromList {
     }
     public ListNode deleteDuplicates(ListNode head) {
         ListNode cur = head;
-        while (cur!=null){
-            if (cur.next!=null&&cur.val==cur.next.val){
+        while (cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
                 cur.next = cur.next.next;
-            }
-            else
+            } else {
                 cur = cur.next;
+            }
         }
         return head;
-//        ListNode dummyHead = new ListNode(0);
-//        dummyHead.next =head;
-//        ListNode pre = dummyHead;
-//        ListNode cur = head;
-//        while (cur!=null){
-//            pre=cur;
-//            while (cur.next!=null&&cur.val==cur.next.val){
-//                cur=cur.next;
-//            }
-//            pre.next = cur.next;
-//            cur = cur.next;
-//        }
-//        return dummyHead.next;
     }
 }

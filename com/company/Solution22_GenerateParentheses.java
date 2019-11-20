@@ -13,12 +13,11 @@ public class Solution22_GenerateParentheses {
         return res;
     }
     public void backtracking(List<String> res,String current, int open,int close,int n){
-        if (current.length()==n*2){
+        if (current.length()==2*n){
             res.add(current);
             return;
         }
-        if (open<n) backtracking(res,current+"(",open+1,close,n);
-        if (close<open) backtracking(res,current+")",open,close+1,n);
-
+        if (open<n) backtracking(res,current+'(',open+1,close,n);
+        if (close<open) backtracking(res,current+')',open,close+1,n);
     }
 }

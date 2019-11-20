@@ -9,24 +9,24 @@ public class Solution56_MergeIntervals {
     }
     //time:     O(nlogn)
     //space:    O(n)
-    public int[][] merge(int[][] intervals) {
-        List<int[]> res = new ArrayList<>();
+    public int[][] merge(int[][] intervals)
+    {
+        List<int[]> resList = new ArrayList<>();
+        if(intervals.length == 0 || intervals == null) return resList.toArray(new int[0][]);
         Arrays.sort(intervals,(a,b)->a[0]-b[0]);
-        int i=0;
-        while (i<intervals.length){
-            int start = intervals[i][0];
-            int end = intervals[i][1];
-            while (i+1<intervals.length&&end>=intervals[i+1][0]){
-                end = Math.max(end,intervals[i+1][1]);
-                i++;
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        for (int i=1;i<intervals.length;++i){
+            if (intervals[i][0]<=end){
+                end = Math.max(intervals[i][1],end);
             }
-            res.add(new int[]{start,end});
+            else {
+                resList.add(new int[]{start,end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
         }
-        int[][] res2 = new int[res.size()][2];
-        for (int j=0;j<res.size();++j){
-            res2[j]=res.get(j);
-        }
-        return res2;
-
+        resList.add(new int[]{start, end});
+        return resList.toArray(new int[0][]);
     }
 }

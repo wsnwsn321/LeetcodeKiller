@@ -8,23 +8,25 @@ public class Solution40_CombSumII {
     public static void main(String[] args) {
 
     }
+    List<List<Integer>> res = new ArrayList<>();
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(candidates);
-        backtrakcing(candidates,0,target,0,res,new ArrayList<>());
+        backtracking(candidates,0,target,0,new ArrayList<>());
         return res;
 
     }
-    public void backtrakcing(int[] candidates, int current, int target, int index, List<List<Integer>> res, List<Integer> temp){
+    public void backtracking(int[] candidates, int current, int target, int index, List<Integer> temp){
+        if (current>target)
+            return;
         if (current==target){
             res.add(new ArrayList<>(temp));
             return;
         }
-        if (current>target)return;
         for (int i=index;i<candidates.length;++i){
-            if (i!=index&&candidates[i]==candidates[i-1]) continue;
+            if(i>index&&candidates[i]==candidates[i-1]) continue;
             temp.add(candidates[i]);
-            backtrakcing(candidates,current+candidates[i],target,i+1,res,temp);
+            backtracking(candidates,current+candidates[i],target,i+1,temp);
             temp.remove(temp.size()-1);
         }
     }

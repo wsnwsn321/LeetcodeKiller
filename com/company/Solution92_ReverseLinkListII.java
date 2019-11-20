@@ -18,17 +18,19 @@ public class Solution92_ReverseLinkListII {
             pre =cur;
             cur = cur.next;
         }
-        ListNode node = pre;
+        //save the node before the reverse begin
+        ListNode preReverseNode = pre;
+        ListNode reverseStart = cur;
         for(int i =m;i<=n;++i){
             ListNode temp = cur.next;
             cur.next = pre;
             pre = cur;
             cur = temp;
         }
-        node.next.next =cur;
-        node.next = pre;
+        reverseStart.next = cur;
+        preReverseNode.next = pre;
         return dummy.next;
 
-
     }
+
 }

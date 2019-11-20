@@ -1,51 +1,44 @@
 package com.company;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Solution54_SpiralMatrix {
-    static int N;
-    static int M;
+public class Solution59_SpiralMatrixII {
     public static void main(String[] args) {
-        int[] a = new int[]{1,2,3};
-        int[] b = new int[]{6,7,8};
-        int[] c = new int[]{4,5,6};
-        int[] d = new int[]{13,14,15};
-        int[] e = new int[]{13,14,15,16};
-        int[][] r = new int[][]{a,b,c,d};
-        //spiralOrder(r);
 
     }
-    //time:     O(n)
-    //space:    O(n)
-    public  List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> res = new ArrayList<>();
-
-        if (matrix.length == 0) {
-            return res;
+    public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        if (n== 0) {
+            return null;
+        }
+        if (n==1){
+            return new int[][]{{1}};
         }
 
         int rowBegin = 0;
-        int rowEnd = matrix.length-1;
+        int rowEnd = res.length-1;
         int colBegin = 0;
-        int colEnd = matrix[0].length - 1;
+        int colEnd = res[0].length - 1;
+        int cur=0;
 
         while (rowBegin <= rowEnd && colBegin <= colEnd) {
             // Traverse Right
             for (int j = colBegin; j <= colEnd; j ++) {
-                res.add(matrix[rowBegin][j]);
+                res[rowBegin][j] = cur++;
             }
             rowBegin++;
 
             // Traverse Down
             for (int j = rowBegin; j <= rowEnd; j ++) {
-                res.add(matrix[j][colEnd]);
+                res[j][colEnd] = cur++;
             }
             colEnd--;
 
             if (rowBegin <= rowEnd) {
                 // Traverse Left
                 for (int j = colEnd; j >= colBegin; j --) {
-                    res.add(matrix[rowEnd][j]);
+                    res[rowEnd][j] = cur++;
                 }
             }
             rowEnd--;
@@ -53,7 +46,7 @@ public class Solution54_SpiralMatrix {
             if (colBegin <= colEnd) {
                 // Traver Up
                 for (int j = rowEnd; j >= rowBegin; j --) {
-                    res.add(matrix[j][colBegin]);
+                    res[j][colBegin] = cur++;
                 }
             }
             colBegin ++;
@@ -61,7 +54,4 @@ public class Solution54_SpiralMatrix {
 
         return res;
     }
-
-
-
 }

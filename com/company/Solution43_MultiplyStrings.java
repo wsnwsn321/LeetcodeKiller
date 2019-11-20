@@ -7,7 +7,6 @@ public class Solution43_MultiplyStrings {
     //time:     O(n1*n2)
     //space:    O(n1+n2)
     public String multiply(String num1, String num2) {
-        StringBuilder sb = new StringBuilder();
         int[] res = new int[num1.length()+num2.length()];
         for (int i=num1.length()-1;i>=0;--i){
             for (int j=num2.length()-1;j>=0;--j){
@@ -17,9 +16,10 @@ public class Solution43_MultiplyStrings {
                 res[i+j+1] = sum%10;
             }
         }
-        for (int x:res){
-            if(sb.length()==0&&x==0) continue;
-            sb.append(x);
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<res.length;++i){
+            if(sb.length()==0&&res[i]==0) continue;
+            sb.append(res[i]);
         }
         return sb.length()==0?"0":sb.toString();
     }

@@ -7,41 +7,39 @@ public class Solution76_MinimumWindowSubstring {
     public static void main(String[] args) {
         String s="a";
         String t = "b";
-        minWindow(s,t);
+        System.out.println(minWindow(s,t));
     }
     //time:     O(s+t)
     //space:    O(s+t)
     public static String minWindow(String s, String t) {
-        Map<Character,Integer> tMap = new HashMap<>();
-        int tLength=0;
-        for (char ct:t.toCharArray()){
-            tMap.put(ct,tMap.getOrDefault(ct,0)+1);
+        Map<Character,Integer> countT = new HashMap<>();
+        for (char c:t.toCharArray()){
+            countT.put(c,countT.getOrDefault(c,0)+1);
         }
-        tLength = tMap.size();
-        Map<Character,Integer> windowCount = new HashMap<>();
-        int current=0;
-        int minL=Integer.MAX_VALUE,fl=0,fr=0;
-        int l=0;
-        char[] cs = s.toCharArray();
+        int length = t.length();
+        int l=0,fl=0,fr =s.length();
         for (int i=0;i<s.length();++i){
-            windowCount.put(cs[i],windowCount.getOrDefault(cs[i],0)+1);
-            if (tMap.containsKey(cs[i])&&tMap.get(cs[i])==windowCount.get(cs[i])){
-                current++;
+            char cur = s.charAt(i);
+            if (countT.containsKey(cur)) {
+                if (countT.get(cur) > 0) {
+                    length--;
+                }
+                countT.put(cur, countT.get(cur) - 1);
             }
-            while (l<i&&current==tLength){
-                if (i-l<minL){
-                    minL = i-l;
-                    fl=l;
-                    fr =i;
+            while (length==0){
+                if (i-l<fr-fl) {
+                    fr = i;
+                    fl = l;
                 }
-                windowCount.put(cs[l],windowCount.get(cs[l])-1);
-                if (tMap.containsKey(cs[l])&&tMap.get(cs[l])>windowCount.get(cs[l])){
-                    current--;
+                if (countT.containsKey(s.charAt(l))){
+                    if (countT.get(s.charAt(l))>=0)
+                        length++;
+                    countT.put(s.charAt(l),countT.get(s.charAt(l++))+1);
                 }
-                l++;
+                else l++;
             }
         }
-        return minL==Integer.MAX_VALUE?"":s.substring(fl,fr+1);
+        return fr-fl==s.length()?"":s.substring(fl,fr+1);
     }
 
 }

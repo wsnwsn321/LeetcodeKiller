@@ -8,8 +8,6 @@ public class Solution980_UniquePathsIII {
     int[] dc = new int[]{1, 0, -1, 0};
     int R, C;
 
-    //time:     O(4^(r*c))
-    //space:    O(r*c)
     public int uniquePathsIII(int[][] grid) {
         this.grid = grid;
         R = grid.length;
