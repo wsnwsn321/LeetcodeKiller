@@ -12,15 +12,15 @@ public class Solution98_ValidateBinarySearchTree {
     }
     //time:     O(N) number of treenodes
     //space:    O(N)
-    public boolean isValidBST(TreeNode root) {
-        if (root==null) return true;
-        return helper(root,Long.MAX_VALUE,Long.MIN_VALUE);
+    public boolean isValidBST(TreeNode root){
+        return validate(root,Long.MAX_VALUE,Long.MIN_VALUE);
     }
-    public boolean helper(TreeNode root,long upper ,long lower){
+    public boolean validate(TreeNode root,long leftMax, long rightMin){
         if (root==null) return true;
-        return
-                root.val <upper&&root.val>lower&&
-                        helper(root.left,root.val,lower)&&helper(root.right,upper,root.val);
+        return (root.val<leftMax&&root.val>rightMin)&&
+                validate(root.left,root.val,rightMin)&&
+                validate(root.right,leftMax,root.val);
     }
+
 
 }
