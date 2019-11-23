@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Solution117_PopulatingNextRightPointersinEachNodeII {
     class Node {
@@ -26,17 +27,16 @@ public class Solution117_PopulatingNextRightPointersinEachNodeII {
         Queue<Node> q = new LinkedList<>();
         q.offer(root);
         while (q.size()>0){
-            Node cur = q.poll();
             int size = q.size();
-            if (cur.left!=null) q.offer(cur.left);
-            if (cur.right!=null) q.offer(cur.right);
-            while (size>0){
-                Node temp = q.poll();
-                if (temp.left!=null) q.offer(temp.left);
-                if (temp.right!=null) q.offer(temp.right);
-                cur.next = temp;
-                cur = cur.next;
-                size--;
+            Node temp = q.poll();
+            if (temp.left!=null) q.offer(temp.left);
+            if (temp.right!=null) q.offer(temp.right);
+            for (int i=0;i<size-1;++i){
+                Node cur = q.poll();
+                temp.next = cur;
+                if (cur.left!=null) q.offer(cur.left);
+                if (cur.right!=null) q.offer(cur.right);
+                temp = cur;
             }
         }
         return root;

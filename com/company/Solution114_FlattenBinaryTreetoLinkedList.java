@@ -7,11 +7,10 @@ public class Solution114_FlattenBinaryTreetoLinkedList {
     TreeNode prev = null;
     public void flatten(TreeNode root) {
         if (root==null) return;
-        flatten(root.right);
+        prev = root;
         flatten(root.left);
-        root.right = prev;
-        root.left =null;
-        prev =root;
+        flatten(root.right);
+        prev.right = root;
     }
 
 }
