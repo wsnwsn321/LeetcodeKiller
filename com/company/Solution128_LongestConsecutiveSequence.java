@@ -8,20 +8,19 @@ public class Solution128_LongestConsecutiveSequence {
 
     }
     public int longestConsecutive(int[] nums) {
-        Set<Integer> set = new HashSet<>();
+        Set<Integer> s = new HashSet<>();
+        for (int x:nums)
+            s.add(x);
+        int max_length =0;
         for (int x:nums){
-           set.add(x);
-        }
-        int res=0;
-        for (int x:nums){
-            if (set.contains(x-1)) continue;
-            int count =1;
-            while (set.contains(x+1)){
-                count++;
-                x=x+1;
+            if (s.contains(x-1))continue;
+            int cur_length=1;
+            while (s.contains(x+1)){
+                cur_length++;
+                x++;
             }
-            res = Math.max(res,count);
+            max_length = Math.max(max_length,cur_length);
         }
-        return res;
+        return max_length;
     }
 }

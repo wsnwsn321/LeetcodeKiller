@@ -12,12 +12,14 @@ public class Solution33_SearchInRotatedSortedArray {
             int mid = (l+r)/2;
             if (nums[mid]==target)
                 return mid;
+            //left side is sorted
             if (nums[mid]>=nums[l]) {
                 if (target >= nums[l] && target < nums[mid])
                     r = mid - 1;
                 else
                     l = mid + 1;
             }
+            //right side is sorted
             else {
                 if (target > nums[mid] && target <= nums[r])
                     l = mid + 1;

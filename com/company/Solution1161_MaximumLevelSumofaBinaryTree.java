@@ -14,29 +14,29 @@ public class Solution1161_MaximumLevelSumofaBinaryTree {
           TreeNode(int x) { val = x; }
       }
     public int maxLevelSum(TreeNode root) {
-        Queue<TreeNode> q =  new LinkedList<>();
-        if (root==null) return 0;
+        int res = 1;
+        int max_sum=0;
+        Queue<TreeNode> q = new LinkedList<>();
         q.offer(root);
-        int level =0;
-        int res = 0,totalSum=0;
+        int level = 1;
         while (q.size()>0){
-            int size= q.size();
+            int size = q.size();
             int sum=0;
-            level++;
-            while (size>0){
+            for (int i=0;i<size;++i){
                 TreeNode cur = q.poll();
                 sum+=cur.val;
-                if (cur.left!=null) q.offer(cur.left);
-                if (cur.right!=null) q.offer(cur.right);
-                size--;
+                if (cur.left!=null)
+                    q.offer(cur.left);
+                if (cur.right!=null)
+                    q.offer(cur.right);
             }
-            if (sum>totalSum){
+            if (max_sum<sum){
                 res = level;
-                totalSum = sum;
+                max_sum = sum;
             }
+            level++;
         }
         return res;
-
     }
 
 }

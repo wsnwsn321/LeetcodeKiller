@@ -9,21 +9,27 @@ public class Solution350_IntersectionOfTwoArraysII {
     //time:     O(m+n)
     //space:    O(min(m,n))
     public int[] intersect(int[] nums1, int[] nums2) {
-        Map<Integer, Integer> map = new HashMap<>();
-        List<Integer> resList = new ArrayList<>();
-        for (int x : nums1) {
-            map.put(x, map.getOrDefault(x, 0) + 1);
-        }
-        for (int x : nums2) {
-            if (map.get(x)>0){
-                resList.add(x);
-                map.put(x,map.get(x)-1);
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        List<Integer> res = new ArrayList<>();
+        int i1 =0,i2=0;
+        while (i1<nums1.length&&i2<nums2.length){
+            int n1 = nums1[i1];
+            int n2 = nums2[i2];
+            while (n1==n2){
+                res.add(n1);
+                n1 = nums1[i1++];
+                n2 = nums2[i2++];
             }
+            if (n1<n2)
+                i1++;
+            else i2++;
         }
-        int[] res = new int[resList.size()];
+        int[] resList = new int[res.size()];
         int index=0;
-        for (int x:resList)
-            res[index++]= x;
-        return res;
+        for (int x:res)
+            resList[index++] = x;
+        return resList;
+
     }
 }
