@@ -10,16 +10,18 @@ public class Solution205_IsomorphicStrings {
         isIsomorphic(a,b);
     }
     public static boolean isIsomorphic(String s, String t) {
-        int[] m1 = new int[256];
-        int[] m2 = new int[256];
-        Arrays.fill(m1,-1);
-        Arrays.fill(m2,-1);
-
-        int n = s.length();
-        for (int i = 0; i < n; i++) {
-            if (m1[s.charAt(i)] != m2[t.charAt(i)]) return false;
-            m1[s.charAt(i)] = i;
-            m2[t.charAt(i)] = i;
+        if (s.length()!=t.length())
+            return false;
+        int[] map1 = new int[128];
+        int[] map2 = new int[128];
+        Arrays.fill(map1,-1);
+        Arrays.fill(map2,-1);
+        for (int i=0;i<s.length();++i){
+            char c1 = s.charAt(i);
+            char c2 = t.charAt(i);
+            if (map1[c1]!=map2[c2])
+                return false;
+            map1[c1] =map2[c2] = i;
         }
         return true;
     }

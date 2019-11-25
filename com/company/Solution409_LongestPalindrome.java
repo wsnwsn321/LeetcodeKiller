@@ -9,20 +9,20 @@ public class Solution409_LongestPalindrome {
 
     }
     public int longestPalindrome(String s) {
-        boolean containOdd=false;
         Map<Character,Integer> map = new HashMap<>();
+        int res = 0;
+        int singleCount =0;
         for (char ch:s.toCharArray()){
             map.put(ch,map.getOrDefault(ch,0)+1);
         }
-        int res =0, maxOdd =0;
-        for (Character ch:map.keySet()){
+        for (char ch:map.keySet()){
             if (map.get(ch)%2==0)
                 res+=map.get(ch);
             else{
+                singleCount++;
                 res+=map.get(ch)-1;
-                containOdd =true;
             }
         }
-        return containOdd?res+1:res;
+        return singleCount>2?res+1:res;
     }
 }
