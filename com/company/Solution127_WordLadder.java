@@ -8,35 +8,34 @@ public class Solution127_WordLadder {
     }
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         Queue<String> q = new LinkedList<>();
-        Set<String> wl = new HashSet<>(wordList);
-        if (!wordList.contains(endWord)) return 0;
-        int res=1;
-        //Set<String> visited = new HashSet<>();
+        Set<String> list = new HashSet<>(wordList);
+        if (!list.contains(endWord)) return 0;
+        int length=0;
         q.offer(beginWord);
-        while (!q.isEmpty()){
+        while (q.size()>0){
             int size = q.size();
-            while (size>0){
+            for (int i=0;i<size;++i){
                 String cur = q.poll();
-                if (cur.equals(endWord)) return res;
-                //visited.add(cur);
-                for (String x:neighbors(cur,wl)){
+                if (cur.equals(endWord))
+                    return length;
+                for (String x:neighbors(cur,list)){
                     q.offer(x);
                 }
-                size--;
             }
-            res++;
+            length++;
         }
-        return res;
+        return 0;
     }
+
     public List<String> neighbors(String s, Set<String> wordList){
-        List<String> res = new LinkedList<>();
-        for(int i=0;i<s.length();i++){
-            char [] chars = s.toCharArray();
-            for(char ch = 'a'; ch <= 'z'; ch++){
-                chars[i] = ch;
-                String word = new String(chars);
-                if(wordList.remove(word)){
-                    res.add(word);
+        List<String> res = new ArrayList<>();
+        for (int i=0;i<s.length();++i){
+            char[] sc = s.toCharArray();
+            for (char ch = 'a';ch<='z';++ch){
+                sc[i] = ch;
+                String neighbour = new String(sc);
+                if (wordList.remove(neighbour)){
+                    res.add(neighbour);
                 }
             }
         }

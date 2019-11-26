@@ -17,11 +17,12 @@ public class Solution129_SumRoottoLeafNumbers {
     public int sumNumbers(TreeNode root) {
         return sum(root,0);
     }
-    public int sum(TreeNode root, int sum){
+    public int sum(TreeNode root, int num){
         if (root==null) return 0;
-        if (root.left==null&&root.right==null) return sum*10+root.val;
-        int left = sum(root.left,sum*10+root.val);
-        int right = sum(root.right,sum*10+root.val);
+        if (root.left==null&&root.right==null)
+            return num*10+root.val;
+        int left = sum(root.left,num*10+root.val);
+        int right = sum(root.right,num*10+root.val);
         return left+right;
     }
 

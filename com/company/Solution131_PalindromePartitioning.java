@@ -24,11 +24,11 @@ public class Solution131_PalindromePartitioning {
     }
 
     public boolean isPalindrome(String s,int left,int right){
-        while(left<right&&s.charAt(left)==s.charAt(right)){
-            left++;
-            right--;
+        while (left<right){
+            if (s.charAt(left++) !=s.charAt(right--))
+                return false;
         }
-        return left>=right;
+        return true;
     }
 
 }

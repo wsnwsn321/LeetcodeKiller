@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.List;
+
 public class Solution148_SortList {
     public class ListNode {
       int val;
@@ -10,35 +12,35 @@ public class Solution148_SortList {
     public static void main(String[] args) {
 
     }
-    public ListNode sortList(ListNode head) {
-        ListNode slow = head, fast = head,pre =null;
+    public ListNode sortList(ListNode head){
+        if (head == null || head.next == null)
+            return head;
+        ListNode slow= head,fast = head,pre = null;
         while (fast!=null&&fast.next!=null){
             pre = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
-        pre.next = null;
-        ListNode l1 = sortList(head);
-        ListNode l2 = sortList(slow);
-        return merge(l1,l2);
+        pre.next =null;
+        return merge(sortList(head),sortList(slow));
 
     }
-
     public ListNode merge(ListNode l1, ListNode l2){
-        ListNode dummyhead = new ListNode(0),head = dummyhead;
+        ListNode dummy = new ListNode(0);
+        ListNode head = dummy;
         while (l1!=null||l2!=null){
-            int v1 = l1==null?Integer.MAX_VALUE:l1.val;
-            int v2 = l2==null?Integer.MAX_VALUE:l2.val;
-            if (v1<v2){
+            int n1 = l1==null?Integer.MAX_VALUE:l1.val;
+            int n2 = l2==null?Integer.MAX_VALUE:l2.val;
+            if (n1<n2){
                 head.next = l1;
-                l1 =l1.next;
+                l1 = l1.next;
             }
             else {
-                head.next=l2;
-                l2=l2.next;
+                head.next = l2;
+                l2 = l2.next;
             }
             head = head.next;
         }
-        return dummyhead.next;
+        return dummy.next;
     }
 }

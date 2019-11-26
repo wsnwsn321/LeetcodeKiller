@@ -1,10 +1,7 @@
 package com.company;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Solution20_ValidParentheses {
     public static void main(String[] args) {
@@ -13,18 +10,19 @@ public class Solution20_ValidParentheses {
     //time:     O(n)
     //space:    O(n)
     public  boolean isValid(String s) {
-       List<Character> container = new ArrayList<>();
-       if (s.length()==0) return true;
-       char[] cs = s.toCharArray();
-       for (char x: cs){
-           if (x=='['||x=='{'||x=='(') container.add(x);
-           else if (container.size()==0) return false;
-           else if((x==']'&&container.get(container.size()-1)=='[')||(x=='}'&&container.get(container.size()-1)=='{')||(x==')'&&container.get(container.size()-1)=='(')){
-               container.remove(container.size()-1);
-           }
-           else return false;
-       }
-       return container.size()==0;
+        Stack<Character> stack = new Stack<>();
+        for (char ch:s.toCharArray()){
+            if (ch=='('||ch=='{'||ch=='['){
+                stack.push(ch);
+            }
+            else if (stack.isEmpty())
+                return false;
+            else if ((ch==')'&&stack.peek()=='(')||(ch==']'&&stack.peek()=='[')||(ch=='}'&&stack.peek()=='{')){
+                stack.pop();
+            }
+            else return false;
+        }
+        return stack.size()==0;
     }
 
 }
