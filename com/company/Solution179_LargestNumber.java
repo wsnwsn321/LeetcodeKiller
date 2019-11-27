@@ -7,23 +7,22 @@ public class Solution179_LargestNumber {
 
     }
     public String largestNumber(int[] nums) {
-        PriorityQueue<Integer> sorted = new PriorityQueue<>(new Comparator<Integer>() {
+        PriorityQueue<String> pq = new PriorityQueue<>(new Comparator<String>() {
             @Override
-            public int compare(Integer o1, Integer o2) {
-                if (o1.equals(o2)) return 0;
-                String s1=String.valueOf(o1);
-                String s2=String.valueOf(o2);
-                String str1 = s1+s2;
-                String str2 = s2+s1;
-                return str2.compareTo(str1);
+            public int compare(String o1, String o2) {
+                String a = o1+o2;
+                String b = o2+o1;
+                return b.compareTo(a);
             }
         });
-        for (int x:nums) sorted.add(x);
-        String res="";
-        while (sorted.size()>0){
-            res+=sorted.poll();
+        for (int x:nums){
+            pq.offer(String.valueOf(x));
         }
-        if (res.charAt(0)=='0') return "0";
-        return res;
+        StringBuilder sb = new StringBuilder();
+        while (pq.size()>0){
+            sb.append(pq.poll());
+        }
+        if (sb.charAt(0)=='0') return "0";
+        return sb.toString();
     }
 }

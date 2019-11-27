@@ -15,8 +15,9 @@ public class Solution208_ImplementTrie {
         }
     }
     class Trie {
-        /** Initialize your data structure here. */
+
         TrieNode root;
+        /** Initialize your data structure here. */
         public Trie() {
             root = new TrieNode();
         }
@@ -24,11 +25,10 @@ public class Solution208_ImplementTrie {
         /** Inserts a word into the trie. */
         public void insert(String word) {
             TrieNode node = root;
-            for (char x:word.toCharArray()){
-                if (node.children[x-'a']==null){
-                    node.children[x-'a'] = new TrieNode(x);
-                }
-                node = node.children[x-'a'];
+            for (char ch:word.toCharArray()){
+                if (node.children[ch-'a']==null)
+                    node.children[ch-'a'] = new TrieNode();
+                node = node.children[ch-'a'];
             }
             node.isWord = true;
         }
@@ -36,9 +36,10 @@ public class Solution208_ImplementTrie {
         /** Returns if the word is in the trie. */
         public boolean search(String word) {
             TrieNode node = root;
-            for (char x:word.toCharArray()){
-                if (node.children[x-'a']==null) return false;
-                node = node.children[x-'a'];
+            for (char ch:word.toCharArray()){
+                if (node.children[ch-'a']==null)
+                    return false;
+                node = node.children[ch-'a'];
             }
             return node.isWord;
         }
@@ -46,9 +47,10 @@ public class Solution208_ImplementTrie {
         /** Returns if there is any word in the trie that starts with the given prefix. */
         public boolean startsWith(String prefix) {
             TrieNode node = root;
-            for (char x:prefix.toCharArray()){
-                if (node.children[x-'a']==null) return false;
-                node = node.children[x-'a'];
+            for (char ch:prefix.toCharArray()){
+                if (node.children[ch-'a']==null)
+                    return false;
+                node = node.children[ch-'a'];
             }
             return true;
         }

@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Solution173_BinarySearchTreeIterator {
     public static void main(String[] args) {
@@ -16,29 +13,29 @@ public class Solution173_BinarySearchTreeIterator {
         TreeNode(int x) { val = x; }
     }
     class BSTIterator {
-        List<Integer> sorted;
-        int index;
+        Queue<Integer> q = new LinkedList<>();
         public BSTIterator(TreeNode root) {
-            sorted = new ArrayList<>();
-            inorderTraversal(root);
-            index=0;
-
-        }
-        public void inorderTraversal(TreeNode root){
-            inorderTraversal(root.left);
-            sorted.add(root.val);
-            inorderTraversal(root.right);
+            Stack<TreeNode> s = new Stack<>();
+            TreeNode cur = root;
+            while (cur!=null||s.size()>0){
+                while (cur!=null){
+                    cur = cur.left;
+                    s.push(cur);
+                }
+                cur = s.pop();
+                q.offer(cur.val);
+                cur = cur.right;
+            }
         }
 
         /** @return the next smallest number */
         public int next() {
-            return sorted.get(index++);
-
+            return q.poll();
         }
 
         /** @return whether we have a next smallest number */
         public boolean hasNext() {
-            return index<sorted.size();
+            return q.size()>0;
         }
     }
 }

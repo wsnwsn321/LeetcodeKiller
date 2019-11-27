@@ -15,7 +15,6 @@ public class Solution934_ShortestBridge {
             for(int j=0;j<A[0].length;++j){
                 if(A[i][j]==1) {
                     index_i =i;index_j=j;
-                    q.add(new int[]{i,j});
                     foundIsland =true;
                     break;
                 }
@@ -23,33 +22,24 @@ public class Solution934_ShortestBridge {
             if(foundIsland) break;
         }
         DFS(index_i,index_j,A,q);
-        int distance=0;
-        int[] d= {0,1,-1};
-        while(!q.isEmpty()){
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        int ans=0;
+        while (q.size()>0){
+            ans++;
             int size = q.size();
-            for(int i=0;i<size;++i) {
-                int[] pos = q.poll();
-                for (int k = 0; k < 4; ++k) {
-                    int x = 0, y = 0;
-                    if (k < 2) {
-                        x = pos[0] + d[0];
-                        y = pos[1] + d[k + 1];
-                    } else {
-                        x = pos[0] + d[k - 1];
-                        y = pos[1] + d[0];
-                    }
-                    if (x < 0 || x >= A.length || y < 0 || y >= A[0].length) continue;
-                    if (A[x][y] == 1) return distance;
-                    else if (A[x][y] == 2) continue;
-                    else {
-                        A[x][y] = 2;
-                        q.add(new int[]{x, y});
-                    }
+            for (int i=0;i<size;++i){
+                int[] cur =q.poll();
+                for (int p=0;p<dir.length;++p){
+                    int x = cur[0]+dir[p][0];
+                    int y = cur[1]+dir[p][1];
+                    if (x<0||x>=A.length||y<0||y>=A[0].length||A[x][y]==2) continue;
+                    if (A[x][y]==1)
+                        return ans;
+                    q.offer(new int[]{x,y});
                 }
             }
-            distance++;
         }
-        return distance;
+        return 1;
     }
     public void DFS(int i,int j, int[][]A,Queue<int[]> q ){
         if(i<0||i>=A.length||j<0||j>=A[0].length||A[i][j]==0||A[i][j]==2) return;

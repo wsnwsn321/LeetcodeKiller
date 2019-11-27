@@ -1,15 +1,13 @@
-package com.company;
+package com.company.CompanyList.Amazon;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Stack;
 
-public class Solution20_ValidParentheses {
+public class ValidParenethesisChanged {
     public static void main(String[] args) {
-
+        String s = "''[]()(())'{}''";
+        System.out.println(isValid(s));
     }
-    //time:     O(n)
-    //space:    O(n)
-    public  boolean isValid(String s) {
+    public static boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         for (char ch:s.toCharArray()){
             if (ch=='('||ch=='{'||ch=='['){
@@ -21,10 +19,15 @@ public class Solution20_ValidParentheses {
                 stack.pop();
             else if(ch == '}' && !stack.empty() && stack.peek() == '{')
                 stack.pop();
+            else if (ch=='\''){
+                if (stack.isEmpty()||stack.peek()!=ch){
+                    stack.push(ch);
+                }
+                else stack.pop();
+            }
             else
                 return false;
         }
         return stack.size()==0;
     }
-
 }

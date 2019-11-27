@@ -1,7 +1,6 @@
 package com.company;
 
-import java.util.Arrays;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Solution215_KthLargestElement {
     public static void main(String[] args) {
@@ -14,22 +13,22 @@ public class Solution215_KthLargestElement {
         int max=Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
         for (int x:nums){
-            if (x>max) max = x;
-            if (x<min) min = x;
+            max = Math.max(max,x);
+            min = Math.min(min,x);
         }
-        int[] count = new int[max-min+1];
-        int res =0;
+        int[] range = new int[max-min+1];
         for (int x:nums){
-            count[x-min]++;
+            range[x-min]++;
         }
-        int kth=1;
-        for (int i=count.length-1;i>=0;--i){
-            while (count[i]>0){
-                count[i]--;
-                kth++;
-                if (kth==k) return min+i;
+        for (int i=range.length-1;i>=0;--i){
+            while (range[i]>0){
+                k--;
+                range[i]--;
+                if (k==0)
+                    return min+i;
             }
         }
         return 0;
+
     }
 }
