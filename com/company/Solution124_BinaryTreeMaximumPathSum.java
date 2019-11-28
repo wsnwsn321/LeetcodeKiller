@@ -19,16 +19,16 @@ public class Solution124_BinaryTreeMaximumPathSum {
     public static int helper(TreeNode root){
         if (root==null)
             return 0;
-        //cur[0] returns max as cur node is the top of my path (turning point)
-        //cur[1] returns max as cur node is in one node in the path
-        int cur,top;
+        //node means current node is in the path(not the turning point)
+        //top means current node is the turning point
+        int node,top;
         int left = helper(root.left);
         int right = helper(root.right);
         left = Math.max(0,left);
         right =Math.max(0,right);
-        cur = root.val+left+right;
-        top = root.val+Math.max(left,right);
-        res = Math.max(res,Math.max(cur,top));
-        return top;
+        top = root.val+left+right;
+        node = root.val+Math.max(left,right);
+        res = Math.max(res,Math.max(node,top));
+        return node;
     }
 }

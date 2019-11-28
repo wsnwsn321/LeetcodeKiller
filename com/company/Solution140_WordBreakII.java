@@ -14,18 +14,15 @@ public class Solution140_WordBreakII {
         if (map.containsKey(s))
             return map.get(s);
         List<String> res = new ArrayList<>();
-        if (s.length()==0){
-            res.add("");
-            return res;
-        }
         for (String cur:wordDict){
             if (s.indexOf(cur)==0){
-                List<String> temp = backtracking(s.substring(cur.length()),wordDict);
-                for (String sub:temp){
-                    if (sub!="")
-                        res.add(cur+" "+sub);
-                    else
-                        res.add(cur);
+                if (s.substring(cur.length()).length()==0)
+                    res.add(cur);
+                else{
+                    List<String> temp = backtracking(s.substring(cur.length()),wordDict);
+                    for (String sub:temp){
+                            res.add(cur+" "+sub);
+                    }
                 }
             }
         }

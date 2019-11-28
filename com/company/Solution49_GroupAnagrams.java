@@ -12,14 +12,21 @@ public class Solution49_GroupAnagrams {
     //space:    O(nK)
     public static List<List<String>> groupAnagrams(String[] strs)
     {
-        Map<String,List<String>> m = new HashMap<>();
-        for (String x:strs){
-            char[] cx = x.toCharArray();
-            Arrays.sort(cx);//KlogK, where k is the length of longest string
-            String key = String.valueOf(cx);
-            m.putIfAbsent(key,new ArrayList<>());
-            m.get(key).add(x);
+        if (strs.length == 0) return new ArrayList();
+        Map<String, List> ans = new HashMap<String, List>();
+        int[] count = new int[26];
+        for (String s : strs) {
+            Arrays.fill(count, 0);
+            for (char c : s.toCharArray()) count[c - 'a']++;
+
+            StringBuilder sb = new StringBuilder("");
+            for (int i = 0; i < 26; i++) {
+                sb.append(count[i]);
+            }
+            String key = sb.toString();
+            if (!ans.containsKey(key)) ans.put(key, new ArrayList());
+            ans.get(key).add(s);
         }
-        return new ArrayList<>(m.values());
+        return new ArrayList(ans.values());
     }
 }

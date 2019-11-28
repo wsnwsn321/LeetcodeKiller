@@ -8,17 +8,17 @@ public class Solution706_DesignHashMap {
     }
 
     class MyHashMap {
-        class ListNode{
+        class Node{
+            Node next;
             int key;
             int val;
-            ListNode next;
-            ListNode(int key, int val) {
+            Node(){}
+            Node(int key,int val){
                 this.key = key;
-                this.val = val;
+                this.val =val;
             }
         }
-        final ListNode[] nodes = new ListNode[10000];
-
+        Node[] buckets = new Node[10000];
         /** Initialize your data structure here. */
         public MyHashMap() {
 
@@ -26,43 +26,43 @@ public class Solution706_DesignHashMap {
 
         /** value will always be non-negative. */
         public void put(int key, int value) {
-            int hashKey = key%nodes.length;
-            if (nodes[hashKey] == null)
-                nodes[hashKey] = new ListNode(-1, -1);
-            ListNode prev = findPrev(nodes[hashKey],key);
-            if (prev.next==null)
-                prev.next =new ListNode(key,value);
+            int hashKey = key%buckets.length;
+            if (buckets[hashKey]==null)
+                buckets[hashKey] = new Node(-1,-1);
+            Node prev = findPrev(key);
+            if (prev.next==null){
+                prev.next = new Node(key,value);
+            }
             else
                 prev.next.val = value;
         }
 
         /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
         public int get(int key) {
-            int hashKey = key%nodes.length;
-            if (nodes[hashKey] == null)
-                return -1;
-            ListNode prev = findPrev(nodes[hashKey],key);
-            if (prev.next==null) return -1;
-            return prev.next.val;
+            int hashCode = key%buckets.length;
+            if (buckets[hashCode]==null) return -1;
+            Node prev = findPrev(key);
+            return prev.next==null?-1:prev.next.val;
         }
 
         /** Removes the mapping of the specified value key if this map contains a mapping for the key */
         public void remove(int key) {
-            int hashKey = key%nodes.length;
-            if (nodes[hashKey] == null) return;
-            ListNode prev = findPrev(nodes[hashKey],key);
-            if (prev.next==null) return;
+            int hashCode = key%buckets.length;
+            if (buckets[hashCode]==null) return;
+            Node prev = findPrev(key);
+            if (prev.next==null)
+                return;
             prev.next = prev.next.next;
         }
-        ListNode findPrev(ListNode bucket, int key) {
-            ListNode node = bucket, prev = null;
-            while (node != null && node.key != key) {
-                prev = node;
-                node = node.next;
+        public Node findPrev(int key){
+            int hashCode = key%buckets.length;
+            Node cur = buckets[hashCode], pre = null;
+            while (cur!=null&&cur.key!=key){
+                pre = cur;
+                cur = cur.next;
             }
-            return prev;
+            return pre;
         }
-
     }
 
 

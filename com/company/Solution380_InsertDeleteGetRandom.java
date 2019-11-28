@@ -7,21 +7,21 @@ public class Solution380_InsertDeleteGetRandom {
 
     }
     class RandomizedSet {
-        Map<Integer,Integer> map;
         List<Integer> list;
+        Map<Integer,Integer> map;
+
         /** Initialize your data structure here. */
         public RandomizedSet() {
-            map = new HashMap<>();
             list = new ArrayList<>();
+            map = new HashMap<>();
         }
 
         /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
         public boolean insert(int val) {
-            if (map.containsKey(val))
-                return false;
-            map.put(val,list.size());
+            if (map.containsKey(val)) return false;
             list.add(val);
-            return  true;
+            map.put(val,list.size()-1);
+            return true;
         }
 
         /** Removes a value from the set. Returns true if the set contained the specified element. */
@@ -29,7 +29,6 @@ public class Solution380_InsertDeleteGetRandom {
             if (!map.containsKey(val)) return false;
             int index = map.get(val);
             list.set(index,list.get(list.size()-1));
-            map.put(list.get(list.size()-1),index);
             list.remove(list.size()-1);
             map.remove(val);
             return true;
@@ -37,9 +36,9 @@ public class Solution380_InsertDeleteGetRandom {
 
         /** Get a random element from the set. */
         public int getRandom() {
-            Random r = new Random();
-            int random = r.nextInt(list.size());
-            return list.get(random);
+            Random rand = new Random();
+            int r = rand.nextInt(list.size());
+            return list.get(r);
         }
     }
 }

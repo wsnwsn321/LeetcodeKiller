@@ -31,21 +31,21 @@ public class Solution212_WordSearchII {
     }
 
     public void DFS(char[][] board, int i, int j,TrieNode root) {
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) return;
+        if (i<0||j<0||i>=board.length||j>=board[0].length) return;
         char cur = board[i][j];
-        if (cur == '#' || root.children[cur - 'a'] == null) return;
-        root = root.children[cur - 'a'];
-        //not part of our trie or cur's visited
-        if (root.word != null) {
+        if (cur=='#'||root.children[cur-'a']==null) return;
+        root = root.children[cur-'a'];
+        if (root.word!=null){
             res.add(root.word);
             root.word = null;
         }
         board[i][j] = '#';
-        DFS(board, i + 1, j, root);
-        DFS(board,  i - 1, j, root);
-        DFS(board,  i, j + 1, root);
-        DFS(board,  i, j - 1, root);
+        DFS(board,i+1,j,root);
+        DFS(board,i-1,j,root);
+        DFS(board,i,j+1,root);
+        DFS(board,i,j-1,root);
         board[i][j] = cur;
+
     }
 
     public TrieNode buildTrie(String[] words){
