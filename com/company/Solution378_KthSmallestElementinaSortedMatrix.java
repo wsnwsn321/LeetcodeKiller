@@ -1,11 +1,13 @@
 package com.company;
 
+import java.util.PriorityQueue;
+
 public class Solution378_KthSmallestElementinaSortedMatrix {
     public static void main(String[] args) {
         int[][] b = new int[][]{{1,5,9},{7,11,13},{12,13,15}};
-        kthSmallest(b,8);
+        //kthSmallest(b,8);
     }
-    public static int kthSmallest(int[][] matrix, int k) {
+    public int kthSmallest(int[][] matrix, int k) {
         int n = matrix.length;
         int lo = matrix[0][0], hi = matrix[n - 1][n - 1];
         while (lo <= hi) {
@@ -16,7 +18,7 @@ public class Solution378_KthSmallestElementinaSortedMatrix {
         }
         return lo;
     }
-    private static int getLessEqual(int[][] matrix, int val) {
+    private int getLessEqual(int[][] matrix, int val) {
         int res = 0;
         int n = matrix.length, i = n - 1, j = 0;
         while (i >= 0 && j < n) {
@@ -28,4 +30,5 @@ public class Solution378_KthSmallestElementinaSortedMatrix {
         }
         return res;
     }
+
 }

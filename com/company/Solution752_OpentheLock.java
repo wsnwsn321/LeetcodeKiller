@@ -7,38 +7,40 @@ public class Solution752_OpentheLock {
 
     }
     public int openLock(String[] deadends, String target) {
-        List<String> d = new ArrayList<>(deadends.length);
-        Set<String> visited =new HashSet<>();
-        for (String x:deadends) d.add(x);
-        int step=0;
+        Set<String> dead = new HashSet<>();
+        for (String x:deadends){
+            dead.add(x);
+        }
+        if (dead.contains("0000")) return -1;
         Queue<String> q = new LinkedList<>();
-        q.add("0000");
-        while (!q.isEmpty()){
+        Set<String> visited = new HashSet<>();
+        int res=0;
+        q.offer("0000");
+        visited.add("0000");
+        while (q.size()>0){
             int size = q.size();
-            while (size>0){
-                String current = q.poll();
-                visited.add(current);
-                if (current.equals(target)) return step;
-                StringBuilder sb = new StringBuilder(current);
-                for(int i = 0; i < 4; i ++) {
-                    char c = sb.charAt(i);
-                    String s1 = sb.substring(0, i) + (c == '9' ? 0 : c - '0' + 1) + sb.substring(i + 1);
-                    String s2 = sb.substring(0, i) + (c == '0' ? 9 : c - '0' - 1) + sb.substring(i + 1);
-                    if (!visited.contains(s1)&&!d.contains(s1)){
-                        q.add(s1);
+            for (int i=0;i<size;++i){
+                String cur = q.poll();
+                if (cur.equals(target))
+                    return res;
+                StringBuilder sb = new StringBuilder(cur);
+                for (int j=0;j<4;++j){
+                    char c = sb.charAt(j);
+                    String s1 = sb.substring(0, j) + (c == '9' ? 0 : c - '0' + 1) + sb.substring(j + 1);
+                    String s2 = sb.substring(0, j) + (c == '0' ? 9 : c - '0' - 1) + sb.substring(j + 1);
+                    if (!visited.contains(s1)&&!dead.contains(s1)){
+                        q.offer(s1);
                         visited.add(s1);
                     }
-                    if (!visited.contains(s2)&&!d.contains(s2)){
-                        q.add(s2);
+                    if (!visited.contains(s2)&&!dead.contains(s2)){
+                        q.offer(s2);
                         visited.add(s2);
                     }
                 }
-                size--;
+                res++;
             }
-            step++;
-
         }
-        return -1;
+        return res;
     }
 
 

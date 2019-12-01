@@ -8,17 +8,15 @@ public class Solution763_PartitionLabel {
 
     }
     public List<Integer> partitionLabels(String S) {
-        int[] lastOcc = new int[26];
         List<Integer> res = new ArrayList<>();
+        int l=0;
+        int lastIndex = 0;
         for (int i=0;i<S.length();++i){
-            lastOcc[S.charAt(i)-'a'] = i;
-        }
-        int l=0,r=0;
-        for (int i=0;i<S.length();++i){
-            r = Math.max(r,lastOcc[S.charAt(i)-'a']);
-            if (i==r){
-                res.add(r-l+1);
-                l = r+1;
+            char ch = S.charAt(i);
+            lastIndex = Math.max(lastIndex,S.lastIndexOf(ch));
+            if (i==lastIndex){
+                res.add(i-l+1);
+                l =i+1;
             }
         }
         return res;

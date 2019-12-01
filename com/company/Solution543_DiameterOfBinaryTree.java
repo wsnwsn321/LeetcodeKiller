@@ -10,12 +10,18 @@ public class Solution543_DiameterOfBinaryTree {
     public static void main(String[] args) {
 
     }
+    int ans =0;
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root==null)
-            return 0;
-        int left = diameterOfBinaryTree(root.left);
-        int right = diameterOfBinaryTree(root.right);
-        return left+right;
+        getDiameter(root);
+        return ans;
+    }
+
+    public int  getDiameter(TreeNode root){
+        if (root==null) return 0;
+        int lheight = getDiameter(root.left);
+        int rheight = getDiameter(root.right);
+        ans = Math.max(ans,lheight+rheight);
+        return Math.max(lheight,rheight)+1;
     }
 
 

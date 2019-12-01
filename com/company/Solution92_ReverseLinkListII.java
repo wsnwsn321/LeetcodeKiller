@@ -10,27 +10,25 @@ public class Solution92_ReverseLinkListII {
 
     }
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode cur = head;
-        ListNode pre =dummy;
-        for (int i = 1; i < m ; ++i) {
-            pre =cur;
+        ListNode dummyhead = new ListNode(0);
+        dummyhead.next = head;
+        ListNode pre = dummyhead,cur = head;
+        for (int i=1;i<m;++i){
+            pre = cur;
             cur = cur.next;
         }
-        //save the node before the reverse begin
-        ListNode preReverseNode = pre;
-        ListNode reverseStart = cur;
-        for(int i =m;i<=n;++i){
+        //cur is now head of reverse,pre is going to connect to reversed head
+        ListNode preReversed = pre;
+        ListNode reversedTail = cur;
+        for (int i=m;i<n;++i){
             ListNode temp = cur.next;
             cur.next = pre;
-            pre = cur;
+            pre =cur;
             cur = temp;
         }
-        reverseStart.next = cur;
-        preReverseNode.next = pre;
-        return dummy.next;
-
+        preReversed.next = pre;
+        reversedTail.next = cur;
+        return dummyhead.next;
     }
 
 }

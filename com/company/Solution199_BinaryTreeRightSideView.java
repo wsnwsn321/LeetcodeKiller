@@ -17,23 +17,19 @@ public class Solution199_BinaryTreeRightSideView {
 
     }
     public List<Integer> rightSideView(TreeNode root) {
-       Queue<TreeNode> queue = new LinkedList<>();
         List<Integer> res = new ArrayList<>();
-        queue.offer(root);
-        res.add(root.val);
-       while (queue.size()>0){
-           int size = queue.size();
-           while (size>0){
-               TreeNode cur = queue.poll();
-               if (cur.left!=null)
-                   queue.offer(cur.left);
-               if (cur.right!=null)
-                   queue.offer(cur.right);
-               size--;
-               if (size==0) res.add(cur.val);
-           }
-       }
-       return res;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while (q.size()>0){
+            int size = q.size();
+            for (int i=0;i<size;++i){
+                TreeNode cur = q.poll();
+                if (i==0) res.add(cur.val);
+                if (cur.right!=null) q.offer(cur.right);
+                if (cur.left!=null) q.offer(cur.left);
+            }
+        }
+        return res;
     }
 
 

@@ -19,7 +19,7 @@ public class Solution325_MaximumSizeSubarraySumEqualsk {
             if (map.containsKey(sum-k)){
                 res = Math.max(res, i-map.get(sum-k));
             }
-            if (!map.containsKey(sum-k))
+            if (!map.containsKey(sum))
                 map.put(sum,i);
         }
         return res;

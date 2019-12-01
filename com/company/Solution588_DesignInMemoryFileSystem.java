@@ -6,65 +6,58 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Solution588_DesignInMemoryFileSystem {
-    public class FileSystem {
+    class FileSystem {
         class File {
             boolean isfile = false;
+            //string is the path of the file/directory
             HashMap< String, File > files = new HashMap < > ();
             String content = "";
         }
         File root;
         public FileSystem() {
-            root = new File();
+            File root = new File();
         }
 
-        public List< String > ls(String path) {
-            File t = root;
-            List < String > files = new ArrayList< >();
-            if (!path.equals("/")) {
-                String[] d = path.split("/");
-                for (int i = 1; i < d.length; i++) {
-                    t = t.files.get(d[i]);
-                }
-                if (t.isfile) {
-                    files.add(d[d.length - 1]);
-                    return files;
-                }
-            }
-            List < String > res_files = new ArrayList < > (t.files.keySet());
-            Collections.sort(res_files);
-            return res_files;
+        public List<String> ls(String path) {
+            return null;
         }
 
+        //creating directories
         public void mkdir(String path) {
-            File t = root;
-            String[] d = path.split("/");
-            for (int i = 1; i < d.length; i++) {
-                if (!t.files.containsKey(d[i]))
-                    t.files.put(d[i], new File());
-                t = t.files.get(d[i]);
+            File node = root;
+            String[] ds = path.split("/");
+            for (String d:ds){
+                if (!node.files.containsKey(d))
+                    node.files.put(d,new File());
+                node = node.files.get(d);
             }
         }
 
         public void addContentToFile(String filePath, String content) {
-            File t = root;
-            String[] d = filePath.split("/");
-            for (int i = 1; i < d.length - 1; i++) {
-                t = t.files.get(d[i]);
+            File node = root;
+            String[] ds = filePath.split("/");
+            for (int i=1;i<ds.length-1;++i){
+                node = node.files.get(ds[i]);
             }
-            if (!t.files.containsKey(d[d.length - 1]))
-                t.files.put(d[d.length - 1], new File());
-            t = t.files.get(d[d.length - 1]);
-            t.isfile = true;
-            t.content = t.content + content;
+            if (node.files.containsKey(ds[ds.length-1])){
+                node.files.get(ds[ds.length-1]).content+=content;
+            }
+            else {
+                node.files.put(ds[ds.length-1],new File());
+                node = node.files.get(ds[ds.length-1]);
+                node.isfile = true;
+                node.content = content;
+            }
+
         }
 
         public String readContentFromFile(String filePath) {
-            File t = root;
-            String[] d = filePath.split("/");
-            for (int i = 1; i < d.length - 1; i++) {
-                t = t.files.get(d[i]);
+            File node = root;
+            String[] ds = filePath.split("/");
+            for (int i=1;i<filePath.length();++i){
+                node = node.files.get(ds[i]);
             }
-            return t.files.get(d[d.length - 1]).content;
+            return node.content;
         }
     }
 

@@ -10,23 +10,21 @@ public class Solution547_FriendCircles {
 
     }
     public int findCircleNum(int[][] M) {
-        int group = 0;
+        int res=0;
         Set<Integer> connected = new HashSet<>();
-        Queue<Integer> q= new LinkedList<>();
         for (int i=0;i<M.length;++i){
             if (!connected.contains(i)){
-                q.offer(i);
-                while (q.size()>0){
-                    int cur = q.poll();
-                    connected.add(cur);
-                    for (int j=0;j<M.length;++j){
-                        if (!connected.contains(j)&&M[cur][j]==1)
-                            q.offer(j);
-                    }
-                }
-                group++;
+                res++;
+                dfs(i,M,connected);
             }
         }
-        return group;
+        return res;
+    }
+    public void dfs(int i,int[][] M, Set<Integer> connected){
+        connected.add(i);
+        for (int j=0;j<M[0].length;++j){
+            if (!connected.contains(j)&&M[i][j]==1)
+                dfs(j,M,connected);
+        }
     }
 }

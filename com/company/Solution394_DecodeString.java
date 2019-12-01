@@ -8,24 +8,26 @@ public class Solution394_DecodeString {
     }
     public String decodeString(String s) {
         Stack<Integer> nums = new Stack<>();
-        Stack<StringBuilder> strs = new Stack<>();
+        Stack<StringBuilder> strings = new Stack<>();
+        int num = 0;
         StringBuilder cur = new StringBuilder();
-        int num=0;
         for (char ch:s.toCharArray()){
             if (Character.isDigit(ch)){
-                num+=num*10+ch-'0';
+                num = num*10+ch-'0';
             }
             else if (ch=='['){
                 nums.push(num);
-                strs.push(cur);
+                num = 0;
+                strings.push(cur);
                 cur = new StringBuilder();
-                num =0;
             }
             else if (ch==']'){
+                int times= nums.pop();
                 StringBuilder temp = cur;
-                cur = strs.pop();
-                for (int i=nums.pop();i>=0;--i)
+                cur = strings.pop();
+                for (int i=0;i<times;++i){
                     cur.append(temp);
+                }
             }
             else cur.append(ch);
         }

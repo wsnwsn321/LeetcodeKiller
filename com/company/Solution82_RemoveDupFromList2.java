@@ -16,19 +16,18 @@ public class Solution82_RemoveDupFromList2 {
     //space:    O(1)
     public ListNode deleteDuplicates(ListNode head) {
         ListNode dummy = new ListNode(0);
-        dummy.next =head;
-        ListNode cur = head;
-        ListNode pre = dummy;
+        dummy.next = head;
+        ListNode pre =dummy,cur = head;
         while (cur!=null){
             while (cur.next!=null&&cur.val==cur.next.val){
-                cur =cur.next;
+                cur = cur.next;
             }
-            if (pre.next!=cur){
-                pre.next = cur.next;
-            }
-            else {
+            //no dup found
+            if (pre.next==cur){
                 pre = cur;
             }
+            else
+                pre.next = cur.next;
             cur = cur.next;
         }
         return dummy.next;

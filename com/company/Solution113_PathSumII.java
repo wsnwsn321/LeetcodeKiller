@@ -23,15 +23,15 @@ public class Solution113_PathSumII {
         if (root==null) return;
         path.add(root.val);
         if (root.left==null&&root.right==null){
-            if (sum-root.val==0)
+            if (sum-root.val==0){
                 res.add(new ArrayList<>(path));
+            }
             path.remove(path.size()-1);
             return;
         }
         dfs(root.left,sum-root.val,path);
         dfs(root.right,sum-root.val,path);
         path.remove(path.size()-1);
-
     }
 
 }

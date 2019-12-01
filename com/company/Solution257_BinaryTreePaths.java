@@ -19,17 +19,17 @@ public class Solution257_BinaryTreePaths {
     //time:     O(n)
     //space:    O(n)
     public List<String> binaryTreePaths(TreeNode root){
-        backtrakcing(root,"");
+        dfs(root,"");
         return res;
     }
 
-    public void backtrakcing(TreeNode root,String path){
+    public void dfs(TreeNode root,String path){
         if (root==null) return;
         if (root.left==null&&root.right==null){
-            path+=root.val;
-            res.add(path);
+            res.add(path+root.val);
+            return;
         }
-        backtrakcing(root.left,path+root.val+"->");
-        backtrakcing(root.right,path+root.val+"->");
+        dfs(root.left,path+root.val+"->");
+        dfs(root.right,path+root.val+"->");
     }
 }

@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class Solution297_SerializeandDeserializeBinaryTree {
     public static void main(String[] args) {
@@ -16,25 +14,43 @@ public class Solution297_SerializeandDeserializeBinaryTree {
     }
     public class Codec {
 
+        public StringBuilder rserialize(TreeNode root, StringBuilder sb) {
+            // Recursive serialization.
+            if (root == null) {
+                sb.append("null,");
+            } else {
+                sb.append(root.val + ",");
+                sb = rserialize(root.left, sb);
+                sb = rserialize(root.right, sb);
+            }
+            return sb;
+        }
+
         // Encodes a tree to a single string.
         public String serialize(TreeNode root) {
-            String res = "";
-            Stack<TreeNode> s = new Stack<>();
-            s.push(root);
-            while (!s.isEmpty()){
-                TreeNode cur = s.pop();
-                res+=cur.val;
-                if (cur.right!=null)
-                    s.push(cur.right);
-                if (cur.left!=null)
-                    s.push(cur.left);
+            return rserialize(root, new StringBuilder()).toString();
+        }
+
+        public TreeNode rdeserialize(List<String> l) {
+            // Recursive deserialization.
+            if (l.get(0).equals("null")) {
+                l.remove(0);
+                return null;
             }
-            return res;
+
+            TreeNode root = new TreeNode(Integer.valueOf(l.get(0)));
+            l.remove(0);
+            root.left = rdeserialize(l);
+            root.right = rdeserialize(l);
+
+            return root;
         }
 
         // Decodes your encoded data to tree.
         public TreeNode deserialize(String data) {
-            return null;
+            String[] data_array = data.split(",");
+            List<String> data_list = new LinkedList<String>(Arrays.asList(data_array));
+            return rdeserialize(data_list);
         }
     }
 }

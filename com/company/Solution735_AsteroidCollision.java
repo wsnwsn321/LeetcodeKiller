@@ -12,26 +12,19 @@ public class Solution735_AsteroidCollision {
 
     public static int[] asteroidCollision(int[] asteroids) {
         Stack<Integer> s = new Stack<>();
-        for(int i =0;i<asteroids.length;++i){
-            if(asteroids[i]>0){
-                s.push(asteroids[i]);
+        for (int x:asteroids){
+            if (x>0){
+                s.push(x);
             }
-            else{
-                if(s.isEmpty()||s.peek()<0){
-                    s.push(asteroids[i]);
+            else {
+                while (s.size()>0&&s.peek()>0&&Math.abs(s.peek())<Math.abs(x)){
+                    s.pop();
                 }
-                else{
-                    if(Math.abs(s.peek())<=Math.abs(asteroids[i])) {
-
-                        if(Math.abs(s.peek())<Math.abs(asteroids[i])){
-                            i--;
-                        }
-                        s.pop();
-                    }
-
-                }
+                if (s.size()>0&&x+s.peek()==0)
+                    s.pop();
+                else if (s.isEmpty()||s.peek()<0)
+                    s.push(x);
             }
-
         }
         int[] res = new int[s.size()];
         int size = s.size();

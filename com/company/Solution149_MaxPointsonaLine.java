@@ -16,22 +16,22 @@ public class Solution149_MaxPointsonaLine {
         maxPoints(p);
     }
     public static int maxPoints(int[][] points) {
-        if(points.length==0) return 0;
-        int res=0;
+        if (points.length==0) return 0;
+        int res =0;
         for (int i=0;i<points.length;++i){
-            Map<String, Integer> count = new HashMap<>();
             int sameP=0;
-            int curMax=0;
-            for (int j = i+1;j<points.length;++j){
-                int x = points[i][0]-points[j][0];
-                int y = points[i][1]-points[j][1];
+            int curMax =0;
+            Map<String, Integer> count = new HashMap<>();
+            for (int j=i+1;j<points.length;++j){
+                int x = points[i][0] - points[j][0];
+                int y = points[i][1] - points[j][1];
                 if (x==y&&x==0){
                     sameP++;
                     continue;
                 }
                 int gcd = findGCD(x,y);
                 if (gcd!=0){
-                    x /=gcd;
+                    x/=gcd;
                     y/=gcd;
                 }
                 String slope = x+"/"+y;

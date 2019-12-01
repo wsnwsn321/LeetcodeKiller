@@ -1,5 +1,8 @@
 package com.company;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Solution733_FloodFill {
     public static void main(String[] args) {
 
@@ -7,7 +10,21 @@ public class Solution733_FloodFill {
     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
         int startColor = image[sr][sc];
         if(newColor==startColor) return image;
-        flood(image,sr,sc,newColor,startColor);
+        //flood(image,sr,sc,newColor,startColor);
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{sr,sc});
+        image[sr][sc] = newColor;
+        int[][] dir = new int[][]{{-1,0},{1,0},{0,1},{0,-1}};
+        while (q.size()>0){
+            int[] cur = q.poll();
+            for (int i=0;i<dir.length;++i){
+                int x = cur[0]+dir[i][0];
+                int y = cur[1]+dir[i][1];
+                if (x<0||y<0||x>=image.length||y>=image[0].length||image[x][y]!=startColor) continue;
+                image[x][y] = newColor;
+                q.offer(new int[]{x,y});
+            }
+        }
         return image;
     }
 

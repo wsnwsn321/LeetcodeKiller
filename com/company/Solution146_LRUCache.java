@@ -5,73 +5,72 @@ import java.util.*;
 public class Solution146_LRUCache {
     class LRUCache {
         class Node{
+            int key,val;
             Node prev;
             Node next;
-            int key,value;
-            Node(int key, int val){
-                this.key =key;
-                this.value = val;
-            }
             Node(){
-
+            }
+            Node(int k, int v){
+                this.key =k;
+                this.val = v;
             }
         }
         Map<Integer,Node> map;
-        int capacity;
         Node head,tail;
+        int cap;
         public LRUCache(int capacity) {
-            map = new HashMap<>();
-            this.capacity = capacity;
             head = new Node();
             tail = new Node();
-            head.next = tail;
+            head.next =tail;
             tail.prev = head;
+            this.cap = capacity;
+            map = new HashMap<>();
         }
 
         public int get(int key) {
-            Node cur = map.get(key);
-            if (cur==null) return -1;
-            moveToHead(cur);
-            return cur.value;
+            Node n = map.get(key);
+            if (n==null) return -1;
+            moveToHead(n);
+            return n.val;
         }
 
         public void put(int key, int value) {
-            Node cur = map.get(key);
-            if (cur==null){
-                Node inserted = new Node(key,value);
-                map.put(key, inserted);
-                addToHead(inserted);
-                if (map.size()>capacity){
-                    Node removed = removeTail();
+            Node n = map.get(key);
+            if (n==null){
+                Node add = new Node(key,value);
+                addToHead(add);
+                map.put(key,add);
+                if (map.size()>cap){
+                    Node removed = removeFromTail();
                     map.remove(removed.key);
                 }
-            }else {
-                cur.value = value;
-                moveToHead(cur);
+            }
+            else {
+                n.val = value;
+                moveToHead(n);
             }
         }
-
-        public void addToHead(Node node){
-            node.prev = head;
-            node.next = head.next;
-            head.next.prev = node;
-            head.next = node;
+        public void addToHead(Node n){
+            n.prev = head;
+            n.next = head.next;
+            head.next.prev = n;
+            head.next = n;
         }
-        public void removeNode(Node node){
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
-        }
-
-        public void moveToHead(Node node){
-            removeNode(node);
-            addToHead(node);
+        public void moveToHead(Node n){
+            removeNode(n);
+            addToHead(n);
         }
 
-        public Node removeTail(){
+        public void removeNode(Node n){
+            n.prev.next = n.next;
+            n.next.prev = n.prev;
+        }
+        public Node removeFromTail(){
             Node removed = tail.prev;
             removeNode(removed);
             return removed;
         }
+
     }
 
 }

@@ -12,25 +12,20 @@ public class Solution239_SlidingWindowMaximum {
         if (a == null || k <= 0) {
             return new int[0];
         }
-        int r=0;
+        Deque<Integer> dq = new LinkedList<>();
         int index=0;
         int[] res = new int[a.length-k+1];
-        Deque<Integer> dq = new LinkedList<>();
-
-        while (r<a.length) {
-            //current index is out of bound, remove it from deque
-            if (dq.size() > 0 && dq.peek() < r - k + 1)
+        for (int i=0;i<a.length;++i){
+            if (dq.size()>0&&dq.peek()<i-k+1)
                 dq.pollFirst();
-            //remove all elements that is smaller than the current one since they will never be the max one
-            while (dq.size() > 0 && a[dq.peekLast()] < a[r])
+
+            while (dq.size()>0&&a[i]>a[dq.peekLast()])
                 dq.pollLast();
-            //after the while, all elements smaller than a[r] are popped
-            //so the head of the deque will always be the largest element
-            dq.offer(r);
-            if (r >= k - 1) {
-                res[index++] = a[dq.peek()];
+
+            dq.offer(i);
+            if (i>=k-1){
+                res[index++] = a[dq.peekFirst()];
             }
-            r++;
         }
         return res;
     }

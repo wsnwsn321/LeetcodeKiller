@@ -16,8 +16,7 @@ public class Solution538_ConvertBSTtoGreaterTree {
     }
     int sum=0;
     public TreeNode convertBST(TreeNode root) {
-        if (root==null)
-            return null;
+        if (root==null) return root;
         convertBST(root.right);
         sum+=root.val;
         root.val = sum;
