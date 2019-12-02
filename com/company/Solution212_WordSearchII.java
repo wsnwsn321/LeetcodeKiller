@@ -30,11 +30,12 @@ public class Solution212_WordSearchII {
         return new ArrayList<>(res);
     }
 
-    public void DFS(char[][] board, int i, int j,TrieNode root) {
+    public void DFS(char[][] board, int i, int j,TrieNode root){
         if (i<0||j<0||i>=board.length||j>=board[0].length) return;
         char cur = board[i][j];
-        if (cur=='#'||root.children[cur-'a']==null) return;
-        root = root.children[cur-'a'];
+        if (cur=='#'||root.children[cur-'a']==null)
+            return;
+        root = root.children[board[i][j]-'a'];
         if (root.word!=null){
             res.add(root.word);
             root.word = null;
@@ -45,20 +46,18 @@ public class Solution212_WordSearchII {
         DFS(board,i,j+1,root);
         DFS(board,i,j-1,root);
         board[i][j] = cur;
-
     }
 
     public TrieNode buildTrie(String[] words){
         TrieNode root = new TrieNode();
-        for (String w:words){
+        for (String s:words){
             TrieNode node = root;
-            for (char c:w.toCharArray()){
-                if (node.children[c-'a']==null){
-                    node.children[c-'a'] = new TrieNode(c);
-                }
-                node = node.children[c-'a'];
+            for (char ch:s.toCharArray()){
+                if (node.children[ch-'a']==null)
+                    node.children[ch-'a']=new TrieNode();
+                node = node.children[ch-'a'];
             }
-            node.word = w;
+            node.word = s;
         }
         return root;
     }

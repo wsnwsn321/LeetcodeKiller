@@ -11,7 +11,7 @@ public class Solution81_SearchinRotatedSortedArrayII {
             if (nums[mid]==target)
                 return true;
             //left part sorted
-            if (nums[mid]>nums[l]) {
+            if (nums[mid]>=nums[l]) {
                 if (target >= nums[l] && target < nums[mid]){
                     r = mid - 1;
                 }

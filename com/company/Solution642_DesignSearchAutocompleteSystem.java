@@ -35,13 +35,14 @@ public class Solution642_DesignSearchAutocompleteSystem {
             TrieNode root = new TrieNode();
             for (int i=0;i<sentences.length;++i){
                 String cur = sentences[i];
+                TrieNode node = root;
                 for (char ch:cur.toCharArray()){
-                    if (root.children[ch-'a']==null)
-                        root.children[ch-'a'] = new TrieNode();
-                    root = root.children[ch-'a'];
+                    if (node.children[ch-'a']==null)
+                        node.children[ch-'a'] = new TrieNode();
+                    node = node.children[ch-'a'];
                 }
-                root.times = times[i];
-                root.word = cur;
+                node.times = times[i];
+                node.word = cur;
             }
             return root;
         }
