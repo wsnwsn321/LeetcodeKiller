@@ -8,14 +8,15 @@ public class Solution296_BestMeetingPoint {
     public static void main(String[] args) {
 
     }
+
     public int minTotalDistance(int[][] grid) {
         List<Integer> rows = new ArrayList<>();
         List<Integer> cols = new ArrayList<>();
-        for (int row = 0; row < grid.length; row++) {
-            for (int col = 0; col < grid[0].length; col++) {
-                if (grid[row][col] == 1) {
-                    rows.add(row);
-                    cols.add(col);
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[0].length; ++j) {
+                if (grid[i][j] == 1) {
+                    rows.add(i);
+                    cols.add(j);
                 }
             }
         }
@@ -33,5 +34,5 @@ public class Solution296_BestMeetingPoint {
         return distance;
     }
 
-
 }
+

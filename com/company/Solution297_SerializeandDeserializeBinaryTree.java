@@ -13,16 +13,15 @@ public class Solution297_SerializeandDeserializeBinaryTree {
         TreeNode(int x) { val = x; }
     }
     public class Codec {
-
+        //preorder traversal
         public StringBuilder rserialize(TreeNode root, StringBuilder sb) {
-            // Recursive serialization.
-            if (root == null) {
+            if (root==null){
                 sb.append("null,");
-            } else {
-                sb.append(root.val + ",");
-                sb = rserialize(root.left, sb);
-                sb = rserialize(root.right, sb);
+                return sb;
             }
+            sb = sb.append(root.val+",");
+            sb = rserialize(root.left,sb);
+            sb = rserialize(root.right,sb);
             return sb;
         }
 
@@ -32,17 +31,14 @@ public class Solution297_SerializeandDeserializeBinaryTree {
         }
 
         public TreeNode rdeserialize(List<String> l) {
-            // Recursive deserialization.
-            if (l.get(0).equals("null")) {
+            if (l.get(0)=="null"){
                 l.remove(0);
                 return null;
             }
-
             TreeNode root = new TreeNode(Integer.valueOf(l.get(0)));
             l.remove(0);
             root.left = rdeserialize(l);
             root.right = rdeserialize(l);
-
             return root;
         }
 

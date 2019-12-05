@@ -12,23 +12,25 @@ public class Solution5_LongestPalindromSubString_R {
     //time: O(n^2);
     //space: O(n^2);
     public static String longestPalindrome(String s) {
-        if (s.length() == 0) return "";
-        int l = 0, r = 0;
+        if(s.length()==0) return "";
         boolean[][] dp = new boolean[s.length()][s.length()];
-        for (int i = 0; i < s.length(); ++i) {
-            dp[i][i] = true;
-            for (int j = 0; j < i; ++j) {
-                if (s.charAt(i) == s.charAt(j)) {
-                    if (j == i - 1)
-                        dp[j][i] = true;
-                    else dp[j][i] = dp[j + 1][i - 1];
-                    if (dp[j][i] && i - j > r - l) {
-                        r = i;
-                        l = j;
+        int fl=0,fr =0;
+        for (int i=0;i<s.length();++i){
+            dp[i][i] =true;
+            for (int j=i-1;j>=0;--j){
+                if (s.charAt(j)==s.charAt(i)){
+                    if (j==i-1)
+                        dp[j][i]=true;
+                    else {
+                        dp[j][i] = dp[j+1][i-1];
+                    }
+                    if (dp[j][i]&&(fr-fl)<(i-j)){
+                        fr = i;
+                        fl = j;
                     }
                 }
             }
         }
-        return s.substring(l, r + 1);
+        return s.substring(fl,fr+1);
     }
 }
