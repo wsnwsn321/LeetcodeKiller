@@ -6,15 +6,14 @@ public class Solution209_MinimumSizeSubarraySum {
         minSubArrayLen(7,a);
     }
     public static int minSubArrayLen(int s, int[] nums) {
-        int l=0,res= nums.length;
-        int windowSum=0;
+        int sum =0, l=0,res=nums.length+1;
         for (int i=0;i<nums.length;++i){
-            windowSum+=nums[i];
-            while (windowSum>s){
+            sum+=nums[i];
+            while (sum>=s){
                 res = Math.min(res,i-l+1);
-                windowSum-=nums[l++];
+                sum-=nums[l++];
             }
         }
-        return res;
+        return res==nums.length+1?0:res;
     }
 }

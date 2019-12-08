@@ -3,34 +3,39 @@ package com.company;
 public class Solution395_LongestSubstringwithhAtLeastKRepeatingCharacters {
     public static void main(String[] args) {
         String x = "abcdedghijklmnopqrstuvwxyz";
-        longestSubstring(x,2);
+        //longestSubstring(x,2);
     }
-    public static int longestSubstring(String s, int k) {
-        int[] count = new int[26];
-        boolean flag =true;
-        int max =0;
-        for (char x:s.toCharArray()){
-            count[x-'a']++;
-        }
-        for (int i=0;i<s.length();++i){
-            if (count[s.charAt(i)-'a']<k){
-                flag =false;
+    public int longestSubstring(String s, int k) {
+        int d = 0;
+
+        for (int numUniqueTarget = 1; numUniqueTarget <= 26; numUniqueTarget++)
+            d = Math.max(d, longestSubstringWithNUniqueChars(s, k, numUniqueTarget));
+
+        return d;
+    }
+
+    private int longestSubstringWithNUniqueChars(String s, int k, int numUniqueTarget) {
+        int[] map = new int[128];
+        int numUnique = 0; // counter 1
+        int numNoLessThanK = 0; // counter 2
+        int begin = 0, end = 0;
+        int d = 0;
+
+        while (end < s.length()) {
+            if (map[s.charAt(end)]++ == 0) numUnique++; // increment map[c] after this statement
+            if (map[s.charAt(end++)] == k) numNoLessThanK++; // inc end after this statement
+
+            while (numUnique > numUniqueTarget) {
+                if (map[s.charAt(begin)]-- == k) numNoLessThanK--; // decrement map[c] after this statement
+                if (map[s.charAt(begin++)] == 0) numUnique--; // inc begin after this statement
             }
+
+            // if we found a string where the number of unique chars equals our target
+            // and all those chars are repeated at least K times then update max
+            if (numUnique == numUniqueTarget && numUnique == numNoLessThanK)
+                d = Math.max(end - begin, d);
         }
-        if (flag) return s.length();
-        int l=0,r=0;
-        int result = 0;
-        while (r<s.length()){
-            if (count[s.charAt(r)-'a']<k){
-                result = Math.max(result,longestSubstring(s.substring(l,r),k));
-                l=r+1;
-            }
-            r++;
-        }
-        result = Math.max(result, longestSubstring(s.substring(l), k));
 
-
-        return result;
-
+        return d;
     }
 }

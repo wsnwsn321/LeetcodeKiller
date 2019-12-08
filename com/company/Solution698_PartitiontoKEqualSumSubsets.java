@@ -7,27 +7,26 @@ public class Solution698_PartitiontoKEqualSumSubsets {
     public static void main(String[] args) {
 
     }
-    public boolean canPartitionKSubsets(int[] nums, int k) {
-        if (k > nums.length) return false;
+    public boolean canPartitionKSubsets(int[] a, int k) {
+        if (k > a.length) return false;
         int sum = 0;
-        for (int num : nums) sum += num;
+        for (int num : a) sum += num;
         if (sum % k != 0) return false;
-        boolean[] visited = new boolean[nums.length];
-        Arrays.sort(nums);
-        return dfs(nums,k,visited,sum/k,0,0);
+        Arrays.sort(a);
+        return  canPartition(a.length-1, a, new boolean[a.length], k, 0, sum / k);
     }
-    public boolean dfs(int[] nums, int k, boolean[] visited, int target,int cur_sum,int pos){
-        if (k==0) return true;
-        if (cur_sum==target&&dfs(nums,k-1,visited,target,0,0))
-            return true;
-        for (int i=pos;i<nums.length;++i){
-            if (!visited[i]&&cur_sum+nums[i]<=target){
-                visited[i]= true;
-                if (dfs(nums,k,visited,target,cur_sum+nums[i],i+1))
+
+    boolean canPartition(int start, int[] a, boolean[] seen, int k, int sum, int target) {
+        if (k == 1) return true;
+        if (sum == target)
+            return canPartition(a.length-1, a, seen, k - 1, 0, target);
+        for (int i = start; i >=0; --i)
+            if (!seen[i]) {
+                seen[i] = true;
+                if (canPartition(i - 1, a, seen, k, sum + a[i], target))
                     return true;
-                visited[i] = false;
+                seen[i] = false;
             }
-        }
         return false;
     }
 

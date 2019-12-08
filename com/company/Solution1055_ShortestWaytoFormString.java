@@ -20,7 +20,6 @@ public class Solution1055_ShortestWaytoFormString {
             }
             else j++;
 
-
         }
         return res;
     }

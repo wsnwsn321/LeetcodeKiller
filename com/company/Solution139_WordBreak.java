@@ -15,20 +15,21 @@ public class Solution139_WordBreak {
     //space:    O(n)
     public static boolean wordBreak(String s, List<String> wordDict) {
         Queue<String> q = new LinkedList<>();
-        Set<String> set = new HashSet<>(wordDict);
-        Set<String> visited = new HashSet<>();
         q.offer(s);
-        while (!q.isEmpty()){
+        Set<String> dic = new HashSet<>(wordDict);
+        Set<String> visited = new HashSet<>();
+        while (q.size()>0){
             String cur = q.poll();
-            if (cur.length()==0) return true;
+            if (cur.length()==0)
+                return true;
             if (!visited.contains(cur)){
+                visited.add(cur);
                 for (int i=0;i<=cur.length();++i){
-                    if (set.contains(cur.substring(0,i))){
+                    if (dic.contains(cur.substring(0,i))){
                         q.offer(cur.substring(i));
                     }
                 }
             }
-            visited.add(cur);
         }
         return false;
     }

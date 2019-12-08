@@ -28,7 +28,7 @@ public class Solution124_BinaryTreeMaximumPathSum {
         right =Math.max(0,right);
         top = root.val+left+right;
         node = root.val+Math.max(left,right);
-        res = Math.max(res,Math.max(node,top));
+        res = Math.max(res,top);
         return node;
     }
 }

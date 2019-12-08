@@ -12,23 +12,29 @@ public class Solution735_AsteroidCollision {
 
     public static int[] asteroidCollision(int[] asteroids) {
         Stack<Integer> s = new Stack<>();
-        for (int x:asteroids){
-            if (x>0){
+        for (int x : asteroids) {
+            if (x > 0)
                 s.push(x);
-            }
             else {
-                while (s.size()>0&&s.peek()>0&&Math.abs(s.peek())<Math.abs(x)){
-                    s.pop();
+                boolean destroied = false;
+                //remove all right-going numbers that is smaller than x
+                while (!s.isEmpty() && s.peek() > 0 && s.peek() <= Math.abs(x)) {
+                    if (!s.isEmpty()&&s.peek() + x == 0) {
+                        destroied = true;
+                        s.pop();
+                        break;
+                    }
+                    else
+                        s.pop();
+
                 }
-                if (s.size()>0&&x+s.peek()==0)
-                    s.pop();
-                else if (s.isEmpty()||s.peek()<0)
+                if (!destroied && (s.isEmpty() || s.peek() < 0))
                     s.push(x);
             }
         }
         int[] res = new int[s.size()];
         int size = s.size();
-        for(int i=size-1;i>=0;--i){
+        for (int i = size - 1; i >= 0; --i) {
             res[i] = s.pop();
         }
         return res;

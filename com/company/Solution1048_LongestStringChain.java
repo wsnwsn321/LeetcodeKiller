@@ -20,7 +20,8 @@ public class Solution1048_LongestStringChain {
             int best = 0;
             for (int i = 0; i < word.length(); ++i) {
                 String prev = word.substring(0, i) + word.substring(i + 1);
-                best = Math.max(best, dp.getOrDefault(prev, 0) + 1);
+                if (dp.containsKey(prev))
+                    best = Math.max(best,dp.get(prev)+1);
             }
             dp.put(word, best);
             res = Math.max(res, best);

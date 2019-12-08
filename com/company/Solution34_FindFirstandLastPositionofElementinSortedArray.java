@@ -10,26 +10,24 @@ public class Solution34_FindFirstandLastPositionofElementinSortedArray {
 
     public int findFirst(int[] nums, int target){
         int index =-1;
-        int l=0,r = nums.length-1;
+        int l = 0, r = nums.length-1;
         while (l<=r){
             int mid = l+(r-l)/2;
-            if (nums[mid]>=target){
+            if (nums[mid]>=target)
                 r = mid-1;
-            }
-            else l =mid+1;
+            else l = mid+1;
             if (nums[mid]==target) index = mid;
         }
         return index;
     }
     public int findLast(int[] nums, int target){
         int index =-1;
-        int l=0,r = nums.length-1;
+        int l = 0, r = nums.length-1;
         while (l<=r){
             int mid = l+(r-l)/2;
-            if (nums[mid]<=target){
+            if (nums[mid]<=target)
                 l = mid+1;
-            }
-            else r =mid-1;
+            else r = mid-1;
             if (nums[mid]==target) index = mid;
         }
         return index;

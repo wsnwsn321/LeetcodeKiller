@@ -13,23 +13,21 @@ public class Solution23_MergeKSortedList {
   //                    k-number of ListNode
     // space: O(k)
   public ListNode mergeKLists(ListNode[] lists) {
-      if (lists==null||lists.length==0) return null;
-
-      PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>((a,b)->a.val-b.val);
-
+      if (lists == null || lists.length == 0) return null;
       ListNode dummy = new ListNode(0);
-      ListNode tail=dummy;
-
-      for (ListNode node:lists)
+      ListNode head = dummy;
+      PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>((a, b) -> a.val - b.val);
+      for (ListNode node : lists) {
           if (node!=null)
-              queue.add(node);
-
-      while (!queue.isEmpty()){
-          tail.next=queue.poll();
-          tail=tail.next;
-
-          if (tail.next!=null)
-              queue.add(tail.next);
+            pq.offer(node);
+      }
+      while (pq.size() > 0) {
+          ListNode temp = pq.poll();
+          head.next = temp;
+          head = head.next;
+          if (temp.next != null) {
+              pq.offer(temp.next);
+          }
       }
       return dummy.next;
   }

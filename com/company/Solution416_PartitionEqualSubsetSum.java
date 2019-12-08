@@ -26,6 +26,7 @@ public class Solution416_PartitionEqualSubsetSum {
             for (int j = 1; j < sum+1; j++) {
 
                 if (j >= A[i-1]) {
+                    //if we use ith element, we need i-1(dp[i-1]) elements to sum up to j-(value of ith element, which is A[i-1])
                     dp[i][j] = (dp[i-1][j] || dp[i-1][j-A[i-1]]);
                 }
                 else

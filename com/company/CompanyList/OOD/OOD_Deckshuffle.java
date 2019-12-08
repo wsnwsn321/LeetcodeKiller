@@ -1,7 +1,5 @@
-package com.company.CompanyList.Amazon;
+package com.company.CompanyList.OOD;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.InflaterInputStream;
 
 public class Solution336_PalindromePairs {
     public static void main(String[] args) {
@@ -33,29 +34,23 @@ public class Solution336_PalindromePairs {
             for (int j = 0; j <= words[i].length(); j++) {
                 String str1 = words[i].substring(0, j);
                 String str2 = words[i].substring(j);
-
-                // step 2
                 if (isPalindrome(str1)) {
-                    String reversedStr2 = new StringBuilder(str2).reverse().toString();
-
-                    /* WARNING: MUST CHECK whether str.length() is equal to 0 in either if statement, because we need to make sure
-                     *  we do not add duplicate pairs (if str1.length() == 0, both of str1 and str2 will from input array) */
-                    if (map.containsKey(reversedStr2) && map.get(reversedStr2) != i && str1.length() != 0) {
-                        List<Integer> newPair = new ArrayList<>();
-                        newPair.add(map.get(reversedStr2));
-                        newPair.add(i);
-                        result.add(newPair);
+                    String reverseStr2 = new StringBuilder(str2).reverse().toString();
+                    if (map.containsKey(reverseStr2) && map.get(reverseStr2) != i) {
+                        List<Integer> temp = new ArrayList<>();
+                        temp.add(map.get(reverseStr2));
+                        temp.add(i);
+                        result.add(temp);
                     }
-                }
 
-                // step 3
+                }
                 if (isPalindrome(str2)) {
-                    String reversedStr1 = new StringBuilder(str1).reverse().toString();
-                    if (map.containsKey(reversedStr1) && map.get(reversedStr1) != i) {
-                        List<Integer> newPair = new ArrayList<>();
-                        newPair.add(i);
-                        newPair.add(map.get(reversedStr1));
-                        result.add(newPair);
+                    String reverseStr1 = new StringBuilder(str1).reverse().toString();
+                    if (map.get(reverseStr1).equals(reverseStr1) && map.get(reverseStr1) != i && str2.length() != 0) {
+                        List<Integer> temp = new ArrayList<>();
+                        temp.add(i);
+                        temp.add(map.get(reverseStr1));
+                        result.add(temp);
                     }
                 }
             }

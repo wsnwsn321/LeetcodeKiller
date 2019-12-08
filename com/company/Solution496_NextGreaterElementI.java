@@ -18,12 +18,17 @@ public class Solution496_NextGreaterElementI {
             int cur = nums2[i];
             map.put(cur,-1);
             while (s.size()>0&&cur>s.peek()){
+                //when cur greater than s.peek, a greater number shows up so we store (s.peek, cur) into map declaring
+                //that the next greater number for s.peek is cur
                 int poped = s.pop();
                 map.put(cur,poped);
             }
             s.push(cur);
         }
+        while (!s.empty())
+            map.put(s.pop(), -1);
         for (int i=0;i<nums1.length;++i){
+            //for numbers in num1, just find next greater element in the map
             nums1[i] = map.get(nums1[i]);
         }
         return nums1;

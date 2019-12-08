@@ -8,34 +8,32 @@ public class Solution621_TaskScheduler {
     leastInterval(c,2);
     }
     public static int leastInterval(char[] tasks, int n) {
-        int res=0;
-        Map<Character,Integer> map = new HashMap<>();
-        for (char t:tasks){
-            map.put(t,map.getOrDefault(t,0)+1);
+        if (n == 0) return tasks.length;
+
+        Map<Character, Integer> taskToCount = new HashMap<>();
+        for (char c : tasks) {
+            taskToCount.put(c, taskToCount.getOrDefault(c, 0) + 1);
         }
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
-        for (char t:map.keySet()){
-            pq.add(map.get(t));
-        }
-        while (pq.size()>0){
-            int i = 0;
-            List < Integer > temp = new ArrayList < > ();
-            while (i <= n) {
-                if (!pq.isEmpty()) {
-                    if (pq.peek() > 1)
-                        temp.add(pq.poll() - 1);
-                    else
-                        pq.poll();
-                }
-                res++;
-                if (pq.isEmpty() && temp.size() == 0)
-                    break;
-                i++;
+
+        Queue<Integer> queue = new PriorityQueue<>((i1, i2) -> i2 - i1);
+        for (char c : taskToCount.keySet()) queue.offer(taskToCount.get(c));
+        //cooldown stores current unavailable tasks
+        Map<Integer, Integer> coolDown = new HashMap<>();
+        int currTime = 0;
+        while (!queue.isEmpty() || !coolDown.isEmpty()) {
+            //release tasks in cooldown when time has passed n seconds
+            if (coolDown.containsKey(currTime - n - 1)) {
+                queue.offer(coolDown.remove(currTime - n - 1));
             }
-            for (int l: temp)
-                pq.add(l);
+            if (!queue.isEmpty()) {
+                int left = queue.poll() - 1;
+                //put remaining tasks into cooldown with the time it's executed
+                if (left != 0) coolDown.put(currTime, left);
+            }
+            currTime++;
         }
-        return res;
+
+        return currTime;
     }
 
 

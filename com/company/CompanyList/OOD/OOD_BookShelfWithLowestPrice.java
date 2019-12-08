@@ -1,4 +1,4 @@
-package com.company.CompanyList.Amazon;
+package com.company.CompanyList.OOD;
 
 import java.util.*;
 

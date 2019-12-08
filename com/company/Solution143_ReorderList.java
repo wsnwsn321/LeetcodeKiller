@@ -19,9 +19,9 @@ public class Solution143_ReorderList {
             slow = slow.next;
             fast = fast.next.next;
         }
-        prev.next=null;
+        prev.next = null;
         ListNode head2 = reverse(slow);
-        while (head2!=null){
+        while (head2 != null) {
             ListNode temp = head.next;
             head.next = head2;
             head = head2;

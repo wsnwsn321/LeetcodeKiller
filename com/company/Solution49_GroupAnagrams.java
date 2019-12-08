@@ -10,22 +10,20 @@ public class Solution49_GroupAnagrams {
     }
     //time:     O(nKlogK)
     //space:    O(nK)
-    public static List<List<String>> groupAnagrams(String[] strs)
-    {
+    public static List<List<String>> groupAnagrams(String[] strs) {
         if (strs.length == 0) return new ArrayList();
-        Map<String, List> ans = new HashMap<String, List>();
+        Map<String, List<String>> ans = new HashMap<>();
         int[] count = new int[26];
         for (String s : strs) {
             Arrays.fill(count, 0);
-            for (char c : s.toCharArray()) count[c - 'a']++;
-
-            StringBuilder sb = new StringBuilder("");
-            for (int i = 0; i < 26; i++) {
-                sb.append(count[i]);
-            }
-            String key = sb.toString();
-            if (!ans.containsKey(key)) ans.put(key, new ArrayList());
-            ans.get(key).add(s);
+            for (char ch : s.toCharArray())
+                count[ch - 'a']++;
+            StringBuilder sb = new StringBuilder();
+            for (int x : count)
+                sb.append(x);
+            if (!ans.containsKey(sb.toString()))
+                ans.put(sb.toString(), new ArrayList<>());
+            ans.get(sb.toString()).add(s);
         }
         return new ArrayList(ans.values());
     }

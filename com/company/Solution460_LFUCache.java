@@ -1,15 +1,14 @@
 package com.company;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.*;
 
 public class Solution460_LFUCache {
 
     class LFUCache {
         HashMap<Integer, Integer> vals;
         HashMap<Integer, Integer> counts;
-        HashMap<Integer, LinkedHashSet<Integer>> lists;
+        //lists store list of keys(as value) with particular counts(as key)
+        HashMap<Integer, Queue<Integer>> lists;
         int cap;
         int min;
 
@@ -24,33 +23,30 @@ public class Solution460_LFUCache {
         public int get(int key) {
             if(!vals.containsKey(key))
                 return -1;
-
             update(key);
             return vals.get(key);
         }
 
         //update frequency
         private void update (int key) {
-            int cnt = counts.get(key);
-            counts.put(key, cnt + 1);
-            lists.get(cnt).remove(key);
-
-            if(cnt == min && lists.get(cnt).size() == 0)
+            int freq = counts.get(key);
+            counts.put(key,counts.get(key)+1);
+            lists.get(freq).remove(key);
+            //update min frequency if no element has current lowest frequency
+            if (min==freq&& lists.get(freq).size()==0)
                 min++;
-
-            if(!lists.containsKey(cnt))
-                lists.put(cnt, new LinkedHashSet<>());
-
-            lists.get(cnt).add(key);
+            //update frequency of key in lists
+            if (!lists.containsKey(freq+1))
+                lists.put(freq+1,new LinkedList<>());
+            lists.get(freq+1).add(key);
         }
 
 
         //remove the key with lowest frequency
         private void evict () {
-            int key = lists.get(min).iterator().next();
-            lists.get(min).remove(key);
-            vals.remove(key);
-            counts.remove(key);
+            int removed = lists.get(min).poll();
+            vals.remove(removed);
+            counts.remove(removed);
         }
 
         public void put(int key, int value) {
@@ -68,12 +64,11 @@ public class Solution460_LFUCache {
 
             vals.put(key, value);
             counts.put(key, 1);
-            //put key into the head of lists whose count is all 1
+
             if(!lists.containsKey(1))
-                lists.put(1, new LinkedHashSet<>());
-            lists.get(1).add(key);
+                lists.put(1, new LinkedList<>());
+            lists.get(1).offer(key);
             min = 1;
         }
     }
-
 }

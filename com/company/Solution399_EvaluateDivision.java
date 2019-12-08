@@ -30,28 +30,21 @@ public class Solution399_EvaluateDivision {
         for (int i = 0; i < queries.size(); i++) {
            List<String> query = queries.get(i);
             result[i] = dfs(query.get(0), query.get(1), pairs, valuesPair, new HashSet<>(), 1.0);
-            if (result[i] == 0.0) result[i] = -1.0;
         }
         return result;
     }
 
-    private double dfs(String start, String end, HashMap<String, ArrayList<String>> pairs, HashMap<String, ArrayList<Double>> values, HashSet<String> set, double value) {
-        if (set.contains(start)) return 0.0;
-        if (!pairs.containsKey(start)) return 0.0;
-        if (start.equals(end)) return value;
-        set.add(start);
-
-        ArrayList<String> strList = pairs.get(start);
-        ArrayList<Double> valueList = values.get(start);
-        double tmp = 0.0;
-        for (int i = 0; i < strList.size(); i++) {
-            tmp = dfs(strList.get(i), end, pairs, values, set, value*valueList.get(i));
-            if (tmp != 0.0) {
-                break;
-            }
+    private double dfs(String start, String end, HashMap<String, ArrayList<String>> pairs, HashMap<String, ArrayList<Double>> values, HashSet<String> visited, double value) {
+        if (visited.contains(start)||!pairs.containsKey(start)) return -1;
+        if (start.equals(end))
+            return value;
+        visited.add(start);
+        for (int i=0;i<pairs.get(start).size();++i) {
+            double temp =dfs(pairs.get(start).get(i), end, pairs, values, visited, value * values.get(start).get(i));
+            if (temp!=-1)
+                 return temp;
         }
-        set.remove(start);
-        return tmp;
+        return -1;
     }
 
 }

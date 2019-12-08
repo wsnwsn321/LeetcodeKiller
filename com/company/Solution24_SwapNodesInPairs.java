@@ -13,17 +13,18 @@ public class Solution24_SwapNodesInPairs {
 
     }
     public ListNode swapPairs(ListNode head) {
-        if (head==null||head.next==null) return head;
+        if (head == null||head.next==null)
+            return head;
         ListNode dummy = new ListNode(0);
-        dummy.next = head;
         ListNode pre = dummy;
-        while (head != null && head.next != null) {
-            ListNode temp = head.next;
-            head.next = temp.next;
-            temp.next = head;
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            ListNode temp = cur.next;
+            cur.next = temp.next;
+            temp.next = cur;
             pre.next = temp;
-            pre = head;
-            head = head.next;
+            pre = cur;
+            cur = cur.next;
         }
         return dummy.next;
     }

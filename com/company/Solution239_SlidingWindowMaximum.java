@@ -18,7 +18,7 @@ public class Solution239_SlidingWindowMaximum {
         for (int i=0;i<a.length;++i){
             if (dq.size()>0&&dq.peek()<i-k+1)
                 dq.pollFirst();
-
+            //remove all smaller number before ith position to keep the head of dq with the largest number
             while (dq.size()>0&&a[i]>a[dq.peekLast()])
                 dq.pollLast();
 
