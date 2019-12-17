@@ -16,16 +16,15 @@ public class Solution239_SlidingWindowMaximum {
         int index=0;
         int[] res = new int[a.length-k+1];
         for (int i=0;i<a.length;++i){
-            if (dq.size()>0&&dq.peek()<i-k+1)
+            if (dq.size()>0&&dq.peekFirst()<i-k+1){
                 dq.pollFirst();
-            //remove all smaller number before ith position to keep the head of dq with the largest number
-            while (dq.size()>0&&a[i]>a[dq.peekLast()])
-                dq.pollLast();
-
-            dq.offer(i);
-            if (i>=k-1){
-                res[index++] = a[dq.peekFirst()];
             }
+            while (dq.size()>0&&a[dq.peekLast()]<=a[i]){
+                dq.pollLast();
+            }
+            dq.offer(i);
+            if (i>=k-1)
+                res[index++] = a[dq.peekFirst()];
         }
         return res;
     }

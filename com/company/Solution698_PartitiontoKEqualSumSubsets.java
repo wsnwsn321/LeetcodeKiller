@@ -17,16 +17,19 @@ public class Solution698_PartitiontoKEqualSumSubsets {
     }
 
     boolean canPartition(int start, int[] a, boolean[] seen, int k, int sum, int target) {
-        if (k == 1) return true;
-        if (sum == target)
-            return canPartition(a.length-1, a, seen, k - 1, 0, target);
-        for (int i = start; i >=0; --i)
-            if (!seen[i]) {
+        if (k==0) return true;
+        if (sum>target) return false;
+        if (sum==target)
+            return canPartition(a.length-1,a,seen,k-1,0,target);
+        for (int i=start;i>=0;--i){
+            if (!seen[i]){
                 seen[i] = true;
-                if (canPartition(i - 1, a, seen, k, sum + a[i], target))
+                if (canPartition(start-1,a,seen,k,sum+a[i],target)){
                     return true;
+                }
                 seen[i] = false;
             }
+        }
         return false;
     }
 
