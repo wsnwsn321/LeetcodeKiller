@@ -9,24 +9,29 @@ public class Solution528_RandomPickwithWeight {
 
     }
     class Solution {
-        List<Integer> psum = new ArrayList<>();
-        int total = 0;
-        Random rand = new Random();
+        int total;
+        List<Integer> sum;
+        Random rand;
         public Solution(int[] w) {
-            for (int x:w){
-                total+=x;
-                psum.add(total);
+            total =0;
+            sum = new ArrayList<>();
+            rand = new Random();
+            for (int n:w){
+                total+=n;
+                sum.add(total);
             }
         }
 
         public int pickIndex() {
-            int target = rand.nextInt(total);
-            int l =0,r = psum.size()-1;
-            while (l<r){
-                int mid = (l+r)/2;
-                if (target==psum.get(mid)) return mid;
-                else if (target>psum.get(mid)) l = mid+1;
-                else r=mid-1;
+            int picked = rand.nextInt(total);
+            int l =0,r = sum.size()-1;
+            while (l!=r){
+                int mid = l+(r-l)/2;
+                if (picked>=sum.get(mid)){
+                    //use l=mid+1 here because when the target > mid, it can only falls in section greater than the current one( which is mid)
+                    l = mid+1;
+                }
+                else r = mid;
             }
             return l;
         }
