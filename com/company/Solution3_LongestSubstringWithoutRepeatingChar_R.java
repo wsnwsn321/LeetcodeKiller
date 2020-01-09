@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Solution3_LongestSubstringWithoutRepeatingChar_R {
     public static void main(String[] args) {
@@ -14,18 +11,16 @@ public class Solution3_LongestSubstringWithoutRepeatingChar_R {
     //runtime: O(n) n=length of s
     //space: O(n) n= length of s
     public static int lengthOfLongestSubstring(String s) {
-        if (s.length()<=1) return s.length();
-        int l=0,r = 1;
-        int res =0;
-        char[] count = new char[26];
-        count[s.charAt(l)]++;
-        char[] cs = s.toCharArray();
-        while (r<s.length()){
-           if (count[cs[r]-'a']==0) count[cs[r++]-'a']++;
-           else {
-               res = Math.max(res,r-l+1);
-               count[cs[l++]-'a']--;
-           }
+        int l=0;
+        int res=0;
+        int[] map = new int[128];
+        Arrays.fill(map,-1);
+        for (int i=0;i<s.length();++i){
+            if (map[s.charAt(i)]>-1){
+                l = Math.max(l,map[s.charAt(i)]+1);
+            }
+            map[s.charAt(i)] = i;
+            res = Math.max(res,i-l+1);
         }
         return res;
     }

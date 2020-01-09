@@ -5,15 +5,14 @@ public class Solution198_HouseRobber {
 
     }
 
-    public int rob(int[] nums) {
-        int res = 0;
-        int preSum=0,curSum=0;
-        for (int i=0;i<nums.length;++i){
-            int temp = curSum;
-            curSum = Math.max(preSum+nums[i],preSum);
-            preSum = temp;
-            res =Math.max(res,curSum);
+    public int rob(int[] num) {
+        int prevMax = 0;
+        int currMax = 0;
+        for (int x : num) {
+            int temp = currMax;
+            currMax = Math.max(prevMax + x, currMax);
+            prevMax = temp;
         }
-        return res;
+        return currMax;
     }
 }
