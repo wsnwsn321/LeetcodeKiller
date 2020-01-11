@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class deleteConseq3 {
     public static void main(String[] args) {
-        String s = "AADHSHHHHSSHHSSSJJJJJDD";
+        String s = "deeedbbcccbdaa";
         String x =checkConseq(s);
         int q = 0;
     }
