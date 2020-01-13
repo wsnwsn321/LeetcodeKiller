@@ -3,43 +3,36 @@ package com.company;
 import java.util.*;
 
 public class Solution57_InsertInterval {
-    class Interval {
-        int start;
-        int end;
-        Interval() { start = 0; end = 0; }
-        Interval(int s, int e) { start = s; end = e; }
-    }
+
     public static void main(String[] args) {
 
     }
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        int newStart = newInterval[0], newEnd = newInterval[1];
-        int idx = 0, n = intervals.length;
-        List<int[]> output = new ArrayList<>();
+        List<int[]> res = new ArrayList<>();
+        int newStart = newInterval[0];
+        int newEnd = newInterval[1];
+        //add all intervals with smaller start time into res
+        int index = 0;
+        while (index < intervals.length && newStart > intervals[index][0])
+            res.add(intervals[index++]);
 
-        //keep adding intervals when interval.start<newStart
-        while (idx < n && newStart > intervals[idx][0])
-            output.add(intervals[idx++]);
-        //newStart greater than all intervals
-        if (output.isEmpty() || output.get(output.size()-1)[1] < newStart)
-            output.add(newInterval);
-        //overlapped, get larger end
-        else {
-            output.get(output.size()-1)[1] = Math.max(output.get(output.size()-1)[1],newEnd);
+        //if newStart > intervals[index][end]
+        if (res.isEmpty() || newStart > res.get(res.size() - 1)[1]) {
+            res.add(newInterval);
+        } else {
+            res.get(res.size() - 1)[1] = Math.max(res.get(res.size() - 1)[1], newEnd);
         }
         //deal with interval.start>newEnd.start cases
-        while (idx < n) {
-            int[] interval = intervals[idx++];
-            int start = interval[0], end = interval[1];
+        while (index < intervals.length) {
+            int[] cur = intervals[index++];
             //if last.end <newInterval.start, no overlap, add directly
-            if (output.get(output.size()-1)[1] < start) output.add(interval);
-            //overlapped, get the larger end
+            if (res.get(res.size() - 1)[1] < cur[0])
+                res.add(cur);
+                //overlapped, get the larger end
             else {
-                output.get(output.size()-1)[1] = Math.max(output.get(output.size()-1)[1],end);
-
+                res.get(res.size() - 1)[1] = Math.max(res.get(res.size() - 1)[1], cur[1]);
             }
         }
-        return output.toArray(new int[output.size()][2]);
-
+        return res.toArray(new int[res.size()][2]);
     }
 }

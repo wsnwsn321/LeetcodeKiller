@@ -13,14 +13,14 @@ public class Solution206_ReverseLinkedList {
 
     }
     public ListNode reverseList(ListNode head) {
-        ListNode prev = null;
+        ListNode pre = null;
         ListNode cur = head;
         while (cur!=null){
-            ListNode temp = cur.next;
-            cur.next = prev;
-            prev = cur;
+            ListNode temp =cur.next;
+            cur.next = pre;
+            pre = cur;
             cur = temp;
         }
-        return prev;
+        return pre;
     }
 }

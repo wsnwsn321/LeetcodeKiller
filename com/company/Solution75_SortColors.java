@@ -6,17 +6,18 @@ public class Solution75_SortColors {
     }
 
     public void sortColors(int[] nums) {
-        int zero=0, two = nums.length-1;
-        int cur=0;
-        while (cur<=two){
-            if (nums[cur]==0){
-                nums[cur++] = nums[zero];
-                nums[zero++]=0;
+        int zero = 0, two = nums.length-1;
+        int index=0;
+        while (zero<=two){
+            if (nums[index]==0){
+                nums[index++] = nums[zero];
+                nums[zero++] = 0;
             }
-            if (nums[cur]==2){
-                nums[cur] = nums[two];
-                nums[two--] = 2;
+            else if (nums[index]==2){
+                nums[index] = nums[two];
+                nums[two--] =2;
             }
+            else index++;
         }
     }
 }

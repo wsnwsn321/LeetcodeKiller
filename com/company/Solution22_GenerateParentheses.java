@@ -9,15 +9,15 @@ public class Solution22_GenerateParentheses {
     }
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();
-        backtracking(res,"",0,0,n);
+        backtracking(n,0,0,res,"");
         return res;
     }
-    public void backtracking(List<String> res,String current, int open,int close,int n){
-        if (current.length()==2*n){
-            res.add(current);
+    public void backtracking(int n, int left, int right, List<String> res, String cur){
+        if (cur.length()==n*2){
+            res.add(cur);
             return;
         }
-        if (open<n) backtracking(res,current+'(',open+1,close,n);
-        if (close<open) backtracking(res,current+')',open,close+1,n);
+        if (left<n) backtracking(n,left+1,right,res,cur+"(");
+        if (right<left) backtracking(n,left,right+1,res,cur+")");
     }
 }

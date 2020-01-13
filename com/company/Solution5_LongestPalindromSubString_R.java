@@ -6,31 +6,33 @@ public class Solution5_LongestPalindromSubString_R {
     public static int lo,maxLen;
     public static void main(String[] args) {
         String s = "abacd";
-        longestPalindrome(s);
+        //longestPalindrome(s);
 
     }
     //time: O(n^2);
-    //space: O(n^2);
-    public static String longestPalindrome(String s) {
+    //space: O(1);
+    public  String longestPalindrome(String s) {
         if(s.length()==0) return "";
-        boolean[][] dp = new boolean[s.length()][s.length()];
-        int fl=0,fr =0;
+        int start=0,end=0;
         for (int i=0;i<s.length();++i){
-            dp[i][i] =true;
-            for (int j=i-1;j>=0;--j){
-                if (s.charAt(j)==s.charAt(i)){
-                    if (j==i-1)
-                        dp[j][i]=true;
-                    else {
-                        dp[j][i] = dp[j+1][i-1];
-                    }
-                    if (dp[j][i]&&(fr-fl)<(i-j)){
-                        fr = i;
-                        fl = j;
-                    }
-                }
+            int l1 = expandAroundCenter(s,i,i);
+            int l2 = expandAroundCenter(s,i,i+1);
+            int len = Math.max(l1, l2);
+            //position i break the palindrom at the middle, so to get its left/right end points by using length/2
+            //l2 is just having two same chars at the middle, like abba
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
             }
         }
-        return s.substring(fl,fr+1);
+        return s.substring(start,end+1);
+    }
+
+    public int expandAroundCenter(String s, int l, int r){
+        while (l>=0&&r<s.length()&&s.charAt(l)==s.charAt(r)){
+            l--;
+            r++;
+        }
+        return r-l+1;
     }
 }
