@@ -7,22 +7,31 @@ public class Solution105_ConstructBinaryTreefromPreorderandInorderTraversal {
     public static void main(String[] args) {
 
     }
-    int pre_idx = 0;
     HashMap<Integer, Integer> inorderMap = new HashMap<Integer, Integer>();
 
-    public TreeNode helper(int in_left, int in_right,int[] preorder) {
-        if (in_left > in_right)
+    //given node A with position i in preorder, nodes before i is on A's left and nodes after i is on A's right
+    //in inorder array
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        for (int i = 0; i < inorder.length; ++i) {
+            inorderMap.put(i, inorder[i]);
+        }
+        return helper(preorder, 0, inorder, 0, inorder.length - 1);
+    }
+
+    public TreeNode helper(int[] preoder,  int rootIndex,int[] inorder,int left, int right) {
+        //rootIndex: index of root in preorder array
+        if (left > right)
             return null;
-        int inorderIndex = inorderMap.get(preorder[pre_idx]);
-        TreeNode root = new TreeNode(preorder[pre_idx++]);
-        root.left = helper(in_left, inorderIndex - 1, preorder);
-        root.right = helper(inorderIndex + 1, in_right, preorder);
+        TreeNode root = new TreeNode(preoder[rootIndex]);
+        //InorderRootIndex: index of root in inorder array
+        int InorderRootIndex = inorderMap.get(root.val);
+        root.left = helper(preoder, rootIndex + 1, inorder, left, InorderRootIndex - 1);
+        //InorderRootIndex - left: number of nodes on the left sight of the root
+        //rootIndex + (InorderRootIndex - left) + 1 : skip all nodes on the left of the root to get the immediate
+        // right node of the current node.
+        int rightNodeIndex = rootIndex + (InorderRootIndex - left) + 1;
+        root.right = helper(preoder, rightNodeIndex, inorder, InorderRootIndex + 1, right);
         return root;
     }
 
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        for (int i = 0; i < inorder.length; ++i)
-            inorderMap.put(inorder[i], i);
-        return helper(0, inorder.length - 1, preorder);
-    }
 }

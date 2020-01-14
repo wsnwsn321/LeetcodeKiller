@@ -15,16 +15,16 @@ public class Solution129_SumRoottoLeafNumbers {
 
     }
     public int sumNumbers(TreeNode root) {
-        return sum(root,0);
+        return helper(root,0);
     }
-    public int sum(TreeNode root, int num){
+    public int helper(TreeNode root, int curSum){
         if (root==null) return 0;
-        if (root.left==null&&root.right==null)
-            return num*10+root.val;
-        int left = sum(root.left,num*10+root.val);
-        int right = sum(root.right,num*10+root.val);
-        return left+right;
+        if (root.left==null&&root.right==null){
+            return curSum*10+root.val;
+        }
+        return helper(root.left,curSum*10+root.val)+helper(root.right,curSum*10+root.val);
     }
+
 
 
 

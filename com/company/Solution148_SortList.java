@@ -32,11 +32,11 @@ public class Solution148_SortList {
             int n1 = l1==null?Integer.MAX_VALUE:l1.val;
             int n2 = l2==null?Integer.MAX_VALUE:l2.val;
             if (n1<n2){
-                head.next = l1;
+                head.next = new ListNode(n1);
                 l1 = l1.next;
             }
-            else {
-                head.next = l2;
+            else{
+                head.next = new ListNode(n2);
                 l2 = l2.next;
             }
             head = head.next;

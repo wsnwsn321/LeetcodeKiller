@@ -9,12 +9,16 @@ public class Solution169_MajorityElement {
 
     }
     public static int majorityElement(int[] nums) {
-      Map<Integer,Integer> map = new HashMap<>();
-      for (int x:nums){
-          map.put(x,map.getOrDefault(x,0)+1);
-          if (map.get(x)>nums.length/2) return x;
-      }
-      return -1;
+        int majNumber = 0;
+        int count = 0;
+        for (int x : nums) {
+            if (count == 0) {
+                majNumber = x;
+            }
+            count += x == majNumber ? 1 : -1;
+
+        }
+        return majNumber;
     }
 
 }
