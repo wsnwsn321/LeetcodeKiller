@@ -31,6 +31,8 @@ public class Solution225_ImplementStackusingQueues {
                 q2.offer(q1.poll());
             }
             int poped = q1.poll();
+            q1 = q2;
+            q2 = new LinkedList<>();
             return poped;
         }
 

@@ -7,19 +7,20 @@ public class Solution67_AddBinary {
     //time:     O(n) n=max(a,b)
     //space:    O(n)
     public String addBinary(String a, String b) {
-        String result = "";
-        int i=a.length()-1;
-        int j =b.length()-1;
-        int up=0;
-        while (i>=0||j>=0){
-            int aNum = i>=0?a.charAt(i)-'0':0;
-            int bNum = j>=0?b.charAt(j)-'0':0;
-            int sum = aNum+bNum+up;
-            up = sum/2;
-            result=(sum%2)+result;
-            i--;j--;
+        String res = "";
+        int i = a.length() - 1, j = b.length() - 1;
+        int up = 0;
+        while (i >= 0 || j >= 0) {
+            int n1 = i < 0 ? 0 : a.charAt(i) - '0';
+            int n2 = j < 0 ? 0 : b.charAt(j) - '0';
+            int sum = n1 + n2 + up;
+            up = sum / 2;
+            res = sum % 2 + res;
+            i--;
+            j--;
         }
-        if (up>0) result="1"+result;
-        return result;
+        if (up == 1)
+            res = 1 + res;
+        return res;
     }
 }

@@ -17,13 +17,27 @@ public class Solution142_LinkedListCycleII {
 
     }
     public ListNode detectCycle(ListNode head) {
-        Set<ListNode> s = new HashSet<>();
-        ListNode cur = head;
-        while (cur!=null){
-            if (s.contains(cur)) return cur;
-            s.add(cur);
-            cur = cur.next;
+        if (head == null) return null;
+        ListNode intersect = findIntersection(head);
+        if (intersect == null) return null;
+        ListNode p1 = head;
+        ListNode p2 = intersect;
+        while (p1 != p2) {
+            p1 = p1.next;
+            p2 = p2.next;
         }
-        return null;
+        return p1;
+    }
+
+    public ListNode findIntersection(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (slow != fast && fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (slow == fast)
+            return slow;
+        else
+            return null;
     }
 }

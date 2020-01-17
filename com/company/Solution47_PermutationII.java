@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Solution47_PermutationII {
     public static void main(String[] args) {
-
+        int[] a = new int[]{1,1,2};
+        permuteUnique(a);
     }
     public static List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();

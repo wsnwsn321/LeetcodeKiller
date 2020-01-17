@@ -176,12 +176,12 @@ public class AmazonVO {
     }
 
     //题目是给一个先递增后递减的数组[1,2,3,4,5,4,3], 查找一个数，返回true和false，问了边界怎么处理，有负数怎么办，有重复的数字怎么办。
-    public static boolean TargetInIncreasingAndDecreasingArray(int[] nums, int target){
-        int max = findMaximum(nums,0,nums.length-1);
-        int n1 = Solution704_BinarySearch.binarySearch(0,max,nums,target);
-        int n2 =Solution704_BinarySearch.binarySearch(max+1,nums.length-1,nums,target);
-        return !(n1==-1 &&n2==-1);
-    }
+//    public static boolean TargetInIncreasingAndDecreasingArray(int[] nums, int target){
+//        int max = findMaximum(nums,0,nums.length-1);
+//        int n1 = Solution704_BinarySearch.binarySearch(0,max,nums,target);
+//        int n2 =Solution704_BinarySearch.binarySearch(max+1,nums.length-1,nums,target);
+//        return !(n1==-1 &&n2==-1);
+//    }
     //找到先增后减array中的最大数
     public static int findMaximum(int[] nums, int low, int high){
         if(low==high) return nums[low];

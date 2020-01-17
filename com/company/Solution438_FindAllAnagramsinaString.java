@@ -11,24 +11,28 @@ public class Solution438_FindAllAnagramsinaString {
         findAnagrams(x,p);
     }
     public static List<Integer> findAnagrams(String s, String p) {
-        int[] pCount = new int[26];
+        int[] count = new int[26];
         List<Integer> res = new ArrayList<>();
-        int count =p.length();
         if (s.length()<p.length()) return res;
         for (char ch:p.toCharArray()){
-            pCount[ch-'a']++;
+            count[ch-'a']++;
         }
-        int l=0,r=0;
-        while (r<s.length()){
-            if (pCount[s.charAt(r)-'a']-->0)
-                count--;
-            if (r-l+1>p.length()){
-                if (pCount[s.charAt(l++)-'a']++>=0)
-                    count++;
+        int l=0;
+        int length = p.length();
+        for (int i=0;i<s.length();++i){
+            char ch = s.charAt(i);
+            //still some chars in p not matched
+            if (count[ch-'a']-->0){
+                length--;
             }
-            if (count==0)
+            //window size> p.length and move left pointer will make
+            //char at l become unmatched again
+            if (i-l+1>p.length()&&count[s.charAt(l++)-'a']++>=0){
+                length++;
+            }
+            if (length==0){
                 res.add(l);
-            r++;
+            }
         }
         return res;
     }

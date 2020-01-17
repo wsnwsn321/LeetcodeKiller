@@ -6,38 +6,15 @@ public class Solution704_BinarySearch {
         search(a,9);
     }
     public static int search(int[] nums, int target) {
-        int start = 0, end = nums.length-1;
-        int result = binarySearch(start,end,nums,target);
-        return result;
-
-    }
-    public static int binarySearch(int start, int end, int[] nums, int target){
-//        if(start<=end){
-//            int mid = (start+end)/2;
-//            if(target==nums[mid]) return mid;
-//            else{
-//                if(target>nums[mid]) return binarySearch(mid+1,end,nums,target);
-//                else return binarySearch(start,mid-1,nums,target);
-//            }
-//        }
-        //return -1;
-
-        int lo = 0;
-        int hi = end;
-
-        while(lo <= hi)
-        {
-            int mid = (lo + hi) / 2;
-
-            if(nums[mid] < target)
-                lo = mid + 1;
-            else if(nums[mid] > target)
-                hi = mid - 1;
-            else
-                return mid;
+        int pivot, left = 0, right = nums.length - 1;
+        while (left <= right) {
+            pivot = left + (right - left) / 2;
+            if (nums[pivot] == target) return pivot;
+            if (target < nums[pivot]) right = pivot - 1;
+            else left = pivot + 1;
         }
-
         return -1;
+
     }
 
 
