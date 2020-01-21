@@ -16,6 +16,7 @@ public class Solution94_BinaryTreeInorderTraversal {
     }
     public List<Integer> inorderTraversal(TreeNode root) {
           List<Integer> res = new ArrayList<>();
+          if (root==null) return res;
           Stack<TreeNode> s = new Stack<>();
           TreeNode cur = root;
           while (cur!=null||s.size()>0){
