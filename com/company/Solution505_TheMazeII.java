@@ -17,19 +17,21 @@ public class Solution505_TheMazeII {
         Queue< int[] > queue = new LinkedList< >();
         queue.add(start);
         while (!queue.isEmpty()) {
-            int[] s = queue.remove();
-            for (int[] dir: dirs) {
-                int x = s[0] + dir[0];
-                int y = s[1] + dir[1];
-                int count = 0;
-                while (x >= 0 && y >= 0 && x < maze.length && y < maze[0].length && maze[x][y] == 0) {
-                    x += dir[0];
-                    y += dir[1];
+            int[] cur = queue.poll();
+            int i=cur[0],j=cur[1];
+            for (int[] d:dirs){
+                int x = i+d[0];
+                int y = j+d[1];
+                int count=0;
+                while (x>=0&&y>=0&&x<maze.length&&y<maze[0].length&&maze[x][y]==0){
+                    x+=d[0];
+                    y+=d[1];
                     count++;
                 }
-                if (distance[s[0]][s[1]] + count < distance[x - dir[0]][y - dir[1]]) {
-                    distance[x - dir[0]][y - dir[1]] = distance[s[0]][s[1]] + count;
-                    queue.add(new int[] {x - dir[0], y - dir[1]});
+                //update distance grid if found a shorter distance
+                if (distance[i][j]+count<distance[x-d[0]][y-d[1]]){
+                    distance[x-d[0]][y-d[1]] = distance[i][j]+count;
+                    queue.offer(new int[]{x-d[0],y-d[1]});
                 }
             }
         }
