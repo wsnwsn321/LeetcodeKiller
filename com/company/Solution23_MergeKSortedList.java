@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Solution23_MergeKSortedList {
@@ -18,16 +19,15 @@ public class Solution23_MergeKSortedList {
       ListNode head = dummy;
       PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>((a, b) -> a.val - b.val);
       for (ListNode node : lists) {
-          if (node!=null)
-            pq.offer(node);
+          if (node != null)
+              pq.offer(node);
       }
       while (pq.size() > 0) {
           ListNode temp = pq.poll();
           head.next = temp;
-          head = head.next;
-          if (temp.next != null) {
+          if (temp.next != null)
               pq.offer(temp.next);
-          }
+          head = head.next;
       }
       return dummy.next;
   }

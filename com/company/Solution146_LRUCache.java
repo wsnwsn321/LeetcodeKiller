@@ -5,67 +5,71 @@ import java.util.*;
 public class Solution146_LRUCache {
     class LRUCache {
         class Node{
-            int key,val;
+            int key;
+            int val;
             Node prev;
             Node next;
             Node(){
+
             }
             Node(int k, int v){
-                this.key =k;
+                this.key = k;
                 this.val = v;
             }
         }
-        Map<Integer,Node> map;
+        int size;
         Node head,tail;
-        int cap;
-        public LRUCache(int capacity) {
+        Map<Integer,Node> cache;
+        public LRUCache(int capacity){
+            this.size =capacity;
+            cache = new HashMap<>();
             head = new Node();
             tail = new Node();
-            head.next =tail;
+            head.next = tail;
             tail.prev = head;
-            this.cap = capacity;
-            map = new HashMap<>();
         }
-
         public int get(int key) {
-            Node n = map.get(key);
-            if (n==null) return -1;
-            moveToHead(n);
-            return n.val;
+            Node cur = cache.get(key);
+            if (cur==null)
+                return -1;
+            moveToHead(cur);
+            return cur.val;
         }
 
         public void put(int key, int value) {
-            Node n = map.get(key);
-            if (n==null){
-                Node add = new Node(key,value);
-                addToHead(add);
-                map.put(key,add);
-                if (map.size()>cap){
-                    Node removed = removeFromTail();
-                    map.remove(removed.key);
-                }
+            Node cur = cache.get(key);
+            if (cur!=null){
+                cur.val = value;
+                moveToHead(cur);
             }
             else {
-                n.val = value;
-                moveToHead(n);
+                Node newNode = new Node(key,value);
+                addToHead(newNode);
+                cache.put(key,newNode);
+                if (cache.size()>size){
+                    Node least = removeTail();
+                    cache.remove(least.key);
+                }
             }
         }
-        public void addToHead(Node n){
-            n.prev = head;
-            n.next = head.next;
-            head.next.prev = n;
-            head.next = n;
-        }
-        public void moveToHead(Node n){
-            removeNode(n);
-            addToHead(n);
+
+        public void addToHead(Node node){
+            node.prev = head;
+            node.next = head.next;
+            head.next.prev = node;
+            head.next = node;
         }
 
-        public void removeNode(Node n){
-            n.prev.next = n.next;
-            n.next.prev = n.prev;
+        public void removeNode(Node node){
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
         }
-        public Node removeFromTail(){
+        public void moveToHead(Node node){
+            removeNode(node);
+            addToHead(node);
+        }
+
+        public Node removeTail(){
             Node removed = tail.prev;
             removeNode(removed);
             return removed;
