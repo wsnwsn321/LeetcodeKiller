@@ -9,35 +9,44 @@ public class Solution362_DesignHitCounter {
 
     }
     class HitCounter {
-        PriorityQueue<Integer> pq;
-        Map<Integer,Integer> count;
-        /** Initialize your data structure here. */
+
+        Map<Integer, Integer> count;
+        PriorityQueue<Integer> scale;
+
+        /**
+         * Initialize your data structure here.
+         */
         public HitCounter() {
-            pq = new PriorityQueue<>();
             count = new HashMap<>();
+            scale = new PriorityQueue<>();
         }
 
-        /** Record a hit.
-         @param timestamp - The current timestamp (in seconds granularity). */
+        /**
+         * Record a hit.
+         *
+         * @param timestamp - The current timestamp (in seconds granularity).
+         */
         public void hit(int timestamp) {
-            if (count.containsKey(timestamp))
-                count.put(timestamp,count.get(timestamp)+1);
-            else {
-                pq.offer(timestamp);
-                count.put(timestamp,1);
-            }
+            count.put(timestamp, count.getOrDefault(timestamp, 0) + 1);
+            scale.offer(timestamp);
+
+
         }
 
-        /** Return the number of hits in the past 5 minutes.
-         @param timestamp - The current timestamp (in seconds granularity). */
+        /**
+         * Return the number of hits in the past 5 minutes.
+         *
+         * @param timestamp - The current timestamp (in seconds granularity).
+         */
         public int getHits(int timestamp) {
-            while (pq.size()>0&&timestamp-pq.peek()>=300)
-                pq.poll();
-            int sum=0;
-            for (int x:pq){
-                sum+=count.get(x);
+            while (scale.size() > 0 && scale.peek() <= timestamp - 300) {
+                count.remove(scale.poll());
             }
-            return sum;
+            int res = 0;
+            for (int times : count.values()) {
+                res += times;
+            }
+            return res;
         }
     }
 }

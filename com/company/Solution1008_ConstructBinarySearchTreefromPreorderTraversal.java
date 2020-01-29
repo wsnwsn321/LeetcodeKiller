@@ -8,7 +8,6 @@ public class Solution1008_ConstructBinarySearchTreefromPreorderTraversal {
     }
     int index =0;
     public TreeNode bstFromPreorder(int[] preorder) {
-        Stack<Integer> s = new Stack<>();
         return buildTree(preorder,Integer.MIN_VALUE,Integer.MAX_VALUE);
     }
 
