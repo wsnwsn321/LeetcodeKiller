@@ -13,32 +13,32 @@ public class Solution173_BinarySearchTreeIterator {
         TreeNode(int x) { val = x; }
     }
     class BSTIterator {
-        Stack<TreeNode> s;
         TreeNode cur;
+        Stack<TreeNode> s;
+
         public BSTIterator(TreeNode root) {
             s = new Stack<>();
-            TreeNode cur = root;
+            cur = root;
+        }
+
+        /**
+         * @return the next smallest number
+         */
+        public int next() {
             while (cur != null) {
                 s.push(cur);
                 cur = cur.left;
             }
+            TreeNode next = s.pop();
+            cur = next.right;
+            return next.val;
         }
 
-        /** @return the next smallest number */
-        public int next() {
-            TreeNode node = s.pop();
-            TreeNode cur = node.right;
-            while (cur!=null){
-                s.push(cur);
-                cur = cur.left;
-            }
-            return node.val;
-
-        }
-
-        /** @return whether we have a next smallest number */
+        /**
+         * @return whether we have a next smallest number
+         */
         public boolean hasNext() {
-            return s.isEmpty();
+            return cur != null || !s.isEmpty();
         }
     }
 }
