@@ -7,19 +7,22 @@ public class Solution32_LongestValidParentheses {
 
     }
     public int longestValidParentheses(String s) {
-        Stack<Integer> stack = new Stack<>();
-        int max =0;
+        Stack<Integer> stack =  new Stack<>();
         stack.push(-1);
-        for (int i=0;i<s.length();++i){
+        int max = 0;
+        for (int i=0;i<s.length();++i) {
             char ch = s.charAt(i);
-            if (ch=='(')
+            if (ch == '(')
                 stack.push(i);
             else {
                 stack.pop();
+                //nothing is in the stack, record the current i as the potential start for the next
+                //valid Ps
                 if (stack.isEmpty())
                     stack.push(i);
-                else
-                    max = Math.max(max,i-stack.peek());
+                else {
+                    max = Math.max(max, i - stack.peek());
+                }
             }
         }
         return max;

@@ -1,12 +1,14 @@
 package com.company;
 
 import java.util.*;
+import java.util.concurrent.Semaphore;
 
 public class Solution380_InsertDeleteGetRandom {
     public static void main(String[] args) {
 
     }
     class RandomizedSet {
+        Semaphore s;
         Map<Integer, Integer> map;
         List<Integer> list;
         Random rand = new Random();
@@ -15,6 +17,7 @@ public class Solution380_InsertDeleteGetRandom {
          * Initialize your data structure here.
          */
         public RandomizedSet() {
+            s = new Semaphore(1);
             map = new HashMap<>();
             list = new ArrayList<>();
         }
@@ -32,7 +35,8 @@ public class Solution380_InsertDeleteGetRandom {
         /**
          * Removes a value from the set. Returns true if the set contained the specified element.
          */
-        public boolean remove(int val) {
+        public boolean remove(int val) throws InterruptedException {
+            s.acquire();
             if (!map.containsKey(val)) return false;
             int last = list.get(list.size() - 1);
             int index = map.get(val);
@@ -40,6 +44,7 @@ public class Solution380_InsertDeleteGetRandom {
             list.remove(list.size() - 1);
             map.put(last, index);
             map.remove(val);
+            s.release();
             return true;
         }
 

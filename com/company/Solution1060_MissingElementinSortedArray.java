@@ -10,23 +10,23 @@ public class Solution1060_MissingElementinSortedArray {
     }
 
     public static int missingElement(int[] nums, int k) {
-        int n = nums.length;
-        if (k > missing(n - 1, nums))
-            return nums[n - 1] + k - missing(n - 1, nums);
-
-        int left = 0, right = n - 1, ans = -1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (missing(mid, nums) >= k)
-                right = mid - 1;
-            else {
-                ans = mid;
-                left = mid + 1;
-            }
-
+        int[] missingArray = new int[nums.length];
+        for (int i = 0; i < nums.length; ++i) {
+            missingArray[i] = nums[i] - (nums[0] + i);
         }
-        return nums[ans] + k - missing(ans, nums);
+        int l = 0, r = nums.length - 1;
+        int ans = -1;
+        //find largest index that is smaller than or equal to k
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (missingArray[mid] >= k) {
+                r = mid - 1;
+            } else {
+                ans = mid;
+                l = mid + 1;
+            }
+        }
+        return nums[0] + k + ans;
     }
 
 

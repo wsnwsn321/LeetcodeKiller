@@ -51,7 +51,7 @@ public class Solution706_DesignHashMap {
                 prev.next.val = value;
             }
 
-            if (size/nodes.length>LOAD_FACTOR){
+            if ((double)size/nodes.length>LOAD_FACTOR){
                 rehash();
             }
 
