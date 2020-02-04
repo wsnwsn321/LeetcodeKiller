@@ -21,22 +21,17 @@ public class Solution117_PopulatingNextRightPointersinEachNodeII {
     public static void main(String[] args) {
 
     }
-    public Node connect(Node root)
-    {
-        if (root==null) return null;
+    public Node connect(Node root) {
+        if (root == null) return null;
         Queue<Node> q = new LinkedList<>();
         q.offer(root);
-        while (q.size()>0){
+        while (q.size() > 0) {
             int size = q.size();
-            Node temp = q.poll();
-            if (temp.left!=null) q.offer(temp.left);
-            if (temp.right!=null) q.offer(temp.right);
-            for (int i=0;i<size-1;++i){
+            for (int i = 0; i < size; ++i) {
                 Node cur = q.poll();
-                temp.next = cur;
-                if (cur.left!=null) q.offer(cur.left);
-                if (cur.right!=null) q.offer(cur.right);
-                temp = cur;
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+                cur.next = i + 1 == size ? null : q.peek();
             }
         }
         return root;

@@ -15,25 +15,25 @@ public class Solution621_TaskScheduler {
             taskToCount.put(c, taskToCount.getOrDefault(c, 0) + 1);
         }
 
-        Queue<Integer> queue = new PriorityQueue<>((i1, i2) -> i2 - i1);
-        for (char c : taskToCount.keySet()) queue.offer(taskToCount.get(c));
-        //cooldown stores current unavailable tasks
-        Map<Integer, Integer> coolDown = new HashMap<>();
-        int currTime = 0;
-        while (!queue.isEmpty() || !coolDown.isEmpty()) {
-            //release tasks in cooldown when time has passed n seconds
-            if (coolDown.containsKey(currTime - n - 1)) {
-                queue.offer(coolDown.remove(currTime - n - 1));
-            }
-            if (!queue.isEmpty()) {
-                int left = queue.poll() - 1;
-                //put remaining tasks into cooldown with the time it's executed
-                if (left != 0) coolDown.put(currTime, left);
-            }
-            currTime++;
-        }
+        Queue<Integer> q = new PriorityQueue<>((i1, i2) -> i2 - i1);
+        for (char c : taskToCount.keySet()) q.offer(taskToCount.get(c));
+        int time = 0;
+        Map<Integer, Integer> cooldown = new HashMap<>();
+        while (q.size() > 0 || cooldown.size() > 0) {
 
-        return currTime;
+            if (cooldown.containsKey(time - n - 1)) {
+                q.offer(cooldown.remove(time - n - 1));
+            }
+
+            if (q.size() > 0) {
+                int remaining = q.poll() - 1;
+                if (remaining > 0)
+                    cooldown.put(time, remaining);
+            }
+            time++;
+        }
+        return time;
+
     }
 
 

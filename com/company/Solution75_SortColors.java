@@ -15,7 +15,7 @@ public class Solution75_SortColors {
             }
             else if (nums[index]==2){
                 nums[index] = nums[two];
-                nums[two--] =2;
+                nums[two--] = 2;
             }
             else index++;
         }

@@ -3,14 +3,14 @@ package com.company;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class TicTacToe {
+class Solution348_TicTacToe {
 
     int[] colScore;
     int[] rowScore;
     int[] diagScore;
     int n;
     /** Initialize your data structure here. */
-    public TicTacToe(int n) {
+    public Solution348_TicTacToe(int n) {
         colScore = new int[n];
         rowScore = new int[n];
         diagScore = new int[2];

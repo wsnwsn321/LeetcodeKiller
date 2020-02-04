@@ -27,16 +27,14 @@ public class Solution127_WordLadder {
         return 0;
     }
 
-    public List<String> neighbors(String s, Set<String> wordList){
+    public List<String> neighbors(String s, Set<String> wordList) {
         List<String> res = new ArrayList<>();
-        for (int i=0;i<s.length();++i){
+        for (int i = 0; i < s.length(); ++i) {
             char[] sc = s.toCharArray();
-            for (char ch = 'a';ch<='z';++ch){
-                sc[i] = ch;
-                String neighbour = new String(sc);
-                if (wordList.remove(neighbour)){
-                    res.add(neighbour);
-                }
+            for (char j = 'a'; j <= 'z'; j++) {
+                sc[i] = j;
+                if (wordList.remove(String.valueOf(sc)))
+                    res.add(String.valueOf(sc));
             }
         }
         return res;

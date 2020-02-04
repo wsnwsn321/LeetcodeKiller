@@ -2,27 +2,31 @@ package com.company;
 
 public class Solution543_DiameterOfBinaryTree {
     public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
     }
+
     public static void main(String[] args) {
 
     }
-    int ans =0;
+
+    int res = 0;
     public int diameterOfBinaryTree(TreeNode root) {
-        getDiameter(root);
-        return ans;
+        helper(root);
+        return res;
     }
 
-    public int  getDiameter(TreeNode root){
-        if (root==null) return 0;
-        int lheight = getDiameter(root.left);
-        int rheight = getDiameter(root.right);
-        ans = Math.max(ans,lheight+rheight);
-        return Math.max(lheight,rheight)+1;
+    public int helper(TreeNode root) {
+        if (root == null) return 0;
+        int left = helper(root.left);
+        int right = helper(root.right);
+        res = Math.max(res, left + right);
+        return Math.max(left, right)+1;
     }
-
 
 }

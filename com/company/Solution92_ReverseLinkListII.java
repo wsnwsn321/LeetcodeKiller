@@ -18,8 +18,8 @@ public class Solution92_ReverseLinkListII {
             cur = cur.next;
         }
         //cur is now head of reverse,pre is going to connect to reversed head
-        ListNode preAfterReverse = pre;
-        ListNode tailAfterReverse = cur;
+        ListNode preOfReversedHead = pre;
+        ListNode reversedTail = cur;
         for (int i = m; i <= n; ++i) {
             ListNode temp = cur.next;
             cur.next = pre;
@@ -27,9 +27,9 @@ public class Solution92_ReverseLinkListII {
             cur = temp;
         }
         //pre is now head of reversed list, connect it with where we started reversing.
-        //cur is first node after reverse, connect tail of reversed list to it
-        preAfterReverse.next = pre;
-        tailAfterReverse.next = cur;
+        //cur is the first node after the reverse part, connect tail of reversed list to it
+        preOfReversedHead.next = pre;
+        reversedTail.next = cur;
         return dummyHead.next;
     }
 
