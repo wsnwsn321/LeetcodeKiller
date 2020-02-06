@@ -7,17 +7,16 @@ public class Solution242_ValidAnagram {
 
     }
     public static boolean isAnagram(String s, String t) {
-        if(s.length()!=t.length()) return false;
-        int[] count= new int[s.length()];
-        for (char ch:s.toCharArray()){
-            count[ch-'a']++;
+        if (s.length() != t.length()) return false;
+        int[] letters = new int[26];
+        for (char ch : s.toCharArray()) {
+            letters[ch - 'a']++;
         }
-        int length=s.length()-1;
-        for (char ch:t.toCharArray()){
-            count[ch-'a']--;
-            if (count[ch-'a']>=0)
+        int length = s.length();
+        for (char ch : t.toCharArray()) {
+            if (letters[ch - 'a']-- >= 1)
                 length--;
         }
-        return length==0;
+        return length == 0;
     }
 }
