@@ -19,16 +19,20 @@ public class Solution378_KthSmallestElementinaSortedMatrix {
         return lo;
     }
     private int getLessEqual(int[][] matrix, int val) {
-        int res = 0;
-        int n = matrix.length, i = n - 1, j = 0;
-        while (i >= 0 && j < n) {
-            if (matrix[i][j] > val) i--;
+        int count = 0;
+        int i = 0, j = matrix[0].length - 1;
+        while (i < matrix.length && j >= 0) {
+            int cur = matrix[i][j];
+            //go to cur's left
+            if (cur > val)
+                j--;
+            //any number to cur's left is <=val, add the number into count and go down one row
             else {
-                res += i + 1;
-                j++;
+                count += j + 1;
+                i++;
             }
         }
-        return res;
+        return count;
     }
 
 }

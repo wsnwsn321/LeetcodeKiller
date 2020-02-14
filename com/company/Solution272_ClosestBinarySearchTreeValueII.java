@@ -21,21 +21,21 @@ public class Solution272_ClosestBinarySearchTreeValueII {
                 return 0;
             }
         });
-        while (pq.size()>0){
+        travel(root, pq, k, target);
+        while (pq.size() > 0) {
             res.add(pq.poll().val);
         }
         return res;
     }
-
-    public void travel( TreeNode root, int k,PriorityQueue<TreeNode> pq,double target){
-        if (root==null)
+    public void travel(TreeNode root, PriorityQueue<TreeNode> pq, int k,double target) {
+        if (root == null)
             return;
-        travel(root.left,k,pq,target);
-        double cur = Math.abs(root.val-target);
-        if (pq.size()>0&&cur>Math.abs(pq.peek().val-target)&&pq.size()==k) return;
+        travel(root.left, pq, k, target);
+        if (pq.size() > 0 && Math.abs(root.val - target) > Math.abs(pq.peek().val - target)) return;
         pq.offer(root);
-        if (pq.size()>k)
+        if (pq.size() > k)
             pq.poll();
-        travel(root.right,k,pq,target);
+        travel(root.right, pq, k, target);
     }
+
 }

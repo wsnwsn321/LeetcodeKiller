@@ -16,9 +16,8 @@ public class Solution224_BasicCalculator {
 
         for (char ch : s.toCharArray()) {
             if (Character.isDigit(ch)) {
-                operand = operand * 10 + (ch - '0');
+                operand = operand * 10 + ch - '0';
             } else if (ch == '+') {
-                //sign here is the previous sign before current ch
                 result += sign * operand;
                 sign = 1;
                 operand = 0;
@@ -29,8 +28,8 @@ public class Solution224_BasicCalculator {
             } else if (ch == '(') {
                 stack.push(result);
                 stack.push(sign);
-                sign = 1;
                 result = 0;
+                sign = 1;
             } else if (ch == ')') {
                 result += sign * operand;
                 result *= stack.pop();

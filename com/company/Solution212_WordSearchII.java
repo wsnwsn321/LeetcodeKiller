@@ -46,16 +46,16 @@ public class Solution212_WordSearchII {
         board[i][j] = ch;
     }
 
-    public TrieNode buildTrie(String[] words){
+    public TrieNode buildTrie(String[] words) {
         TrieNode root = new TrieNode();
-        for (String cur:words){
+        for (String w : words) {
             TrieNode node = root;
-            for (char ch:cur.toCharArray()){
-                if (node.children[ch-'a']==null)
-                    node.children[ch-'a'] = new TrieNode(ch);
-                node = node.children[ch-'a'];
+            for (char ch : w.toCharArray()) {
+                if (node.children[ch - 'a'] == null)
+                    node.children[ch - 'a'] = new TrieNode(ch);
+                node = node.children[ch - 'a'];
             }
-            node.word = cur;
+            node.word = w;
         }
         return root;
     }

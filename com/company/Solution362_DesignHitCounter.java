@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Solution362_DesignHitCounter {
     public static void main(String[] args) {
@@ -11,14 +9,14 @@ public class Solution362_DesignHitCounter {
     class HitCounter {
 
         Map<Integer, Integer> count;
-        PriorityQueue<Integer> scale;
+        Queue<Integer> scale;
 
         /**
          * Initialize your data structure here.
          */
         public HitCounter() {
             count = new HashMap<>();
-            scale = new PriorityQueue<>();
+            scale = new LinkedList<>();
         }
 
         /**
