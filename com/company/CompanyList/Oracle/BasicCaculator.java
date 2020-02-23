@@ -1,7 +1,5 @@
 package com.company.CompanyList.Oracle;
 
-import java.util.Stack;
-
 public class BasicCaculator {
     public static void main(String[] args) {
         System.out.println(calculate("1-23-4+71"));
@@ -9,7 +7,6 @@ public class BasicCaculator {
 
     public static int calculate(String s) {
 
-        Stack<Integer> stack = new Stack<Integer>();
         int operand = 0;
         int result = 0; // For the on-going result
         int sign = 1;  // 1 means positive, -1 means negative

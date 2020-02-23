@@ -1,18 +1,17 @@
 package com.company;
 
-public class Solution340_LongestSubstringwithAtMostKDistinctCharacters {
+public class Solution159_LongestSubstringwithAtMostTwoDistinctCharacters {
     public static void main(String[] args) {
-        String s = "eceba";
-        lengthOfLongestSubstringKDistinct(s,2);
+
     }
-    public static int lengthOfLongestSubstringKDistinct(String s, int k) {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
         int l = 0, res = 0;
         int[] count = new int[128];
         int unique = 0;
         for (int r = 0; r < s.length(); ++r) {
             if (count[s.charAt(r)]++ == 0)
                 unique++;
-            if (unique > k) {
+            if (unique > 2) {
                 while (count[s.charAt(l++)]-- > 1);
                 unique--;
             }

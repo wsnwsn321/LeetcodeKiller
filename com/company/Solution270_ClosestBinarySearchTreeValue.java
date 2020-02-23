@@ -6,16 +6,19 @@ public class Solution270_ClosestBinarySearchTreeValue {
     public static void main(String[] args) {
 
     }
-    public int closestValue(TreeNode root, double target) {
-        int cloest = root.val;
+    public int closestValue(TreeNode root, double target) throws Exception {
+        if (root == null)
+            throw new Exception("tree is null!");
+        int closest = root.val;
         while (root != null) {
-            cloest = Math.abs(root.val - target) < Math.abs(cloest - target) ? root.val : cloest;
-            if (root.val < target)
-                root = root.right;
-            else
+            if (root.val == target) return root.val;
+            closest = Math.abs(root.val - target) < Math.abs(closest - target) ? root.val : closest;
+            if (root.val > target)
                 root = root.left;
+            else
+                root = root.right;
         }
-        return cloest;
+        return closest;
     }
 
 }
